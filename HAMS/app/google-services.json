@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "368064627686",
+    "project_id": "hams-group12",
+    "storage_bucket": "hams-group12.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:368064627686:android:fff188b6555524d1184c27",
+        "android_client_info": {
+          "package_name": "com.seg2105.hams"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKvYtZ1qDMltIf_8WZuHlns6eUFdET3-Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
