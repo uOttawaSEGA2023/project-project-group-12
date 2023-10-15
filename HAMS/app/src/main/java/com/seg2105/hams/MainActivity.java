@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
 
     FirebaseAuth auth;
     Button button;
+    Button form_button;
     TextView textView;
     FirebaseUser user;
 
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         button = findViewById(R.id.btn_logout);
+        form_button = findViewById(R.id.form_redirect);
         textView = findViewById(R.id.emailText);
         user = auth.getCurrentUser();
         if (user == null){
@@ -40,6 +42,15 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 FirebaseAuth.getInstance().signOut();
                 Intent intent = new Intent(getApplicationContext(), Login.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        form_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), InfoForm.class);
                 startActivity(intent);
                 finish();
             }
