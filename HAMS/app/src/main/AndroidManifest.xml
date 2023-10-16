@@ -18,7 +18,7 @@
             android:name=".InfoForm"
             android:exported="false"
             android:label="@string/title_activity_info_form"
-            android:theme="@style/Theme.Material3.Dark" />
+            android:theme="@style/Theme.Material3.Dark.NoActionBar" />
         <activity
             android:name=".Register"
             android:exported="false"

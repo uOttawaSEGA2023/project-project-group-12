@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.seg2105.hams.Util;
+
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.datepicker.MaterialDatePicker;
@@ -29,6 +31,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import org.json.*;
+
 
 public class InfoForm extends AppCompatActivity {
     TextInputEditText editTextFirstName, editTextLastName, editTextStreet, editTextCity,
@@ -186,6 +189,7 @@ public class InfoForm extends AppCompatActivity {
                 HashMap<String, Object> user = new HashMap<>();
                 HashMap<String, Object> addressInfo = new HashMap<>();
 
+                user.put("Date Form Completed", Util.getDateYYYYMMDD());
                 user.put("First Name", firstName);
                 user.put("Last Name", lastName);
                 user.put("Email", currentUser.getEmail());
