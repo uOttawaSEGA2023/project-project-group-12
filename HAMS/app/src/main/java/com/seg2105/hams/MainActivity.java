@@ -29,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
         form_button = findViewById(R.id.form_redirect);
         textView = findViewById(R.id.emailText);
         user = auth.getCurrentUser();
+
+        // If user not signed in, redirect to login page.
         if (user == null){
             Intent intent = new Intent(getApplicationContext(), Login.class);
             startActivity(intent);
@@ -37,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
             textView.setText(user.getEmail());
         }
 
+        // Handle sign-out and form button.
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

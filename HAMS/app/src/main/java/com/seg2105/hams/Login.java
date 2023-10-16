@@ -30,6 +30,7 @@ public class Login extends AppCompatActivity {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
+        // If user is logged in, redirect to MainActivity.
         if(currentUser != null){
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
@@ -47,6 +48,8 @@ public class Login extends AppCompatActivity {
         editTextPassword = findViewById(R.id.password);
         buttonLogin = findViewById(R.id.btn_login);
         textView = findViewById(R.id.gotoRegister);
+
+        // If user wishes to go to register page, do so.
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -56,6 +59,7 @@ public class Login extends AppCompatActivity {
             }
         });
 
+        // On login click, handle action.
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,20 +67,22 @@ public class Login extends AppCompatActivity {
                 email = String.valueOf(editTextEmail.getText());
                 password = String.valueOf(editTextPassword.getText());
 
+                // Validate input fields.
                 if (TextUtils.isEmpty(email)) {
                     Toast.makeText(Login.this, "Enter email.", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
                 if (TextUtils.isEmpty(password)) {
                     Toast.makeText(Login.this, "Enter password.", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
+                // Else, sign in with FireBase
                 mAuth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
+                                // Handle succes and failure.
                                 if (task.isSuccessful()) {
                                     Toast.makeText(getApplicationContext(), "Logged in.",
                                             Toast.LENGTH_SHORT).show();

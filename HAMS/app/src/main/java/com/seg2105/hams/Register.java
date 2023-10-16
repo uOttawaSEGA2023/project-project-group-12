@@ -29,7 +29,7 @@ public class Register extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
+        // Check if user is signed in (non-null) and redirect to MainActivity if so.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -47,6 +47,8 @@ public class Register extends AppCompatActivity {
         editTextPassword = findViewById(R.id.password);
         buttonReg = findViewById(R.id.btn_register);
         textView = findViewById(R.id.gotoLogin);
+
+        // If user clicks on Go To Login, redirect to login.
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -56,27 +58,31 @@ public class Register extends AppCompatActivity {
             }
         });
 
+        // If user clicks register, handle operation.
         buttonReg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Get values of email and password inputted.
                 String email, password;
                 email = String.valueOf(editTextEmail.getText());
                 password = String.valueOf(editTextPassword.getText());
 
+                // Validation logic.
                 if (TextUtils.isEmpty(email)) {
                     Toast.makeText(Register.this, "Enter email.", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
                 if (TextUtils.isEmpty(password)) {
                     Toast.makeText(Register.this, "Enter password.", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
+                // Create account with FireBase.
                 mAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
+                                // Handle success or failure.
                                 if (task.isSuccessful()) {
                                     Toast.makeText(Register.this, "User created.",
                                             Toast.LENGTH_SHORT).show();

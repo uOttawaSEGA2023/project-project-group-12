@@ -4,6 +4,10 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class Util {
+    /**
+     * Returns today's date in internation standard format using LocalDate and DateTimeFormatter.
+     * @return the date in YYYY-MM-DD format
+     */
     public static String getDateYYYYMMDD () {
         LocalDate currentDate = LocalDate.now();
 
