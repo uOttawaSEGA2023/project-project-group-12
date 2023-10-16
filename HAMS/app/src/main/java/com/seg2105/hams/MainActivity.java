@@ -10,6 +10,11 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,7 +39,17 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         } else {
-            textView.setText(user.getEmail());
+            String userEmail = user.getEmail();
+            databaseReference.child("users").child(user.getUid()).child("role").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        String userRole = dataSnapshot.getValue().toString();
+                        String welcomeMessage = "Welcome " + userEmail + "! Your role is " + userRole;
+                        textView.setText(welcomeMessage);
+                    } else {
+                        textView.setText("Error: User data not found in the database");
+                    }
         }
 
         button.setOnClickListener(new View.OnClickListener() {
