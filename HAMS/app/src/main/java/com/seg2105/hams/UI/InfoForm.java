@@ -1,6 +1,5 @@
-package com.seg2105.hams;
+package com.seg2105.hams.UI;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -11,14 +10,15 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.seg2105.hams.Util;
+import com.seg2105.hams.R;
+import com.seg2105.hams.Users.Patient;
+import com.seg2105.hams.Util.Util;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
@@ -29,8 +29,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
-import org.json.*;
 
 
 public class InfoForm extends AppCompatActivity {
@@ -117,7 +115,7 @@ public class InfoForm extends AppCompatActivity {
         formComplete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String firstName, lastName, street, city, province, country ,postalCode, phoneNumber, healthcardNumber, employeeNumber, specialties;
+                String firstName, lastName, street, city, province, country ,postalCode, phoneNumber, healthNumber, employeeNumber, specialties;
                 firstName = String.valueOf(editTextFirstName.getText());
                 lastName = String.valueOf(editTextLastName.getText());
                 street = String.valueOf(editTextStreet.getText());
@@ -126,7 +124,7 @@ public class InfoForm extends AppCompatActivity {
                 country = String.valueOf(editTextCountry.getText());
                 postalCode = String.valueOf(editTextPostalCode.getText());
                 phoneNumber = String.valueOf(editTextPhoneNumber.getText());
-                healthcardNumber = String.valueOf(editTextHealthcard.getText());
+                healthNumber = String.valueOf(editTextHealthcard.getText());
                 employeeNumber = String.valueOf(editTextEmployeeNumber.getText());
                 specialties = String.valueOf(editTextSpecialties.getText());
 
@@ -168,7 +166,7 @@ public class InfoForm extends AppCompatActivity {
                         return;
                 }
                 else if (role=="patient") {
-                    if (TextUtils.isEmpty(healthcardNumber)) {
+                    if (TextUtils.isEmpty(healthNumber)) {
                         Toast.makeText(InfoForm.this, "Enter healthcard number.", Toast.LENGTH_SHORT).show();
                         return;
                     }
@@ -183,48 +181,50 @@ public class InfoForm extends AppCompatActivity {
                         return;
                     }
                 }
-                final FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference ref = database.getReference();
-                DatabaseReference usersRef = ref.child("users");
-                HashMap<String, Object> user = new HashMap<>();
-                HashMap<String, Object> addressInfo = new HashMap<>();
-                HashMap<String, Object> specialtiesList = new HashMap<>();
+                Patient p = new Patient(currentUser.getUid(), currentUser.getEmail(), true, firstName, lastName, phoneNumber, street, healthNumber);
+                p.serializeToFirebase();
+//                final FirebaseDatabase database = FirebaseDatabase.getInstance();
+//                DatabaseReference ref = database.getReference();
+//                DatabaseReference usersRef = ref.child("users");
+//                HashMap<String, Object> user = new HashMap<>();
+//                HashMap<String, Object> addressInfo = new HashMap<>();
+//                HashMap<String, Object> specialtiesList = new HashMap<>();
 
-                user.put("Date Form Completed", Util.getDateYYYYMMDD());
-                user.put("First Name", firstName);
-                user.put("Last Name", lastName);
-                user.put("Email", currentUser.getEmail());
-
-                addressInfo.put("Street", street);
-                addressInfo.put("City", city);
-                addressInfo.put("Province", province);
-                addressInfo.put("Country", country);
-                addressInfo.put("Postal Code", postalCode);
-
-                int counter =0;
-                for (String spe : specialties.split(",")){
-                    specialtiesList.put(String.valueOf(counter++), spe.trim());
-                }
-
-                user.put("Address", addressInfo);
-                user.put("Phone Number", phoneNumber);
-                user.put("Role", role);
-                if (role=="patient"){
-                    user.put("Healthcard Number", healthcardNumber);
-                }
-                else if (role=="doctor") {
-                    user.put("Employee Number", employeeNumber);
-                    user.put("Specialties", specialtiesList);
-                }
-                usersRef.child(currentUser.getUid()).setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        Toast.makeText(InfoForm.this, "User info added", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                        startActivity(intent);
-                        finish();
-                    }
-                });
+//                user.put("Date Form Completed", Util.getDateYYYYMMDD());
+//                user.put("First Name", firstName);
+//                user.put("Last Name", lastName);
+//                user.put("Email", currentUser.getEmail());
+//
+//                addressInfo.put("Street", street);
+//                addressInfo.put("City", city);
+//                addressInfo.put("Province", province);
+//                addressInfo.put("Country", country);
+//                addressInfo.put("Postal Code", postalCode);
+//
+//                int counter =0;
+//                for (String spe : specialties.split(",")){
+//                    specialtiesList.put(String.valueOf(counter++), spe.trim());
+//                }
+//
+//                user.put("Address", addressInfo);
+//                user.put("Phone Number", phoneNumber);
+//                user.put("Role", role);
+//                if (role=="patient"){
+//                    user.put("Healthcard Number", healthcardNumber);
+//                }
+//                else if (role=="doctor") {
+//                    user.put("Employee Number", employeeNumber);
+//                    user.put("Specialties", specialtiesList);
+//                }
+//                usersRef.child(currentUser.getUid()).setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+//                    @Override
+//                    public void onSuccess(Void unused) {
+//                        Toast.makeText(InfoForm.this, "User info added", Toast.LENGTH_SHORT).show();
+//                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//                        startActivity(intent);
+//                        finish();
+//                    }
+//                });
             }
         });
     }

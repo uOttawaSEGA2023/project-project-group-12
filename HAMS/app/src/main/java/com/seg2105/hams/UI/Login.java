@@ -1,4 +1,4 @@
-package com.seg2105.hams;
+package com.seg2105.hams.UI;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +17,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.seg2105.hams.R;
 
 public class Login extends AppCompatActivity {
 
