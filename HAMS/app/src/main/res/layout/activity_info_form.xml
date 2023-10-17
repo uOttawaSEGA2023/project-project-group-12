@@ -189,7 +189,7 @@
                     android:id="@+id/specialties"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Specialties" />
+                    android:hint="Specialties (separate by comma)" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
