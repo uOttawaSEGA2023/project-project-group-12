@@ -10,6 +10,11 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         button = findViewById(R.id.btn_logout);
         form_button = findViewById(R.id.form_redirect);
-        textView = findViewById(R.id.emailText);
+        textView = findViewById(R.id.welcomeText);
         user = auth.getCurrentUser();
 
         // If user not signed in, redirect to login page.
@@ -36,7 +41,27 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         } else {
-            textView.setText(user.getEmail());
+            // Get role from database (Temporary, inefficient)
+            DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference().child("users");
+
+            // Query the database to get the role for the specific UID
+            usersRef.child(user.getUid()).child("Role").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    // Handle the data change event
+                    if (dataSnapshot.exists()) {
+                        String role = dataSnapshot.getValue(String.class);
+                        textView.setText("Welcome! You are logged in as a " + role + ".");
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    // Handle errors, if any occurred during the operation
+                }
+            });
+
+
         }
 
         // Handle sign-out and form button.
