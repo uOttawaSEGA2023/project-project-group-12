@@ -24,27 +24,7 @@ public class Patient extends Person implements Serializable {
         this.healthNumber = healthNumber;
     }
 
-    public void serializeToFirebase() {
-        Map<String, Object> userDataMap = new HashMap<>();
-        userDataMap.put("healthNumber", healthNumber);
-        userDataMap.put("address",address);
-        userDataMap.put("firstName", firstName);
-        userDataMap.put("isRegistered", true);
-        userDataMap.put("lastName", lastName);
-        userDataMap.put("phoneNumber", phoneNumber);
-        userDataMap.put("email", email);
 
-        Patient obj = this;
-        Gson gson = new Gson();
-        String json = gson.toJson(obj);
-
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference usersReference = database.getReference("users");
-        DatabaseReference userUUIDReference  = usersReference.child(this.UUID);
-
-        userUUIDReference.setValue(userDataMap);
-
-    }
 
     public void deserializeFromFirebase() {
 

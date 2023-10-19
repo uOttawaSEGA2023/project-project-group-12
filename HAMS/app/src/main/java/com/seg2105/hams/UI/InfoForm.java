@@ -1,5 +1,7 @@
 package com.seg2105.hams.UI;
 
+import static com.seg2105.hams.Users.UserManager.*;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -182,49 +184,7 @@ public class InfoForm extends AppCompatActivity {
                     }
                 }
                 Patient p = new Patient(currentUser.getUid(), currentUser.getEmail(), true, firstName, lastName, phoneNumber, street, healthNumber);
-                p.serializeToFirebase();
-//                final FirebaseDatabase database = FirebaseDatabase.getInstance();
-//                DatabaseReference ref = database.getReference();
-//                DatabaseReference usersRef = ref.child("users");
-//                HashMap<String, Object> user = new HashMap<>();
-//                HashMap<String, Object> addressInfo = new HashMap<>();
-//                HashMap<String, Object> specialtiesList = new HashMap<>();
-
-//                user.put("Date Form Completed", Util.getDateYYYYMMDD());
-//                user.put("First Name", firstName);
-//                user.put("Last Name", lastName);
-//                user.put("Email", currentUser.getEmail());
-//
-//                addressInfo.put("Street", street);
-//                addressInfo.put("City", city);
-//                addressInfo.put("Province", province);
-//                addressInfo.put("Country", country);
-//                addressInfo.put("Postal Code", postalCode);
-//
-//                int counter =0;
-//                for (String spe : specialties.split(",")){
-//                    specialtiesList.put(String.valueOf(counter++), spe.trim());
-//                }
-//
-//                user.put("Address", addressInfo);
-//                user.put("Phone Number", phoneNumber);
-//                user.put("Role", role);
-//                if (role=="patient"){
-//                    user.put("Healthcard Number", healthcardNumber);
-//                }
-//                else if (role=="doctor") {
-//                    user.put("Employee Number", employeeNumber);
-//                    user.put("Specialties", specialtiesList);
-//                }
-//                usersRef.child(currentUser.getUid()).setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-//                    @Override
-//                    public void onSuccess(Void unused) {
-//                        Toast.makeText(InfoForm.this, "User info added", Toast.LENGTH_SHORT).show();
-//                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-//                        startActivity(intent);
-//                        finish();
-//                    }
-//                });
+                putUserInFirebase(p);
             }
         });
     }

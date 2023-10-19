@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -85,6 +86,13 @@ public class Login extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 // Handle succes and failure.
                                 if (task.isSuccessful()) {
+                                    // Store UUID in SharedPreferences
+                                    SharedPreferences preferences = getSharedPreferences("user_info", MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = preferences.edit();
+                                    editor.putString("UUID", mAuth.getUid());
+                                    editor.apply();
+
+
                                     Toast.makeText(getApplicationContext(), "Logged in.",
                                             Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
