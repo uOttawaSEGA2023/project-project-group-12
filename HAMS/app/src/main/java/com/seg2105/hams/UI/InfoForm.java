@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.seg2105.hams.R;
 import com.seg2105.hams.Users.Patient;
+import com.seg2105.hams.Users.User;
 import com.seg2105.hams.Util.Util;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -31,11 +32,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 
 public class InfoForm extends AppCompatActivity {
     TextInputEditText editTextFirstName, editTextLastName, editTextStreet, editTextCity,
-            editTextProvince, editTextCountry, editTextPostalCode, editTextPhoneNumber, editTextHealthcard,
+            editTextProvince, editTextCountry, editTextPostalCode, editTextPhoneNumber, editTextHealthNumber,
             editTextEmployeeNumber, editTextSpecialties;
     Button formComplete, doctor, patient;
     MaterialButton ageSelect;
@@ -65,11 +67,11 @@ public class InfoForm extends AppCompatActivity {
         editTextCountry=findViewById(R.id.country);
         editTextPostalCode=findViewById(R.id.postal_code);
         editTextPhoneNumber=findViewById(R.id.phone_number);
-        editTextHealthcard=findViewById(R.id.healthcard);
+        editTextHealthNumber=findViewById(R.id.healthNumber);
         editTextEmployeeNumber=findViewById(R.id.employeeNumber);
         editTextSpecialties=findViewById(R.id.specialties);
 
-        editTextHealthcard.setVisibility(View.GONE);
+        editTextHealthNumber.setVisibility(View.GONE);
         editTextEmployeeNumber.setVisibility(View.GONE);
         editTextSpecialties.setVisibility(View.GONE);
 
@@ -100,7 +102,7 @@ public class InfoForm extends AppCompatActivity {
             role="doctor";
             editTextEmployeeNumber.setVisibility(View.VISIBLE);
             editTextSpecialties.setVisibility(View.VISIBLE);
-            editTextHealthcard.setVisibility(View.GONE);
+            editTextHealthNumber.setVisibility(View.GONE);
 
             }
         });
@@ -111,80 +113,39 @@ public class InfoForm extends AppCompatActivity {
                 role="patient";
                 editTextEmployeeNumber.setVisibility(View.GONE);
                 editTextSpecialties.setVisibility(View.GONE);
-                editTextHealthcard.setVisibility(View.VISIBLE);
+                editTextHealthNumber.setVisibility(View.VISIBLE);
             }
         });
         formComplete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String firstName, lastName, street, city, province, country ,postalCode, phoneNumber, healthNumber, employeeNumber, specialties;
+                String firstName, lastName, address, phoneNumber, healthNumber, employeeNumber, specialties;
+                Map<String, String> addressValues = new HashMap<>();
+
+                addressValues.put("street", String.valueOf(editTextStreet.getText()));
+                addressValues.put("city", String.valueOf(editTextCity.getText()));
+                addressValues.put("province", String.valueOf(editTextProvince.getText()));
+                addressValues.put("country", String.valueOf(editTextCountry.getText()));
+                addressValues.put("postalCode", String.valueOf(editTextPostalCode.getText()));
+
                 firstName = String.valueOf(editTextFirstName.getText());
                 lastName = String.valueOf(editTextLastName.getText());
-                street = String.valueOf(editTextStreet.getText());
-                city = String.valueOf(editTextCity.getText());
-                province = String.valueOf(editTextProvince.getText());
-                country = String.valueOf(editTextCountry.getText());
-                postalCode = String.valueOf(editTextPostalCode.getText());
                 phoneNumber = String.valueOf(editTextPhoneNumber.getText());
-                healthNumber = String.valueOf(editTextHealthcard.getText());
+                address = Util.fieldsToAddress(addressValues);
+                healthNumber = String.valueOf(editTextHealthNumber.getText());
                 employeeNumber = String.valueOf(editTextEmployeeNumber.getText());
                 specialties = String.valueOf(editTextSpecialties.getText());
 
-                if (TextUtils.isEmpty(firstName)) {
-                    Toast.makeText(InfoForm.this, "Enter first name.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if (TextUtils.isEmpty(lastName)) {
-                    Toast.makeText(InfoForm.this, "Enter last name.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (TextUtils.isEmpty(street)) {
-                    Toast.makeText(InfoForm.this, "Enter Street.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (TextUtils.isEmpty(city)) {
-                    Toast.makeText(InfoForm.this, "Enter city.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (TextUtils.isEmpty(province)) {
-                    Toast.makeText(InfoForm.this, "Enter province.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (TextUtils.isEmpty(country)) {
-                    Toast.makeText(InfoForm.this, "Enter country.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (TextUtils.isEmpty(postalCode)) {
-                    Toast.makeText(InfoForm.this, "Enter Postal Code.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (TextUtils.isEmpty(phoneNumber)) {
-                    Toast.makeText(InfoForm.this, "Enter phone number.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (role==""){
-                        Toast.makeText(InfoForm.this, "Please choose either doctor or patient", Toast.LENGTH_SHORT).show();
-                        return;
-                }
-                else if (role=="patient") {
-                    if (TextUtils.isEmpty(healthNumber)) {
-                        Toast.makeText(InfoForm.this, "Enter healthcard number.", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                }
-                else {
-                    if (TextUtils.isEmpty(employeeNumber)) {
-                        Toast.makeText(InfoForm.this, "Enter employee number.", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    if (TextUtils.isEmpty(specialties)) {
-                        Toast.makeText(InfoForm.this, "Enter specialties.", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                }
-                Patient p = new Patient(currentUser.getUid(), currentUser.getEmail(), true, firstName, lastName, phoneNumber, street, healthNumber);
+                User p = new Patient(currentUser.getUid(), currentUser.getEmail(), true, firstName, lastName, phoneNumber, address, healthNumber);
                 putUserInFirebase(p);
+//                if (putUserInFirebase(p)) {
+//                    Toast.makeText(InfoForm.this, "User info added", Toast.LENGTH_SHORT).show();
+//                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//                    startActivity(intent);
+//                    finish();
+//                } else {
+//                    Toast.makeText(InfoForm.this, "error", Toast.LENGTH_SHORT).show();
+//                }
             }
         });
     }

@@ -16,6 +16,9 @@ import com.google.gson.Gson;
 public class Patient extends Person implements Serializable {
     private String healthNumber;
 
+    public Patient(){
+
+    }
     public Patient(String UUID, String email) {
         super(UUID, email);
     }
@@ -24,34 +27,13 @@ public class Patient extends Person implements Serializable {
         this.healthNumber = healthNumber;
     }
 
+    public String getHealthNumber() {
+        return healthNumber;
+    }
 
 
-    public void deserializeFromFirebase() {
-
-        DatabaseReference userUUIDReference = FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-        userUUIDReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // Get the data as a Map
-                Map<String, Object> userDataMap = (Map<String, Object>) dataSnapshot.getValue();
-
-                if (userDataMap != null) {
-                    healthNumber =  ((String) userDataMap.get("healthNumber"));
-                    address =  ((String) userDataMap.get("address"));
-                    firstName =  ((String) userDataMap.get("firstName"));
-                    isRegistered =  ((boolean) userDataMap.get("isRegistered"));
-                    lastName =  ((String) userDataMap.get("lastName"));
-                    phoneNumber =  ((String) userDataMap.get("phoneNumber"));
-                    email =  ((String) userDataMap.get("email"));
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Handle errors
-            }
-        });
-
-
-        }
-
+    @Override
+    public String toString(){
+        return super.toString() + " healthNumber: " + healthNumber;
+    }
 }

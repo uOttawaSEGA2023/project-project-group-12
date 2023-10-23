@@ -2,6 +2,8 @@ package com.seg2105.hams.Util;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Util {
     /**
@@ -15,5 +17,14 @@ public class Util {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         return currentDate.format(formatter);
+    }
+
+    public static String fieldsToAddress(Map<String, String> addressValues){
+        String street = addressValues.get("street");
+        String city = addressValues.get("city");
+        String province = addressValues.get("province");
+        String country = addressValues.get("country");
+        String postalCode = addressValues.get("postalCode");
+        return street + ", " + city +  ", " + province + ", " + country + ", " + postalCode;
     }
 }

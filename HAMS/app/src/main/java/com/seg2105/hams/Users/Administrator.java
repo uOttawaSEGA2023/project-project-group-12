@@ -4,4 +4,6 @@ public class Administrator extends User{
     public Administrator(String UUID, String email) {
         super(UUID, email);
     }
+
+
 }
