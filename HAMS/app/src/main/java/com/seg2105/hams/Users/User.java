@@ -2,7 +2,7 @@ package com.seg2105.hams.Users;
 
 import java.io.Serializable;
 
-public class User implements Serializable {
+public abstract class User implements Serializable {
     private String UUID;
     private String email;
 
@@ -34,4 +34,7 @@ public class User implements Serializable {
     public void setUUID(String UUID) {
         this.UUID = UUID;
     }
+
+    public abstract String getRole();
+
 }

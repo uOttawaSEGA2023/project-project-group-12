@@ -7,14 +7,14 @@
     android:orientation="vertical"
     android:gravity="center"
     android:paddingHorizontal="25dp"
-    tools:context=".UI.Register">
+    tools:context=".UI.LoginFragment">
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/open_sans_bold"
-        android:text="@string/register"
+        android:text="@string/login"
         android:textSize="48sp"
         android:layout_marginBottom="20dp"
         android:gravity="center"
@@ -47,17 +47,17 @@
 
     <Button
         android:layout_margin="25dp"
-        android:text="@string/register"
-        android:id="@+id/btn_register"
+        android:text="@string/login"
+        android:id="@+id/btn_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <TextView
-        android:id="@+id/gotoLogin"
+        android:id="@+id/gotoRegister"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/open_sans_bold"
         android:gravity="center"
-        android:text="@string/click_to_login"
+        android:text="@string/click_to_register"
         android:textSize="16sp" />
 </LinearLayout>

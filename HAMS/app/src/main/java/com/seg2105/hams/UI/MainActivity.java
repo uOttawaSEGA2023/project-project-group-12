@@ -1,96 +1,39 @@
 package com.seg2105.hams.UI;
 
+import static com.seg2105.hams.Users.UserManager.getCurrentUser;
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.NavigationUI;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.seg2105.hams.R;
-import com.seg2105.hams.Users.User;
 
 public class MainActivity extends AppCompatActivity {
-
-    FirebaseAuth auth;
-    Button button;
-    Button form_button;
-    TextView textView;
-    FirebaseUser user;
-
+    private NavController navController;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        auth = FirebaseAuth.getInstance();
-        button = findViewById(R.id.btn_logout);
-        form_button = findViewById(R.id.form_redirect);
-        textView = findViewById(R.id.welcomeText);
-        user = auth.getCurrentUser();
+        // Find the NavController
+        NavHostFragment navHostFragment =
+                (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+        // Get the NavController from the NavHostFragment and store it
+        navController = navHostFragment.getNavController();
+        // Navigate to homeFragment
 
-        // If user not signed in, redirect to login page.
-        if (user == null){
-            Intent intent = new Intent(getApplicationContext(), Login.class);
-            startActivity(intent);
-            finish();
-        } else {
-            // Get role from database (Temporary, inefficient)
-            DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference().child("users");
-
-            // Query the database to get the role for the specific UID
-            usersRef.child(user.getUid()).child("Role").addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    // Handle the data change event
-                    if (dataSnapshot.exists()) {
-                        String role = dataSnapshot.getValue(String.class);
-                        textView.setText("Welcome! You are logged in as a " + role + ".");
-                    }
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    // Handle errors, if any occurred during the operation
-                }
-            });
-
-
-        }
-
-        // Handle sign-out and form button.
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(getApplicationContext(), Login.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-
-        form_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), InfoForm.class);
-                startActivity(intent);
-                finish();
-            }
-        });
+        navController.navigate(R.id.homeFragment);
     }
 
-    protected void onStart(){
-        super.onStart();
-
-
-    }
 }
+
+

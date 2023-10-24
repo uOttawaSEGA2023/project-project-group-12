@@ -5,11 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center"
     android:paddingHorizontal="25dp"
-    android:showDividers="middle"
-    tools:context=".UI.InfoForm">
-    
+    tools:context=".UI.RegisterFragment">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -18,26 +16,56 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:divider="@drawable/divider"
-            android:showDividers="middle">
+            android:showDividers="middle"
+            android:gravity="center">
 
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_bold"
+                android:text="@string/register"
+                android:textSize="48sp"
+                android:layout_marginBottom="20dp"
+                android:gravity="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/email" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:passwordToggleEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:hint="@string/password" />
+            </com.google.android.material.textfield.TextInputLayout>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="40sp"
+                android:textSize="30sp"
                 android:fontFamily="@font/open_sans_bold"
                 android:gravity="center"
                 android:layout_marginVertical="10dp"
-                android:text="Account Information"
+                android:text="@string/account_information"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
             </TextView>
-
-            <TextView
-                android:text=""
-                android:id="@+id/user_email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -49,7 +77,7 @@
                     android:id="@+id/first_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="First Name" />
+                    android:hint="@string/first_name" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -60,7 +88,7 @@
                     android:id="@+id/last_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Last Name" />
+                    android:hint="@string/last_name" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -70,7 +98,7 @@
                     android:id="@+id/street"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Address (Number and Street)" />
+                    android:hint="@string/address_number_and_street" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -80,7 +108,7 @@
                     android:id="@+id/city"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="City" />
+                    android:hint="@string/city" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -90,7 +118,7 @@
                     android:id="@+id/province"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Province" />
+                    android:hint="@string/province" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -100,7 +128,7 @@
                     android:id="@+id/country"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Country" />
+                    android:hint="@string/country" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -110,7 +138,7 @@
                     android:id="@+id/postal_code"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Postal Code" />
+                    android:hint="@string/postal_code" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -120,7 +148,7 @@
                     android:id="@+id/phone_number"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Phone Number" />
+                    android:hint="@string/phone_number" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
@@ -128,7 +156,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans_bold"
                 android:textSize="25sp"
-                android:text="Select your age"
+                android:text="@string/select_your_age"
                 android:gravity="center">
             </TextView>
 
@@ -138,7 +166,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:calendarViewShown="false"
-                android:text="Select Age">
+                android:text="@string/select_age">
             </com.google.android.material.button.MaterialButton>
 
             <TextView
@@ -146,7 +174,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans_bold"
                 android:textSize="22sp"
-                android:text="Select one to register">
+                android:text="@string/select_one_to_register">
             </TextView>
             <Button
                 android:id="@+id/doctor"
@@ -154,7 +182,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="22sp"
                 android:backgroundTint="@color/cardview_light_background"
-                android:text="Doctor">
+                android:text="@string/doctor">
             </Button>
             <Button
                 android:id="@+id/patient"
@@ -162,7 +190,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="22sp"
                 android:backgroundTint="@color/cardview_light_background"
-                android:text="Patient">
+                android:text="@string/patient">
             </Button>
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -171,7 +199,7 @@
                     android:id="@+id/healthNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Healthcard Number" />
+                    android:hint="@string/healthcard_number" />
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -180,7 +208,7 @@
                     android:id="@+id/employeeNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Employee Number" />
+                    android:hint="@string/employee_number" />
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -189,20 +217,29 @@
                     android:id="@+id/specialties"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Specialties (separate by comma)" />
+                    android:hint="@string/specialties_separate_by_comma" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
-                android:id="@+id/complete_form"
+                android:layout_margin="25dp"
+                android:text="@string/register"
+                android:id="@+id/btn_register"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="25sp"
-                android:layout_gravity="center"
-                android:backgroundTint="@color/cardview_light_background"
-                android:text="Complete Form">
+                android:layout_height="wrap_content" />
 
-            </Button>
+            <TextView
+                android:id="@+id/gotoLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_bold"
+                android:gravity="center"
+                android:text="@string/click_to_login"
+                android:textSize="16sp" />
+
         </LinearLayout>
     </ScrollView>
+
+
+
 
 </LinearLayout>

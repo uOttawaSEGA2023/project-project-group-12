@@ -19,11 +19,8 @@ public class Patient extends Person implements Serializable {
     public Patient(){
 
     }
-    public Patient(String UUID, String email) {
-        super(UUID, email);
-    }
-    public Patient (String UUID, String email, boolean isRegistered, String firstName, String lastName, String phoneNumber, String address,String healthNumber) {
-        super(UUID, email, isRegistered, firstName, lastName, phoneNumber, address);
+    public Patient (String UUID, String email, String firstName, String lastName, String phoneNumber, String address,String healthNumber) {
+        super(UUID, email, firstName, lastName, phoneNumber, address);
         this.healthNumber = healthNumber;
     }
 
@@ -35,5 +32,10 @@ public class Patient extends Person implements Serializable {
     @Override
     public String toString(){
         return super.toString() + " healthNumber: " + healthNumber;
+    }
+
+    @Override
+    public String getRole() {
+        return "Patient";
     }
 }

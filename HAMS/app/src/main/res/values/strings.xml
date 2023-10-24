@@ -50,4 +50,22 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
+    <string name="info_form">Info Form</string>
+    <string name="account_information">Account Information</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="address_number_and_street">Address (Number and Street)</string>
+    <string name="city">City</string>
+    <string name="province">Province</string>
+    <string name="country">Country</string>
+    <string name="postal_code">Postal Code</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="select_your_age">Select your age</string>
+    <string name="select_age">Select Age</string>
+    <string name="select_one_to_register">Select one to register</string>
+    <string name="doctor">Doctor</string>
+    <string name="patient">Patient</string>
+    <string name="healthcard_number">Healthcard Number</string>
+    <string name="employee_number">Employee Number</string>
+    <string name="specialties_separate_by_comma">Specialties (separate by comma)</string>
 </resources>

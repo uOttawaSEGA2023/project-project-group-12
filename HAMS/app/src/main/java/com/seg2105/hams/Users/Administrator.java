@@ -5,5 +5,10 @@ public class Administrator extends User{
         super(UUID, email);
     }
 
+    @Override
+    public String getRole() {
+        return "Admin";
+    }
+
 
 }
