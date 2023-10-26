@@ -13,7 +13,7 @@ public class Doctor extends Person {
     }
     @Override
     public String getRole() {
-        return "Doctor";
+        return "doctor";
     }
 
     public String getEmployeeNumber() {
@@ -31,4 +31,6 @@ public class Doctor extends Person {
     public void setSpecialties(String[] specialties) {
         this.specialties = specialties;
     }
+
+
 }

@@ -1,7 +1,6 @@
 package com.seg2105.hams.UI;
 
-import static com.seg2105.hams.Users.UserManager.getCurrentUser;
-import static com.seg2105.hams.Users.UserManager.putUserInFirebase;
+import static com.seg2105.hams.Users.UserManager.putUserInDatabase;
 
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -173,11 +172,6 @@ public class RegisterFragment extends Fragment {
                     return;
                 }
 
-
-
-
-
-
                 // Create account with Firebase.
                 mAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(requireActivity(), new OnCompleteListener<AuthResult>() {
@@ -190,11 +184,11 @@ public class RegisterFragment extends Fragment {
 
                                     if ("patient".equals(role)) {
                                         User p = new Patient(FirebaseAuth.getInstance().getCurrentUser().getUid(), email, firstName, lastName, phoneNumber, address, healthNumber);
-                                        putUserInFirebase(p);
+                                        putUserInDatabase(p);
                                     }
                                     if ("doctor".equals(role)) {
                                         User d = new Doctor(FirebaseAuth.getInstance().getCurrentUser().getUid(), email, firstName, lastName, phoneNumber, address, employeeNumber, specialties);
-                                        putUserInFirebase(d);
+                                        putUserInDatabase(d);
                                     }
 
                                     // Navigate to the LoginFragment after successful registration

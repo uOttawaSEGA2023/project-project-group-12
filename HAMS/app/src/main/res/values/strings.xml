@@ -68,4 +68,7 @@
     <string name="healthcard_number">Healthcard Number</string>
     <string name="employee_number">Employee Number</string>
     <string name="specialties_separate_by_comma">Specialties (separate by comma)</string>
+    <string name="go_to_admin_inbox">Go to admin inbox</string>
+    <string name="admin_inbox">Admin Inbox</string>
+    <string name="home">Home</string>
 </resources>

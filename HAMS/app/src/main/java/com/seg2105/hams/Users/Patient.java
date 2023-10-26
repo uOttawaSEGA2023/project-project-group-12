@@ -11,7 +11,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.gson.Gson;
 
 public class Patient extends Person implements Serializable {
     private String healthNumber;
@@ -36,6 +35,6 @@ public class Patient extends Person implements Serializable {
 
     @Override
     public String getRole() {
-        return "Patient";
+        return "patient";
     }
 }

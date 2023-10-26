@@ -16,6 +16,12 @@
         android:layout_height="wrap_content" />
 
     <Button
+        android:id="@+id/btn_admin"
+        android:text="@string/go_to_admin_inbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"/>
+    <Button
         android:id="@+id/btn_logout"
         android:text="@string/logout"
         android:layout_width="wrap_content"
