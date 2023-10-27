@@ -16,7 +16,21 @@
         <action
             android:id="@+id/action_home_to_admin"
             app:destination="@id/adminFragment" />
+        <action
+            android:id="@+id/action_home_to_notaccepted"
+            app:destination="@id/notAcceptedFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/notAcceptedFragment"
+        android:name="com.seg2105.hams.UI.NotAcceptedFragment"
+        android:label="Not Accepted"
+        tools:layout="@layout/fragment_notaccepted" >
+        <action
+            android:id="@+id/action_notaccepted_to_login"
+            app:destination="@id/loginFragment" />
+    </fragment>
+
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.seg2105.hams.UI.LoginFragment"
