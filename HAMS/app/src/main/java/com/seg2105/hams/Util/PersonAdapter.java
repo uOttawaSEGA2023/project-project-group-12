@@ -3,6 +3,7 @@ package com.seg2105.hams.Util;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,10 +13,11 @@ import com.seg2105.hams.Users.Person;
 
 import java.util.List;
 
+/*
+    Class used to bridge java of RecyclerView to UI
+ */
 public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonViewHolder> {
-    private List<Person> pendingList;
-    private List<Person> approvedList;
-    private List<Person> rejectedList;
+    private List<Person> list;
     private OnItemClickListener listener;
 
     // Define your custom listener interface here
@@ -24,10 +26,8 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonView
     }
 
     // Constructor to initialize the adapter with data and the custom listener
-    public PersonAdapter(List<Person> pendingList, List<Person> approvedList, List<Person> rejectedList, OnItemClickListener listener) {
-        this.pendingList = pendingList;
-        this.approvedList = approvedList;
-        this.rejectedList = rejectedList;
+    public PersonAdapter(List<Person> list, OnItemClickListener listener) {
+        this.list = list;
         this.listener = listener;
     }
 
@@ -47,32 +47,27 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonView
 
     @Override
     public int getItemCount() {
-        return pendingList.size() + approvedList.size() + rejectedList.size();
+        return list.size();
     }
 
     // Helper method to get the correct person item based on the position
     private Person getItem(int position) {
-        if (position < pendingList.size()) {
-            return pendingList.get(position);
-        } else if (position < pendingList.size() + approvedList.size()) {
-            return approvedList.get(position - pendingList.size());
-        } else {
-            return rejectedList.get(position - pendingList.size() - approvedList.size());
-        }
+        return list.get(position);
     }
 
-    // ViewHolder class
     class PersonViewHolder extends RecyclerView.ViewHolder {
-        // Initialize views here
+        private TextView nameTextView;
+        private TextView emailTextView;
 
         PersonViewHolder(@NonNull View itemView) {
             super(itemView);
-            // Initialize views and set click listener
+            nameTextView = itemView.findViewById(R.id.name);
+            emailTextView = itemView.findViewById(R.id.email);
         }
 
-        // Bind data and set click listener for the item
         void bind(final Person person, final OnItemClickListener listener) {
-            // Bind data to views here
+            nameTextView.setText(person.getFirstName()); // Assuming you have a getName() method in your Person class
+            emailTextView.setText(person.getEmail()); // Assuming you have a getEmail() method in your Person class
 
             // Set click listener
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -85,4 +80,5 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonView
             });
         }
     }
+
 }

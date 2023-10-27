@@ -1,12 +1,10 @@
 package com.seg2105.hams.UI;
 
 import static androidx.navigation.Navigation.findNavController;
-import static com.seg2105.hams.Users.UserManager.getCurrentUser;
 import static com.seg2105.hams.Users.UserManager.getUserFromDatabase;
 
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +14,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -25,7 +21,10 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.seg2105.hams.R;
-import com.seg2105.hams.Users.User;
+import com.seg2105.hams.Users.Person;
+import com.seg2105.hams.Util.UserCallback;
+
+import java.util.List;
 
 public class LoginFragment extends Fragment {
 
@@ -88,11 +87,14 @@ public class LoginFragment extends Fragment {
                                     // If successfully authenticated, call getUserFromDatabase with callback, which waits for success or failure
                                     getUserFromDatabase(mAuth.getCurrentUser().getUid(), new UserCallback() {
                                         @Override
-                                        public void onUserLoaded() {
+                                        public void onSuccess() {
                                             // User loaded successfully, navigate to home fragment
                                             findNavController(view).navigate(R.id.action_login_to_home);
                                             Toast.makeText(requireContext(), "Logged in.", Toast.LENGTH_SHORT).show();
                                         }
+
+                                        @Override
+                                        public void onPersonsLoaded(List<Person> persons) {};
 
                                         @Override
                                         public void onFailure(String error) {

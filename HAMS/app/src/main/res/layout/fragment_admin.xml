@@ -27,23 +27,57 @@
             android:divider="@drawable/divider"
             android:showDividers="middle"
             android:gravity="center">
+            <TextView
+                android:text="@string/pending"
+                android:textSize="20sp"
+                android:id="@+id/pendingTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="20sp"/>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewPending"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/approvedList"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rejectedList"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-            <Button
-                android:id="@+id/btn_home"
+            <TextView
+                android:text="@string/rejected"
+                android:textSize="20sp"
+                android:id="@+id/rejectedTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/home" />
+                android:layout_marginVertical="20sp"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewRejected"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+            <TextView
+                android:text="@string/accepted"
+                android:textSize="20sp"
+                android:id="@+id/acceptedTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="20sp"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewAccepted"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <Button
+                    android:id="@+id/btn_acceptAll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/accept_all"
+                    android:layout_margin="10sp"/>
+                <Button
+                    android:id="@+id/btn_home"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/home"
+                    android:layout_margin="10sp"/>
+            </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 

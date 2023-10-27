@@ -1,17 +1,23 @@
 package com.seg2105.hams.Users;
 
+import static androidx.navigation.Navigation.findNavController;
+
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
-import com.seg2105.hams.UI.UserCallback;
+import com.seg2105.hams.Util.UserCallback;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -49,13 +55,13 @@ public class UserManager {
                     // Depending on userType, deserialize into corresponding instance
                     if ("admin".equals(userType)) {
                         currentUser = userDataSnapshot.getValue(Administrator.class);
-                        callback.onUserLoaded();
+                        callback.onSuccess();
                     } else if ("patient".equals(userType)) {
                         currentUser = userDataSnapshot.getValue(Patient.class);
-                        callback.onUserLoaded();
+                        callback.onSuccess();
                     } else if ("doctor".equals(userType)) {
                         currentUser = userDataSnapshot.getValue(Doctor.class);
-                        callback.onUserLoaded();
+                        callback.onSuccess();
                     }
                     Log.d("currentUser", currentUser.toString());
                 } else {
@@ -67,6 +73,94 @@ public class UserManager {
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 callback.onFailure(databaseError.getMessage());
             }
+        });
+    }
+
+    // Used to get a all person from database
+    public static void getPersonsFromDatabase(UserCallback callback) {
+        List<Person> persons = new ArrayList<>();
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users");
+
+        databaseReference.orderByChild("userType").startAt("doctor").endAt("patient").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // If datareference is found
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        String userType = snapshot.child("userType").getValue(String.class);
+                        // Get the userData as a DataSnapshot
+                        DataSnapshot userDataSnapshot = snapshot.child("userData");
+
+                        // add person to persons list that will eventually be returned with callback method onPersonsLoaded
+                        if ("doctor".equals(userType)) {
+                            persons.add(userDataSnapshot.getValue(Doctor.class));
+                        } else if ("patient".equals(userType)) {
+                            persons.add(userDataSnapshot.getValue(Patient.class));
+                        }
+                    }
+                    callback.onPersonsLoaded(persons);
+                } else {
+                    callback.onFailure("No-one found.");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                callback.onFailure(databaseError.getMessage());
+            }
+        });
+    }
+
+    // update status of Person in database
+    public static void updateStatus(String UUID, String newStatus, UserCallback callback) {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users").child(UUID).child("userData").child("status");
+
+        // Update the status field with the new value
+        databaseReference.setValue(newStatus)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        // Status updated successfully
+                        Log.d("TAG", "Status updated successfully");
+                        callback.onSuccess();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Handle the error
+                        Log.e("TAG", "Error updating status: " + e.getMessage());
+                        callback.onFailure(e.getMessage());
+                    }
+                });
+
+    }
+
+    // Get all persons from database, then update each status from pending to accepted
+    public static void acceptAllPending(UserCallback callback) {
+        getPersonsFromDatabase(new UserCallback() {
+            @Override
+            public void onSuccess() {}
+
+            @Override
+            public void onPersonsLoaded(List<Person> persons) {
+                for (Person p : persons) {
+                    if ("pending".equals(p.getStatus())){
+                        updateStatus(p.getUUID(), "accepted", new UserCallback() {
+                            @Override
+                            public void onPersonsLoaded(List<Person> persons) {}
+                            @Override
+                            public void onFailure(String error) {callback.onFailure(error);}
+                            @Override
+                            public void onSuccess() {}
+                        });
+                    }
+                } callback.onSuccess();
+            }
+
+            @Override
+            public void onFailure(String error) {callback.onFailure(error);}
+
         });
     }
 
