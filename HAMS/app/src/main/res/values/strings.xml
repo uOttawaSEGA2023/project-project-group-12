@@ -71,4 +71,6 @@
     <string name="go_to_admin_inbox">Go to admin inbox</string>
     <string name="admin_inbox">Admin Inbox</string>
     <string name="home">Home</string>
+    <string name="name">name</string>
+    <string name="back">Back</string>
 </resources>

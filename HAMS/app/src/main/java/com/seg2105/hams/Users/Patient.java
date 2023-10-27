@@ -18,8 +18,8 @@ public class Patient extends Person implements Serializable {
     public Patient(){
 
     }
-    public Patient (String UUID, String email, String firstName, String lastName, String phoneNumber, String address,String healthNumber) {
-        super(UUID, email, firstName, lastName, phoneNumber, address);
+    public Patient (String UUID, String email, String firstName, String lastName, String phoneNumber, String address,String healthNumber, String status) {
+        super(UUID, email, firstName, lastName, phoneNumber, address, status);
         this.healthNumber = healthNumber;
     }
 

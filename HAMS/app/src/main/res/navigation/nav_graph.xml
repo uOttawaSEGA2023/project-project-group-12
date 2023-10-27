@@ -48,5 +48,18 @@
         <action
             android:id="@+id/action_admin_to_home"
             app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_admin_to_person"
+            app:destination="@id/personFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/personFragment"
+        android:name="com.seg2105.hams.UI.PersonFragment"
+        android:label="Person"
+        tools:layout="@layout/fragment_person">
+        <action
+            android:id="@+id/action_person_to_admin"
+            app:destination="@id/adminFragment" />
     </fragment>
 </navigation>

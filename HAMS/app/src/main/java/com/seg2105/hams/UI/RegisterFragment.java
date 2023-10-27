@@ -183,11 +183,11 @@ public class RegisterFragment extends Fragment {
                                             Toast.LENGTH_SHORT).show();
 
                                     if ("patient".equals(role)) {
-                                        User p = new Patient(FirebaseAuth.getInstance().getCurrentUser().getUid(), email, firstName, lastName, phoneNumber, address, healthNumber);
+                                        User p = new Patient(FirebaseAuth.getInstance().getCurrentUser().getUid(), email, firstName, lastName, phoneNumber, address, healthNumber, "pending");
                                         putUserInDatabase(p);
                                     }
                                     if ("doctor".equals(role)) {
-                                        User d = new Doctor(FirebaseAuth.getInstance().getCurrentUser().getUid(), email, firstName, lastName, phoneNumber, address, employeeNumber, specialties);
+                                        User d = new Doctor(FirebaseAuth.getInstance().getCurrentUser().getUid(), email, firstName, lastName, phoneNumber, address, employeeNumber, specialties, "pending");
                                         putUserInDatabase(d);
                                     }
 
