@@ -18,6 +18,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.seg2105.hams.R;
+import com.seg2105.hams.Users.Doctor;
+import com.seg2105.hams.Users.Patient;
 import com.seg2105.hams.Users.Person;
 import com.seg2105.hams.Util.UserCallback;
 
@@ -33,6 +35,11 @@ public class PersonFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_person, container, false);
         TextView name = view.findViewById(R.id.name);
         TextView address = view.findViewById(R.id.address);
+        TextView phoneNumber = view.findViewById(R.id.phone_number);
+        TextView healthNumber = view.findViewById(R.id.health_number);
+        TextView employeeNumber = view.findViewById(R.id.employee_number);
+        TextView specialties = view.findViewById(R.id.specialties);
+
 
         // Prevents NullPointerException
         if (getArguments() != null) {
@@ -40,8 +47,19 @@ public class PersonFragment extends Fragment {
         }
 
         // Set info in person fragment
-        name.setText(person.getFirstName()+" "+ person.getLastName());
-        address.setText(person.getAddress());
+        name.setText("Name: " + person.getFirstName()+" "+ person.getLastName());
+        address.setText("Address: " + person.getAddress());
+        phoneNumber.setText("Phone Number: " + person.getPhoneNumber());
+        if (person instanceof Patient) {
+            healthNumber.setText("Health Number: " + ((Patient) person).getHealthNumber());
+            employeeNumber.setVisibility(View.GONE);
+            specialties.setVisibility(View.GONE);
+        }
+        else if (person instanceof Doctor) {
+            employeeNumber.setText("Employee Number: " + ((Doctor) person).getEmployeeNumber());
+            specialties.setText("Specialties Number: " + ((Doctor) person).getSpecialties());
+            healthNumber.setVisibility(View.GONE);
+        }
         return view;
     }
 
