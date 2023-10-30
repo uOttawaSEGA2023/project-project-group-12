@@ -1,12 +1,15 @@
 package com.seg2105.hams.Users;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Doctor extends Person {
     private String employeeNumber;
-    private String[] specialties;
+    private List<String> specialties;
 
     public Doctor() {};
 
-    public Doctor (String UUID, String email, String firstName, String lastName, String phoneNumber, String address,String employeeNumber, String[] specialties, String status) {
+    public Doctor (String UUID, String email, String firstName, String lastName, String phoneNumber, String address,String employeeNumber, List<String> specialties, String status) {
         super(UUID, email, firstName, lastName, phoneNumber, address, status);
         this.employeeNumber = employeeNumber;
         this.specialties = specialties;
@@ -24,11 +27,11 @@ public class Doctor extends Person {
         this.employeeNumber = employeeNumber;
     }
 
-    public String[] getSpecialties() {
+    public List<String> getSpecialties() {
         return specialties;
     }
 
-    public void setSpecialties(String[] specialties) {
+    public void setSpecialties(List<String> specialties) {
         this.specialties = specialties;
     }
 

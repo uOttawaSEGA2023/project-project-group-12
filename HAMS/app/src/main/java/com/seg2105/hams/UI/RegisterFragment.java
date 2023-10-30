@@ -30,8 +30,10 @@ import com.seg2105.hams.Util.Util;
 
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -139,7 +141,7 @@ public class RegisterFragment extends Fragment {
             public void onClick(View view) {
                 // Get values inputted.
                 String email, password, firstName, lastName, address, phoneNumber, healthNumber, employeeNumber;
-                String[] specialties;
+                List<String> specialties = new ArrayList<>();
                 Map<String, String> addressValues = new HashMap<>();
 
                 addressValues.put("street", String.valueOf(editTextStreet.getText()));
@@ -156,11 +158,9 @@ public class RegisterFragment extends Fragment {
                 address = Util.fieldsToAddress(addressValues);
                 healthNumber = String.valueOf(editTextHealthNumber.getText());
                 employeeNumber = String.valueOf(editTextEmployeeNumber.getText());
-                specialties = String.valueOf(editTextSpecialties.getText()).split(",");
-                for (int i =0; i<specialties.length; i++) {
-                    specialties[i] = specialties[i].trim();
+                for (String s : String.valueOf(editTextSpecialties.getText()).split(",")) {
+                    specialties.add(s.trim());
                 }
-
 
                 // Validation logic.
                 if (TextUtils.isEmpty(email)) {

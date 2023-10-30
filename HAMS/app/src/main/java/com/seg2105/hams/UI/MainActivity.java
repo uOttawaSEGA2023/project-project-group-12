@@ -18,11 +18,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.seg2105.hams.R;
 
 public class MainActivity extends AppCompatActivity {
-    private NavController navController;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        NavController navController;
 
         // Find the NavController
         NavHostFragment navHostFragment =
