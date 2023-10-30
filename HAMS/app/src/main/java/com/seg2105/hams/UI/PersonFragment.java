@@ -57,7 +57,7 @@ public class PersonFragment extends Fragment {
         }
         else if (person instanceof Doctor) {
             employeeNumber.setText("Employee Number: " + ((Doctor) person).getEmployeeNumber());
-            specialties.setText("Specialties Number: " + ((Doctor) person).getSpecialties());
+            specialties.setText("Specialties: " + ((Doctor) person).getSpecialties().toString().replace("[", "").replace("]", ""));
             healthNumber.setVisibility(View.GONE);
         }
         return view;
