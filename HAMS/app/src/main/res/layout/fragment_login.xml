@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:gravity="center"
     android:paddingHorizontal="25dp"
-    tools:context=".Login">
+    tools:context=".UI.LoginFragment">
 
     <TextView
         android:id="@+id/textView"
