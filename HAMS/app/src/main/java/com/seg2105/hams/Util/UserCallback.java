@@ -11,6 +11,6 @@ import java.util.List;
 
 public interface UserCallback {
     void onSuccess();
-    void onPersonsLoaded(List<Person> persons);
+    void onListLoaded(List list);
     void onFailure(String error);
 }

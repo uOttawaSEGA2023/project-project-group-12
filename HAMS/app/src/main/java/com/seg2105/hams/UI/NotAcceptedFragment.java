@@ -1,9 +1,9 @@
 package com.seg2105.hams.UI;
 
 import static androidx.navigation.Navigation.findNavController;
-import static com.seg2105.hams.Users.UserManager.getCurrentUser;
-import static com.seg2105.hams.Users.UserManager.isLoggedIn;
-import static com.seg2105.hams.Users.UserManager.setCurrentUser;
+import static com.seg2105.hams.Managers.UserManager.getCurrentUser;
+import static com.seg2105.hams.Managers.UserManager.isLoggedIn;
+import static com.seg2105.hams.Managers.UserManager.setCurrentUser;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

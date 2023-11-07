@@ -79,4 +79,13 @@
     <string name="accept">Accept</string>
     <string name="reject">Reject</string>
     <string name="accept_all">Accept All</string>
+    <string name="doctor_inbox">Doctor Inbox</string>
+    <string name="appointments">Appointments</string>
+    <string name="shifts">Shifts</string>
+    <string name="go_to_doctor_inbox">Go to doctor inbox</string>
+    <string name="select_the_date">Select the date</string>
+    <string name="date">Date</string>
+    <string name="submit_shift">Submit Shift</string>
+    <string name="pick_start_time">Pick Start Time</string>
+    <string name="pick_end_time">Pick End Time</string>
 </resources>

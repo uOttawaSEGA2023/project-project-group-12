@@ -12,6 +12,11 @@ public class Administrator extends User{
     }
 
     @Override
+    public void setRole() {
+
+    }
+
+    @Override
     public void setEmail(String email) {
         super.setEmail(email);
     }

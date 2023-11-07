@@ -1,8 +1,11 @@
-package com.seg2105.hams.Users;
+package com.seg2105.hams.Managers;
 
+import static androidx.core.content.ContentProviderCompat.requireContext;
 import static androidx.navigation.Navigation.findNavController;
 
 import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -13,6 +16,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.seg2105.hams.R;
+import com.seg2105.hams.Users.Administrator;
+import com.seg2105.hams.Users.Doctor;
+import com.seg2105.hams.Users.Patient;
+import com.seg2105.hams.Users.Person;
+import com.seg2105.hams.Users.User;
 import com.seg2105.hams.Util.UserCallback;
 
 import java.util.ArrayList;
@@ -98,7 +107,7 @@ public class UserManager {
                             persons.add(userDataSnapshot.getValue(Patient.class));
                         }
                     }
-                    callback.onPersonsLoaded(persons);
+                    callback.onListLoaded(persons);
                 } else {
                     callback.onFailure("No-one found.");
                 }
@@ -143,16 +152,20 @@ public class UserManager {
             public void onSuccess() {}
 
             @Override
-            public void onPersonsLoaded(List<Person> persons) {
-                for (Person p : persons) {
-                    if ("pending".equals(p.getStatus())){
-                        updateStatus(p.getUUID(), "accepted", new UserCallback() {
-                            @Override
-                            public void onPersonsLoaded(List<Person> persons) {}
+            public void onListLoaded(List persons) {
+                for (Object p : persons) {
+                    Person person = (Person)p;
+                    if ("pending".equals(person.getStatus())){
+                        updateStatus(person.getUUID(), "accepted", new UserCallback() {
                             @Override
                             public void onFailure(String error) {callback.onFailure(error);}
                             @Override
                             public void onSuccess() {}
+
+                            @Override
+                            public void onListLoaded(List persons) {
+
+                            }
                         });
                     }
                 } callback.onSuccess();
@@ -174,5 +187,24 @@ public class UserManager {
 
     public static User getCurrentUser() {
         return currentUser;
+    }
+
+    public static void reloadUser(UserCallback callback) {
+        String UUID = getCurrentUser().getUUID();
+        getUserFromDatabase(UUID, new UserCallback() {
+            @Override
+            public void onSuccess() {
+            }
+
+            @Override
+            public void onListLoaded(List persons) {
+            }
+
+
+            @Override
+            public void onFailure(String error) {
+                callback.onFailure(error);
+            }
+        });
     }
 }

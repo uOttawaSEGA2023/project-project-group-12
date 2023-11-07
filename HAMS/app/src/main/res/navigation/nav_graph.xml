@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_home_to_notaccepted"
             app:destination="@id/notAcceptedFragment" />
+        <action
+            android:id="@+id/action_home_to_doctor"
+            app:destination="@id/doctorFragment" />
     </fragment>
 
     <fragment
@@ -64,6 +67,18 @@
             app:destination="@id/homeFragment" />
         <action
             android:id="@+id/action_admin_to_person"
+            app:destination="@id/personFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/doctorFragment"
+        android:name="com.seg2105.hams.UI.DoctorFragment"
+        android:label="Doctor"
+        tools:layout="@layout/fragment_doctor">
+        <action
+            android:id="@+id/action_doctor_to_home"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_doctor_to_person"
             app:destination="@id/personFragment" />
     </fragment>
 

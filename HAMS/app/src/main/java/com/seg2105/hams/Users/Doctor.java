@@ -1,11 +1,15 @@
 package com.seg2105.hams.Users;
 
+import com.seg2105.hams.Managers.Shift;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Doctor extends Person {
     private String employeeNumber;
     private List<String> specialties;
+    private HashMap<String, Shift> shifts;
 
     public Doctor() {};
 
@@ -18,6 +22,10 @@ public class Doctor extends Person {
     public String getRole() {
         return "doctor";
     }
+
+    @Override
+    public void setRole() {}
+
 
     public String getEmployeeNumber() {
         return employeeNumber;
@@ -35,5 +43,11 @@ public class Doctor extends Person {
         this.specialties = specialties;
     }
 
+    public HashMap<String, Shift> getShifts() {
+        return shifts;
+    }
 
+    public void setShifts(HashMap<String, Shift> shifts) {
+        this.shifts = shifts;
+    }
 }

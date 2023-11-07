@@ -2,8 +2,8 @@ package com.seg2105.hams.UI;
 
 import static androidx.navigation.Navigation.findNavController;
 
-import static com.seg2105.hams.Users.UserManager.acceptAllPending;
-import static com.seg2105.hams.Users.UserManager.getPersonsFromDatabase;
+import static com.seg2105.hams.Managers.UserManager.acceptAllPending;
+import static com.seg2105.hams.Managers.UserManager.getPersonsFromDatabase;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -49,11 +49,12 @@ public class AdminFragment extends Fragment implements PersonAdapter.OnItemClick
             public void onSuccess() {}
 
             @Override
-            public void onPersonsLoaded(List<Person> persons) {
-                for (Person p : persons) {
-                    if ("pending".equals(p.getStatus())) {pendingList.add(p);}
-                    if ("accepted".equals(p.getStatus())) {acceptedList.add(p);}
-                    if ("rejected".equals(p.getStatus())) {rejectedList.add(p);}
+            public void onListLoaded(List persons) {
+                for (Object p : persons) {
+                    Person person = (Person)p;
+                    if ("pending".equals(person.getStatus())) {pendingList.add(person);}
+                    if ("accepted".equals(person.getStatus())) {acceptedList.add(person);}
+                    if ("rejected".equals(person.getStatus())) {rejectedList.add(person);}
                 }
 
                 PersonAdapter pendingAdapter = new PersonAdapter(pendingList, AdminFragment.this);
@@ -91,14 +92,16 @@ public class AdminFragment extends Fragment implements PersonAdapter.OnItemClick
                 acceptAllPending(new UserCallback() {
 
                     @Override
-                    public void onPersonsLoaded(List<Person> persons) {}
-
-                    @Override
                     public void onFailure(String error) {}
 
                     @Override
                     public void onSuccess() {
                         findNavController(view).navigate(R.id.adminFragment);
+                    }
+
+                    @Override
+                    public void onListLoaded(List persons) {
+
                     }
                 });
             }

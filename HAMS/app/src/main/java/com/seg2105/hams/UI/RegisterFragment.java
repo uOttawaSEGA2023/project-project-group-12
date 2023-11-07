@@ -1,6 +1,6 @@
 package com.seg2105.hams.UI;
 
-import static com.seg2105.hams.Users.UserManager.putUserInDatabase;
+import static com.seg2105.hams.Managers.UserManager.putUserInDatabase;
 
 import android.os.Bundle;
 import android.text.TextUtils;

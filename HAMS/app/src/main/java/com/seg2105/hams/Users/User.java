@@ -36,5 +36,6 @@ public abstract class User implements Serializable {
     }
 
     public abstract String getRole();
+    public abstract void setRole();
 
 }

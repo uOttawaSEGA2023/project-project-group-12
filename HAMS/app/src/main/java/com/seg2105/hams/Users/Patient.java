@@ -37,4 +37,9 @@ public class Patient extends Person implements Serializable {
     public String getRole() {
         return "patient";
     }
+
+    @Override
+    public void setRole() {
+
+    }
 }

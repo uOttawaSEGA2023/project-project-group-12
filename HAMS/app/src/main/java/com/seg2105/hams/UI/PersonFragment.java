@@ -2,10 +2,9 @@ package com.seg2105.hams.UI;
 
 import static androidx.navigation.Navigation.findNavController;
 
-import static com.seg2105.hams.Users.UserManager.updateStatus;
+import static com.seg2105.hams.Managers.UserManager.updateStatus;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,12 +82,15 @@ public class PersonFragment extends Fragment {
             public void onClick(View view) {
                 updateStatus(person.getUUID(), "accepted", new UserCallback() {
                     @Override
-                    public void onPersonsLoaded(List<Person> persons) {}
-                    @Override
                     public void onFailure(String error) {Toast.makeText(requireContext(), "Error: " + error, Toast.LENGTH_SHORT).show();}
                     @Override
                     public void onSuccess() {
                         findNavController(view).navigate(R.id.action_person_to_admin);
+                    }
+
+                    @Override
+                    public void onListLoaded(List persons) {
+
                     }
                 });
             }
@@ -98,12 +100,15 @@ public class PersonFragment extends Fragment {
             public void onClick(View view) {
                 updateStatus(person.getUUID(), "rejected", new UserCallback() {
                     @Override
-                    public void onPersonsLoaded(List<Person> persons) {}
-                    @Override
                     public void onFailure(String error) {Toast.makeText(requireContext(), "Error: " + error, Toast.LENGTH_SHORT).show();}
                     @Override
                     public void onSuccess() {
                         findNavController(view).navigate(R.id.action_person_to_admin);
+                    }
+
+                    @Override
+                    public void onListLoaded(List persons) {
+
                     }
                 });
             }

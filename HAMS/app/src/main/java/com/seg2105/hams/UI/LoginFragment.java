@@ -1,7 +1,7 @@
 package com.seg2105.hams.UI;
 
 import static androidx.navigation.Navigation.findNavController;
-import static com.seg2105.hams.Users.UserManager.getUserFromDatabase;
+import static com.seg2105.hams.Managers.UserManager.getUserFromDatabase;
 
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -94,7 +94,9 @@ public class LoginFragment extends Fragment {
                                         }
 
                                         @Override
-                                        public void onPersonsLoaded(List<Person> persons) {};
+                                        public void onListLoaded(List persons) {
+                                        }
+
 
                                         @Override
                                         public void onFailure(String error) {
