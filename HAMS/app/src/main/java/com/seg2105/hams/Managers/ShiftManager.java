@@ -78,13 +78,24 @@ public class ShiftManager {
         });
     }
     public static void removeShiftFromDataBase(Shift shift, UserCallback callback) {
-        DatabaseReference shiftReference = FirebaseDatabase.getInstance().getReference("users").child(getCurrentUser().getUUID()).child("shifts").child(shift.getShiftID());
+        DatabaseReference shiftReference = FirebaseDatabase.getInstance().getReference("users").child(getCurrentUser().getUUID()).child("userData").child("shifts").child(shift.getShiftID());
 
         shiftReference.removeValue()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
+                        UserManager.reloadUser(new UserCallback() {
+                            @Override
+                            public void onSuccess() {callback.onSuccess();}
 
+                            @Override
+                            public void onListLoaded(List persons) {}
+
+                            @Override
+                            public void onFailure(String error) {
+                                callback.onFailure(error);
+                            }
+                        });
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -94,17 +105,6 @@ public class ShiftManager {
                     }
                 });
 
-        UserManager.reloadUser(new UserCallback() {
-            @Override
-            public void onSuccess() {callback.onSuccess();}
 
-            @Override
-            public void onListLoaded(List persons) {}
-
-            @Override
-            public void onFailure(String error) {
-                callback.onFailure(error);
-            }
-        });
     }
 }

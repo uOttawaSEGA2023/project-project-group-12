@@ -193,8 +193,7 @@ public class UserManager {
         String UUID = getCurrentUser().getUUID();
         getUserFromDatabase(UUID, new UserCallback() {
             @Override
-            public void onSuccess() {
-            }
+            public void onSuccess() { callback.onSuccess();}
 
             @Override
             public void onListLoaded(List persons) {

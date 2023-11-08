@@ -7,8 +7,8 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import com.seg2105.hams.UI.DoctorFragment;
 import com.seg2105.hams.UI.doctorFragments.*;
 
-public class MyViewPagerAdapter extends FragmentStateAdapter {
-    public MyViewPagerAdapter(@NonNull DoctorFragment fragmentActivity) {
+public class DoctorViewPagerAdapter extends FragmentStateAdapter {
+    public DoctorViewPagerAdapter(@NonNull DoctorFragment fragmentActivity) {
         super(fragmentActivity);
     }
 

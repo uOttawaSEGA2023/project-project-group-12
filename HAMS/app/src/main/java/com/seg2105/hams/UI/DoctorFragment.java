@@ -12,13 +12,13 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
 import com.seg2105.hams.R;
-import com.seg2105.hams.Util.MyViewPagerAdapter;
+import com.seg2105.hams.Util.DoctorViewPagerAdapter;
 
 public class DoctorFragment extends Fragment {
 
     TabLayout tabLayout;
     ViewPager2 viewPager2;
-    MyViewPagerAdapter myViewPagerAdapter;
+    DoctorViewPagerAdapter doctorViewPagerAdapter;
     public DoctorFragment() {};
 
     @Override
@@ -26,8 +26,8 @@ public class DoctorFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_doctor, container, false);
         tabLayout = view.findViewById(R.id.tab_layout);
         viewPager2 = view.findViewById(R.id.view_pager);
-        myViewPagerAdapter = new MyViewPagerAdapter(this);
-        viewPager2.setAdapter(myViewPagerAdapter);
+        doctorViewPagerAdapter = new DoctorViewPagerAdapter(this);
+        viewPager2.setAdapter(doctorViewPagerAdapter);
         return view;
     }
 

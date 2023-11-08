@@ -51,7 +51,6 @@ public class ShiftFragment extends Fragment implements ShiftAdapter.OnItemClickL
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        List<Shift> upcomingShifts = new ArrayList<>();
         View view = inflater.inflate(R.layout.fragment_shift, container, false);
 
         startTimeEditText = view.findViewById(R.id.startTime);
@@ -66,8 +65,8 @@ public class ShiftFragment extends Fragment implements ShiftAdapter.OnItemClickL
 
             @Override
             public void onListLoaded(List shifts) {
-                ShiftAdapter pendingAdapter = new ShiftAdapter(upcomingShifts, ShiftFragment.this);
-                recyclerViewUpcoming.setAdapter(pendingAdapter);
+                ShiftAdapter upcomingAdapter = new ShiftAdapter(shifts, ShiftFragment.this);
+                recyclerViewUpcoming.setAdapter(upcomingAdapter);
                 recyclerViewUpcoming.setLayoutManager(new LinearLayoutManager(getActivity()));
             }
 
@@ -124,12 +123,19 @@ public class ShiftFragment extends Fragment implements ShiftAdapter.OnItemClickL
                     switch (checkShiftRequirements(view, date, sTime, eTime)){
                         case 1:
                             Toast.makeText(requireContext(), "Please fill out all fields.", Toast.LENGTH_SHORT).show();
+                            break;
                         case 2:
                             Toast.makeText(requireContext(), "Please choose 30 minute intervals.", Toast.LENGTH_SHORT).show();
+                            break;
+
                         case 3:
                             Toast.makeText(requireContext(), "Please a shift in the future.", Toast.LENGTH_SHORT).show();
+                            break;
+
                         case 4:
                             Toast.makeText(requireContext(), "Your shift must end after it starts.", Toast.LENGTH_SHORT).show();
+                            break;
+
                         case 0:
                             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
 
@@ -142,8 +148,8 @@ public class ShiftFragment extends Fragment implements ShiftAdapter.OnItemClickL
                             Shift s = new Shift(startTimeString, endTimeString);
                             ShiftManager.putShiftInDatabase(s, new UserCallback(){
                                 public void onSuccess() {
-                                    FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
-                                    fragmentTransaction.detach(ShiftFragment.this).attach(ShiftFragment.this).commit();
+                                    findNavController(requireView()).navigate(R.id.action_doctor_to_home);
+                                    findNavController(requireView()).navigate(R.id.action_home_to_doctor);
                                     Toast.makeText(requireContext(), "Shift added successfully", Toast.LENGTH_SHORT).show();
                                 }
                                 public void onListLoaded(List shift) {}
@@ -153,6 +159,8 @@ public class ShiftFragment extends Fragment implements ShiftAdapter.OnItemClickL
                                     Toast.makeText(requireContext(), "Error putting shift in database", Toast.LENGTH_SHORT).show();
                                 }
                             });
+                            break;
+
                     }
 
                 } catch (Exception e) {
@@ -194,8 +202,8 @@ public class ShiftFragment extends Fragment implements ShiftAdapter.OnItemClickL
         removeShiftFromDataBase(shift, new UserCallback() {
             @Override
             public void onSuccess() {
-                FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
-                fragmentTransaction.detach(ShiftFragment.this).attach(ShiftFragment.this).commit();
+                findNavController(requireView()).navigate(R.id.action_doctor_to_home);
+                findNavController(requireView()).navigate(R.id.action_home_to_doctor);
                 Toast.makeText(requireContext(), "Shift deleted successfully", Toast.LENGTH_SHORT).show();
             }
 

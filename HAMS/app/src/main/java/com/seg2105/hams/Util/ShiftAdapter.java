@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.seg2105.hams.Managers.Shift;
 import com.seg2105.hams.R;
 
+import java.text.MessageFormat;
 import java.util.List;
 
 /*
@@ -71,9 +72,9 @@ public class ShiftAdapter extends RecyclerView.Adapter<ShiftAdapter.ShiftViewHol
         }
 
         void bind(final Shift shift, final OnItemClickListener listener) {
-            startTimeTextView.setText(shift.getStart().toString());
-            endTimeTextView.setText(shift.getEnd().toString());
-            shiftIDTextView.setText(shift.getEnd().toString());
+            startTimeTextView.setText(MessageFormat.format("Start: {0}", shift.getStart()));
+            endTimeTextView.setText(MessageFormat.format("End: {0}",shift.getEnd()));
+            shiftIDTextView.setText(shift.getShiftID());
 
             // Set click listener
             cancelBtn.setOnClickListener(new View.OnClickListener() {
