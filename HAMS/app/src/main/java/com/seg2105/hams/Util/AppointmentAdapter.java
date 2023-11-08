@@ -1,5 +1,7 @@
 package com.seg2105.hams.Util;
 
+import static com.seg2105.hams.Managers.UserManager.getUserFromDatabase;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,8 +11,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.seg2105.hams.Managers.Appointment;
+import com.seg2105.hams.Managers.UserManager;
 import com.seg2105.hams.R;
+import com.seg2105.hams.Users.Patient;
 import com.seg2105.hams.Users.Person;
+import com.seg2105.hams.Users.User;
 
 import java.util.List;
 
@@ -23,7 +28,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
 
     // Define your custom listener interface here
     public interface OnItemClickListener {
-        void onItemClick(Appointment appointment);
+        void onItemClick(Appointment appointment, Person person);
     }
 
     // Constructor to initialize the adapter with data and the custom listener
@@ -58,24 +63,44 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
 
     class AppointmentViewHolder extends RecyclerView.ViewHolder {
         private TextView nameTextView;
-        private TextView emailTextView;
+        private TextView dateTextView;
+        private TextView appointmentIDTextView;
 
         AppointmentViewHolder(@NonNull View itemView) {
             super(itemView);
             nameTextView = itemView.findViewById(R.id.name);
-            emailTextView = itemView.findViewById(R.id.email);
+            dateTextView = itemView.findViewById(R.id.date);
+            appointmentIDTextView = itemView.findViewById(R.id.appointmentID);
         }
 
+        Patient patient;
         void bind(final Appointment appointment, final OnItemClickListener listener) {
-//            nameTextView.setText(appointment.getFirstName()); // Assuming you have a getName() method in your Person class
-//            emailTextView.setText(appointment.getEmail()); // Assuming you have a getEmail() method in your Person class
+            getUserFromDatabase(appointment.getPatientUUID(), new UserCallback() {
+                @Override
+                public void onSuccess() {                }
+
+                @Override
+                public void onSuccess(Object object) {
+                    patient = (Patient)object;
+
+                    nameTextView.setText(patient.getFirstName());
+                    dateTextView.setText(appointment.getDateTime());
+                    appointmentIDTextView.setText(appointment.getAppointmentID());
+                }
+                @Override
+                public void onListLoaded(List list) {                }
+
+                @Override
+                public void onFailure(String error) {                }
+            });
+
 
             // Set click listener
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (listener != null) {
-                        listener.onItemClick(appointment);
+                        listener.onItemClick(appointment, patient);
                     }
                 }
             });

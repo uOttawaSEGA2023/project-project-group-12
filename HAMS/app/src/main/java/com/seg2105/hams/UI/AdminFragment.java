@@ -49,6 +49,11 @@ public class AdminFragment extends Fragment implements PersonAdapter.OnItemClick
             public void onSuccess() {}
 
             @Override
+            public void onSuccess(Object object) {
+
+            }
+
+            @Override
             public void onListLoaded(List persons) {
                 for (Object p : persons) {
                     Person person = (Person)p;
@@ -89,7 +94,7 @@ public class AdminFragment extends Fragment implements PersonAdapter.OnItemClick
         acceptAll_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                acceptAllPending(new UserCallback() {
+                acceptAllPending("users",new UserCallback() {
 
                     @Override
                     public void onFailure(String error) {}
@@ -97,6 +102,11 @@ public class AdminFragment extends Fragment implements PersonAdapter.OnItemClick
                     @Override
                     public void onSuccess() {
                         findNavController(view).navigate(R.id.adminFragment);
+                    }
+
+                    @Override
+                    public void onSuccess(Object object) {
+
                     }
 
                     @Override

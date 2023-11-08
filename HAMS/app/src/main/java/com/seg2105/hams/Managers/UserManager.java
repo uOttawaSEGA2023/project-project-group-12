@@ -63,16 +63,12 @@ public class UserManager {
 
                     // Depending on userType, deserialize into corresponding instance
                     if ("admin".equals(userType)) {
-                        currentUser = userDataSnapshot.getValue(Administrator.class);
-                        callback.onSuccess();
+                        callback.onSuccess(userDataSnapshot.getValue(Administrator.class));
                     } else if ("patient".equals(userType)) {
-                        currentUser = userDataSnapshot.getValue(Patient.class);
-                        callback.onSuccess();
+                        callback.onSuccess(userDataSnapshot.getValue(Patient.class));
                     } else if ("doctor".equals(userType)) {
-                        currentUser = userDataSnapshot.getValue(Doctor.class);
-                        callback.onSuccess();
+                        callback.onSuccess(userDataSnapshot.getValue(Doctor.class));
                     }
-                    Log.d("currentUser", currentUser.toString());
                 } else {
                     callback.onFailure("User with UUID " + UUID + " does not exist");
                 }
@@ -121,8 +117,11 @@ public class UserManager {
     }
 
     // update status of Person in database
-    public static void updateStatus(String UUID, String newStatus, UserCallback callback) {
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users").child(UUID).child("userData").child("status");
+    public static void updateStatus(String nodeBranch, String ID, String newStatus, UserCallback callback) {
+        DatabaseReference databaseReference = null;
+        if ("users".equals(nodeBranch)) databaseReference = FirebaseDatabase.getInstance().getReference("users").child(ID).child("userData").child("status");
+        if("appointments".equals(nodeBranch)) databaseReference = FirebaseDatabase.getInstance().getReference("appointments").child(ID).child("status");
+
 
         // Update the status field with the new value
         databaseReference.setValue(newStatus)
@@ -146,27 +145,52 @@ public class UserManager {
     }
 
     // Get all persons from database, then update each status from pending to accepted
-    public static void acceptAllPending(UserCallback callback) {
+    public static void acceptAllPending(String type,UserCallback callback) {
         getPersonsFromDatabase(new UserCallback() {
             @Override
             public void onSuccess() {}
 
             @Override
-            public void onListLoaded(List persons) {
-                for (Object p : persons) {
-                    Person person = (Person)p;
-                    if ("pending".equals(person.getStatus())){
-                        updateStatus(person.getUUID(), "accepted", new UserCallback() {
-                            @Override
-                            public void onFailure(String error) {callback.onFailure(error);}
-                            @Override
-                            public void onSuccess() {}
+            public void onSuccess(Object object) {
 
-                            @Override
-                            public void onListLoaded(List persons) {
+            }
 
-                            }
-                        });
+            @Override
+            public void onListLoaded(List list) {
+                Person person = null;
+                Appointment appointment = null;
+
+                for (Object o : list) {
+                    if ("users".equals(type)) person = (Person)o;
+                    if ("appointments".equals(type)) appointment = (Appointment)o;
+
+                    if (person != null) {
+                        if ("pending".equals(person.getStatus())){
+                            updateStatus("users" ,person.getUUID(), "accepted", new UserCallback() {
+                                @Override
+                                public void onFailure(String error) {callback.onFailure(error);}
+                                @Override
+                                public void onSuccess() {}
+                                @Override
+                                public void onSuccess(Object object) {}
+                                @Override
+                                public void onListLoaded(List persons) {}
+                            });
+                        }
+                    }
+                    if (appointment != null) {
+                        if ("pending".equals(person.getStatus())){
+                            updateStatus("appointments" ,appointment.getAppointmentID(), "accepted", new UserCallback() {
+                                @Override
+                                public void onFailure(String error) {callback.onFailure(error);}
+                                @Override
+                                public void onSuccess() {}
+                                @Override
+                                public void onSuccess(Object object) {}
+                                @Override
+                                public void onListLoaded(List persons) {}
+                            });
+                        }
                     }
                 } callback.onSuccess();
             }

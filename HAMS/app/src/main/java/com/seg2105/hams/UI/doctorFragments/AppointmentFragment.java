@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.seg2105.hams.Managers.Appointment;
 import com.seg2105.hams.R;
 import com.seg2105.hams.Users.Person;
+import com.seg2105.hams.Users.User;
 import com.seg2105.hams.Util.AppointmentAdapter;
 import com.seg2105.hams.Util.UserCallback;
 
@@ -45,6 +46,11 @@ public class AppointmentFragment extends Fragment implements AppointmentAdapter.
         getAppointmentsFromDatabase((Person)getCurrentUser(),new UserCallback() {
             @Override
             public void onSuccess() {}
+
+            @Override
+            public void onSuccess(Object object) {
+
+            }
 
             @Override
             public void onListLoaded(List appointments) {
@@ -84,7 +90,7 @@ public class AppointmentFragment extends Fragment implements AppointmentAdapter.
         acceptAll_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                acceptAllPending(new UserCallback() {
+                acceptAllPending("appointments",new UserCallback() {
 
                     @Override
                     public void onFailure(String error) {}
@@ -92,6 +98,11 @@ public class AppointmentFragment extends Fragment implements AppointmentAdapter.
                     @Override
                     public void onSuccess() {
                         findNavController(view).navigate(R.id.adminFragment);
+                    }
+
+                    @Override
+                    public void onSuccess(Object object) {
+
                     }
 
                     @Override
@@ -113,10 +124,11 @@ public class AppointmentFragment extends Fragment implements AppointmentAdapter.
     }
 
     @Override
-    public void onItemClick(Appointment appointment) {
+    public void onItemClick(Appointment appointment, Person person) {
         // Handle item click, navigate to AppointmentFragment passing the selected Appointment object in Bundle
         Bundle bundle = new Bundle();
         bundle.putSerializable("appointment", appointment);
+        bundle.putSerializable("person", person);
         findNavController(requireView()).navigate(R.id.action_doctor_to_person, bundle);
     }
 

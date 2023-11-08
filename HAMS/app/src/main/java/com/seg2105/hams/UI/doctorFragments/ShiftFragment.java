@@ -64,6 +64,11 @@ public class ShiftFragment extends Fragment implements ShiftAdapter.OnItemClickL
             }
 
             @Override
+            public void onSuccess(Object object) {
+
+            }
+
+            @Override
             public void onListLoaded(List shifts) {
                 ShiftAdapter upcomingAdapter = new ShiftAdapter(shifts, ShiftFragment.this);
                 recyclerViewUpcoming.setAdapter(upcomingAdapter);
@@ -152,6 +157,12 @@ public class ShiftFragment extends Fragment implements ShiftAdapter.OnItemClickL
                                     findNavController(requireView()).navigate(R.id.action_home_to_doctor);
                                     Toast.makeText(requireContext(), "Shift added successfully", Toast.LENGTH_SHORT).show();
                                 }
+
+                                @Override
+                                public void onSuccess(Object object) {
+
+                                }
+
                                 public void onListLoaded(List shift) {}
 
                                 @Override
@@ -205,6 +216,11 @@ public class ShiftFragment extends Fragment implements ShiftAdapter.OnItemClickL
                 findNavController(requireView()).navigate(R.id.action_doctor_to_home);
                 findNavController(requireView()).navigate(R.id.action_home_to_doctor);
                 Toast.makeText(requireContext(), "Shift deleted successfully", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onSuccess(Object object) {
+
             }
 
             @Override

@@ -2,6 +2,7 @@ package com.seg2105.hams.UI;
 
 import static androidx.navigation.Navigation.findNavController;
 import static com.seg2105.hams.Managers.UserManager.getUserFromDatabase;
+import static com.seg2105.hams.Managers.UserManager.setCurrentUser;
 
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -21,7 +22,9 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.seg2105.hams.R;
+import com.seg2105.hams.Users.Administrator;
 import com.seg2105.hams.Users.Person;
+import com.seg2105.hams.Users.User;
 import com.seg2105.hams.Util.UserCallback;
 
 import java.util.List;
@@ -85,9 +88,16 @@ public class LoginFragment extends Fragment {
                                 // Handle success and failure.
                                 if (task.isSuccessful()) {
                                     // If successfully authenticated, call getUserFromDatabase with callback, which waits for success or failure
+
+
                                     getUserFromDatabase(mAuth.getCurrentUser().getUid(), new UserCallback() {
                                         @Override
                                         public void onSuccess() {
+                                        }
+
+                                        @Override
+                                        public void onSuccess(Object object) {
+                                            setCurrentUser((User)object);
                                             // User loaded successfully, navigate to home fragment
                                             findNavController(view).navigate(R.id.action_login_to_home);
                                             Toast.makeText(requireContext(), "Logged in.", Toast.LENGTH_SHORT).show();

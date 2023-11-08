@@ -29,7 +29,10 @@ public class AppointmentManager {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // If datareference is found
                 for (DataSnapshot appointmentSnapshot : dataSnapshot.getChildren()) {
-                    
+                    if (appointmentIDs.contains(appointmentSnapshot.child("appointmentID").getValue(String.class))) {
+                        Appointment appointment = appointmentSnapshot.getValue(Appointment.class);
+                        appointments.add(appointment);
+                    }
                 }
                 if (appointments.isEmpty()) {
                     callback.onFailure("No shifts.");
