@@ -20,80 +20,56 @@ import java.util.List;
 
 public class AppointmentManager {
     public static void getAppointmentsFromDatabase(Person person, UserCallback callback) {
-        List<Shift> shifts = new ArrayList<>();
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users").child(person.getUUID()).child("userData").child("shifts");
+        List<String> appointmentIDs = person.getAppointments();
+        List<Appointment> appointments = new ArrayList<>();
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("appointments");
 
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // If datareference is found
-                if (dataSnapshot.exists()) {
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        Shift shift = snapshot.getValue(Shift.class);
-                        if (shift!=null) shifts.add(snapshot.getValue(Shift.class));
-                    }
-                    if (shifts.isEmpty()) {
-                        callback.onFailure("No shifts.");
-                    } else {
-                        callback.onListLoaded(shifts);
-                    }
-                } else {
-                    callback.onFailure("No shifts.");
+                for (DataSnapshot appointmentSnapshot : dataSnapshot.getChildren()) {
+                    
                 }
-            }
+                if (appointments.isEmpty()) {
+                    callback.onFailure("No shifts.");
+                } else {
+                    callback.onListLoaded(appointments);
+                }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+            public void onCancelled (@NonNull DatabaseError databaseError){
+                // Handle errors
                 callback.onFailure(databaseError.getMessage());
             }
+
         });
+
+
+
     }
 
-    public static void putAppointmentInDatabase(Shift shift, UserCallback callback) {
-        DatabaseReference shiftsReference = FirebaseDatabase.getInstance().getReference("users").child(getCurrentUser().getUUID()).child("userData").child("shifts");
+    public static void putAppointmentInDatabase(Appointment appointment, UserCallback callback) {
+        DatabaseReference appointmentsReference = FirebaseDatabase.getInstance().getReference("appointments");
 
         // Generate a unique ID for the new shift using push()
-        DatabaseReference newShiftRef = shiftsReference.push();
+        DatabaseReference newAppointmentRef = appointmentsReference.push();
 
-        shift.setShiftID(newShiftRef.getKey());
+        appointment.setAppointmentID(newAppointmentRef.getKey());
 
         // Set the value of the new shift object to the generated unique ID
-        newShiftRef.setValue(shift);
+        newAppointmentRef.setValue(appointment);
 
-        UserManager.reloadUser(new UserCallback() {
-            @Override
-            public void onSuccess() {
-                callback.onSuccess();
-            }
-
-            @Override
-            public void onListLoaded(List persons) {}
-
-            @Override
-            public void onFailure(String error) {
-                callback.onFailure(error);
-            }
-        });
+        callback.onSuccess();
     }
     public static void removeAppointmentFromDataBase(Appointment appointment, UserCallback callback) {
-        DatabaseReference shiftReference = FirebaseDatabase.getInstance().getReference("users").child(getCurrentUser().getUUID()).child("userData").child("shifts");
+        DatabaseReference appointmentReference = FirebaseDatabase.getInstance().getReference("appointments").child(appointment.getAppointmentID());
 
-        shiftReference.removeValue()
+        appointmentReference.removeValue()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        UserManager.reloadUser(new UserCallback() {
-                            @Override
-                            public void onSuccess() {callback.onSuccess();}
-
-                            @Override
-                            public void onListLoaded(List persons) {}
-
-                            @Override
-                            public void onFailure(String error) {
-                                callback.onFailure(error);
-                            }
-                        });
+                        callback.onSuccess();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

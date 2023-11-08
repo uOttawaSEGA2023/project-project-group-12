@@ -25,7 +25,7 @@ public class ShiftManager {
         List<Shift> shifts = new ArrayList<>();
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users").child(doctor.getUUID()).child("userData").child("shifts");
 
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // If datareference is found
@@ -61,21 +61,6 @@ public class ShiftManager {
 
         // Set the value of the new shift object to the generated unique ID
         newShiftRef.setValue(shift);
-
-        UserManager.reloadUser(new UserCallback() {
-            @Override
-            public void onSuccess() {
-                callback.onSuccess();
-            }
-
-            @Override
-            public void onListLoaded(List persons) {}
-
-            @Override
-            public void onFailure(String error) {
-                callback.onFailure(error);
-            }
-        });
     }
     public static void removeShiftFromDataBase(Shift shift, UserCallback callback) {
         DatabaseReference shiftReference = FirebaseDatabase.getInstance().getReference("users").child(getCurrentUser().getUUID()).child("userData").child("shifts").child(shift.getShiftID());
@@ -84,18 +69,7 @@ public class ShiftManager {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        UserManager.reloadUser(new UserCallback() {
-                            @Override
-                            public void onSuccess() {callback.onSuccess();}
-
-                            @Override
-                            public void onListLoaded(List persons) {}
-
-                            @Override
-                            public void onFailure(String error) {
-                                callback.onFailure(error);
-                            }
-                        });
+                        callback.onSuccess();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

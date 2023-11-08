@@ -51,7 +51,7 @@ public class UserManager {
         // Get the datareference of child of users with matching UUID
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users").child(UUID);
 
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // If datareference is found
@@ -90,7 +90,7 @@ public class UserManager {
         List<Person> persons = new ArrayList<>();
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users");
 
-        databaseReference.orderByChild("userType").startAt("doctor").endAt("patient").addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.orderByChild("userType").startAt("doctor").endAt("patient").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // If datareference is found
@@ -187,23 +187,5 @@ public class UserManager {
 
     public static User getCurrentUser() {
         return currentUser;
-    }
-
-    public static void reloadUser(UserCallback callback) {
-        String UUID = getCurrentUser().getUUID();
-        getUserFromDatabase(UUID, new UserCallback() {
-            @Override
-            public void onSuccess() { callback.onSuccess();}
-
-            @Override
-            public void onListLoaded(List persons) {
-            }
-
-
-            @Override
-            public void onFailure(String error) {
-                callback.onFailure(error);
-            }
-        });
     }
 }

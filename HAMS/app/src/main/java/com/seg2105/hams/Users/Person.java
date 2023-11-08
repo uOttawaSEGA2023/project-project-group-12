@@ -1,11 +1,14 @@
 package com.seg2105.hams.Users;
 
+import java.util.List;
+
 public abstract class Person extends User{
-    protected String firstName;
-    protected String lastName;
-    protected String phoneNumber;
-    protected String address;
-    protected String status;
+    private String firstName;
+    private String lastName;
+    private String phoneNumber;
+    private String address;
+    private String status;
+    private List<String> appointments;
 
     public Person(String UUID, String email) {
         super(UUID, email);
@@ -57,5 +60,13 @@ public abstract class Person extends User{
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public List<String> getAppointments() {
+        return appointments;
+    }
+
+    public void setAppointments(List<String> appointments) {
+        this.appointments = appointments;
     }
 }

@@ -6,59 +6,59 @@ import com.seg2105.hams.Users.Patient;
 import java.io.Serializable;
 
 public class Appointment implements Serializable {
-    private String date;
-    private Doctor doctor;
-    private Patient patient;
+    private String dateTime;
+    private String doctorUUID;
+    private String patientUUID;
     private String status;
-    private int appointmentID;
+    private String appointmentID;
 
     public Appointment(){}
 
-    public Appointment(String date, Doctor doctor, Patient patient, String status, int appointmentID) {
-        this.date = date;
-        this.doctor = doctor;
-        this.patient = patient;
+    public Appointment(String dateTime, String doctorUUID, String patientUUID, String status, String appointmentID) {
+        this.dateTime = dateTime;
+        this.doctorUUID = doctorUUID;
+        this.patientUUID = patientUUID;
         this.status = status;
         this.appointmentID = appointmentID;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public String getAppointmentID() {
+        return appointmentID;
     }
 
-    public String getDate() {
-        return date;
-    }
-
-    public void setDoctor(Doctor doctor) {
-        this.doctor = doctor;
-    }
-
-    public Doctor getDoctor() {
-        return doctor;
-    }
-
-    public void setPatient(Patient patient) {
-        this.patient = patient;
-    }
-
-    public Patient getPatient() {
-        return patient;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
+    public void setAppointmentID(String appointmentID) {
+        this.appointmentID = appointmentID;
     }
 
     public String getStatus() {
         return status;
     }
 
-    public void setAppointmentID(int appointmentID) {
-        this.appointmentID = appointmentID;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public int getAppointmentID() {
-        return appointmentID;
+    public String getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(String dateTime) {
+        this.dateTime = dateTime;
+    }
+
+    public String getDoctorUUID() {
+        return doctorUUID;
+    }
+
+    public void setDoctorUUID(String doctorUUID) {
+        this.doctorUUID = doctorUUID;
+    }
+
+    public String getPatientUUID() {
+        return patientUUID;
+    }
+
+    public void setPatientUUID(String patientUUID) {
+        this.patientUUID = patientUUID;
     }
 }
