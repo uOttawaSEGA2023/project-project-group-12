@@ -3,7 +3,9 @@ package com.seg2105.hams.Managers;
 import com.seg2105.hams.Users.Doctor;
 import com.seg2105.hams.Users.Patient;
 
-public class Appointment {
+import java.io.Serializable;
+
+public class Appointment implements Serializable {
     private String date;
     private Doctor doctor;
     private Patient patient;
