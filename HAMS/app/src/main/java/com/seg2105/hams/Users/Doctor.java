@@ -7,14 +7,16 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Doctor extends Person {
+    private String automaticallyApprove;
     private String employeeNumber;
     private List<String> specialties;
     private HashMap<String, Shift> shifts;
 
     public Doctor() {};
 
-    public Doctor (String UUID, String email, String firstName, String lastName, String phoneNumber, String address,String employeeNumber, List<String> specialties, String status) {
-        super(UUID, email, firstName, lastName, phoneNumber, address, status);
+    public Doctor (String UUID, String email, String firstName, String lastName, String phoneNumber, String dateOfBirth, String address, String automaticallyApprove, String employeeNumber, List<String> specialties, String status) {
+        super(UUID, email, firstName, lastName, phoneNumber, dateOfBirth, address, status);
+        this.automaticallyApprove=automaticallyApprove;
         this.employeeNumber = employeeNumber;
         this.specialties = specialties;
     }
@@ -26,7 +28,8 @@ public class Doctor extends Person {
     @Override
     public void setRole() {}
 
-
+    public String getAutomaticallyApprove() {return automaticallyApprove;}
+    public void setAutomaticallyApprove(String automaticallyApprove) { this.automaticallyApprove=automaticallyApprove;}
     public String getEmployeeNumber() {
         return employeeNumber;
     }

@@ -28,11 +28,15 @@ public class AppointmentManager {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // If datareference is found
-                for (DataSnapshot appointmentSnapshot : dataSnapshot.getChildren()) {
-                    if (appointmentIDs.contains(appointmentSnapshot.child("appointmentID").getValue(String.class))) {
-                        Appointment appointment = appointmentSnapshot.getValue(Appointment.class);
-                        appointments.add(appointment);
+                try { //added try catch block for now since doctor isn't initialized with a list of appointments. catches NullPointerException
+                    for (DataSnapshot appointmentSnapshot : dataSnapshot.getChildren()) {
+                        if (appointmentIDs.contains(appointmentSnapshot.child("appointmentID").getValue(String.class))) {
+                            Appointment appointment = appointmentSnapshot.getValue(Appointment.class);
+                            appointments.add(appointment);
+                        }
                     }
+                } catch (Exception e) {
+
                 }
                 if (appointments.isEmpty()) {
                     callback.onFailure("No shifts.");
@@ -54,6 +58,12 @@ public class AppointmentManager {
 
     public static void putAppointmentInDatabase(Appointment appointment, UserCallback callback) {
         DatabaseReference appointmentsReference = FirebaseDatabase.getInstance().getReference("appointments");
+        DatabaseReference doctorReference = FirebaseDatabase.getInstance().getReference("users");
+
+        //check if doctor associated with appointment autoaccepts appointments
+        if ("true".equals(doctorReference.child(appointment.getDoctorUUID()).child("userData").child("automaticallyApprove"))){
+            appointment.setStatus("accepted");
+        }
 
         // Generate a unique ID for the new shift using push()
         DatabaseReference newAppointmentRef = appointmentsReference.push();
@@ -62,6 +72,7 @@ public class AppointmentManager {
 
         // Set the value of the new shift object to the generated unique ID
         newAppointmentRef.setValue(appointment);
+
 
         callback.onSuccess();
     }

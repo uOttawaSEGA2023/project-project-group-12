@@ -151,23 +151,16 @@
                     android:hint="@string/phone_number" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/open_sans_bold"
-                android:textSize="25sp"
-                android:text="@string/select_your_age"
-                android:gravity="center">
-            </TextView>
+                android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/age_select"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Date of Birth (dd/mm/yyyy)" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.button.MaterialButton
-                android:layout_gravity="center"
-                android:id="@+id/age_select"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:calendarViewShown="false"
-                android:text="@string/select_age">
-            </com.google.android.material.button.MaterialButton>
 
             <TextView
                 android:layout_width="match_parent"
@@ -219,6 +212,31 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/specialties_separate_by_comma" />
             </com.google.android.material.textfield.TextInputLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/autoAcceptLayout">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans_bold"
+                    android:textSize="18sp"
+                    android:text="Auto Accept Appointments"
+                    android:paddingRight="15dp"
+                    android:layout_gravity="left|center">
+                </TextView>
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/autoAcceptAppt"
+                    android:layout_gravity="right"
+                    android:thumb="@drawable/thumb1"
+                    app:track="@drawable/track"/>
+
+
+            </LinearLayout>
 
             <Button
                 android:layout_margin="25dp"

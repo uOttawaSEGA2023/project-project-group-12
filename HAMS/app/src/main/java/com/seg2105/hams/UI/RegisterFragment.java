@@ -8,9 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -19,6 +21,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -40,15 +43,19 @@ import java.util.Map;
 public class RegisterFragment extends Fragment {
 
     TextInputEditText editTextFirstName, editTextLastName, editTextStreet, editTextCity,
-            editTextProvince, editTextCountry, editTextPostalCode, editTextPhoneNumber, editTextHealthNumber,
+            editTextProvince, editTextCountry, editTextPostalCode, editTextPhoneNumber, editTextAge, editTextHealthNumber,
             editTextEmployeeNumber, editTextSpecialties;
-    MaterialButton doctor, patient, ageSelect;
-    String role, dateOfBirth;
+    MaterialButton doctor, patient;
+    SwitchCompat autoAccept;
+    String role;
 
     TextInputEditText editTextEmail, editTextPassword;
     Button buttonReg;
     FirebaseAuth mAuth;
     TextView textView;
+    String automaticallyApprove="false";
+
+    LinearLayout autoAcceptLayout;
 
     public RegisterFragment() {
         // Required empty public constructor
@@ -74,38 +81,22 @@ public class RegisterFragment extends Fragment {
         editTextHealthNumber = view.findViewById(R.id.healthNumber);
         editTextEmployeeNumber = view.findViewById(R.id.employeeNumber);
         editTextSpecialties = view.findViewById(R.id.specialties);
+        editTextAge = view.findViewById(R.id.age_select);
 
         editTextHealthNumber.setVisibility(View.GONE);
         editTextEmployeeNumber.setVisibility(View.GONE);
         editTextSpecialties.setVisibility(View.GONE);
 
-        ageSelect = view.findViewById(R.id.age_select);
-
-        ageSelect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MaterialDatePicker<Long> materialDatePicker = MaterialDatePicker.Builder.datePicker()
-                        .setTitleText("Select Date")
-                        .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
-                        .build();
-                materialDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Long>() {
-                    @Override
-                    public void onPositiveButtonClick(Long selection) {
-                        String date = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date(selection));
-                        ageSelect.setText(MessageFormat.format("Selected Date: {0}", date));
-                        dateOfBirth = date;
-                    }
-                });
-                materialDatePicker.show(getParentFragmentManager(), "tag");
-            }
-        });
-
+        autoAccept = view.findViewById(R.id.autoAcceptAppt);
+        autoAcceptLayout = view.findViewById(R.id.autoAcceptLayout);
+        autoAcceptLayout.setVisibility(view.GONE);
         doctor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 role = "doctor";
                 editTextEmployeeNumber.setVisibility(View.VISIBLE);
                 editTextSpecialties.setVisibility(View.VISIBLE);
+                autoAcceptLayout.setVisibility(view.VISIBLE);
                 editTextHealthNumber.setVisibility(View.GONE);
             }
         });
@@ -116,7 +107,20 @@ public class RegisterFragment extends Fragment {
                 role = "patient";
                 editTextEmployeeNumber.setVisibility(View.GONE);
                 editTextSpecialties.setVisibility(View.GONE);
+                autoAcceptLayout.setVisibility(view.GONE);
                 editTextHealthNumber.setVisibility(View.VISIBLE);
+            }
+        });
+
+
+        autoAccept.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                // The switch is checked.
+                automaticallyApprove="true";
+
+            } else {
+                // The switch isn't checked.
+                automaticallyApprove="false";
             }
         });
 
@@ -140,7 +144,7 @@ public class RegisterFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 // Get values inputted.
-                String email, password, firstName, lastName, address, phoneNumber, healthNumber, employeeNumber;
+                String email, password, firstName, lastName, address, phoneNumber, dateOfBirth, healthNumber, employeeNumber;
                 List<String> specialties = new ArrayList<>();
                 Map<String, String> addressValues = new HashMap<>();
 
@@ -155,6 +159,7 @@ public class RegisterFragment extends Fragment {
                 firstName = String.valueOf(editTextFirstName.getText());
                 lastName = String.valueOf(editTextLastName.getText());
                 phoneNumber = String.valueOf(editTextPhoneNumber.getText());
+                dateOfBirth = String.valueOf(editTextAge.getText());
                 address = Util.fieldsToAddress(addressValues);
                 healthNumber = String.valueOf(editTextHealthNumber.getText());
                 employeeNumber = String.valueOf(editTextEmployeeNumber.getText());
@@ -183,11 +188,11 @@ public class RegisterFragment extends Fragment {
                                             Toast.LENGTH_SHORT).show();
 
                                     if ("patient".equals(role)) {
-                                        User p = new Patient(FirebaseAuth.getInstance().getCurrentUser().getUid(), email, firstName, lastName, phoneNumber, address, healthNumber, "pending");
+                                        User p = new Patient(FirebaseAuth.getInstance().getCurrentUser().getUid(), email, firstName, lastName, phoneNumber, dateOfBirth, address, healthNumber, "pending");
                                         putUserInDatabase(p);
                                     }
                                     if ("doctor".equals(role)) {
-                                        User d = new Doctor(FirebaseAuth.getInstance().getCurrentUser().getUid(), email, firstName, lastName, phoneNumber, address, employeeNumber, specialties, "pending");
+                                        User d = new Doctor(FirebaseAuth.getInstance().getCurrentUser().getUid(), email, firstName, lastName, phoneNumber, dateOfBirth, address, automaticallyApprove, employeeNumber, specialties, "pending");
                                         putUserInDatabase(d);
                                     }
 

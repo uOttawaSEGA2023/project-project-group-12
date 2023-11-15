@@ -6,6 +6,7 @@ public abstract class Person extends User{
     private String firstName;
     private String lastName;
     private String phoneNumber;
+    private String dateOfBirth;
     private String address;
     private String status;
     private List<String> appointments;
@@ -14,13 +15,15 @@ public abstract class Person extends User{
         super(UUID, email);
     }
 
-    public Person (String UUID, String email, String firstName, String lastName, String phoneNumber, String address, String status) {
+    public Person (String UUID, String email, String firstName, String lastName, String phoneNumber, String dateOfBirth, String address, String status) {
         super(UUID, email);
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
+        this.dateOfBirth=dateOfBirth;
         this.address = address;
         this.status = status;
+
     }
 
     public Person() {
@@ -60,6 +63,14 @@ public abstract class Person extends User{
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 
     public List<String> getAppointments() {
