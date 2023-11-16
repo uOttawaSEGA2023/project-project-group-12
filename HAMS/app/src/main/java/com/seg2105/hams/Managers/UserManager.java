@@ -51,7 +51,7 @@ public class UserManager {
         // Get the datareference of child of users with matching UUID
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users").child(UUID);
 
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // If datareference is found

@@ -15,7 +15,9 @@ import com.seg2105.hams.Users.Doctor;
 import com.seg2105.hams.Users.Person;
 import com.seg2105.hams.Util.UserCallback;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class AppointmentManager {
@@ -59,6 +61,7 @@ public class AppointmentManager {
     public static void putAppointmentInDatabase(Appointment appointment, UserCallback callback) {
         DatabaseReference appointmentsReference = FirebaseDatabase.getInstance().getReference("appointments");
         DatabaseReference doctorReference = FirebaseDatabase.getInstance().getReference("users");
+
 
         //check if doctor associated with appointment autoaccepts appointments
         if ("true".equals(doctorReference.child(appointment.getDoctorUUID()).child("userData").child("automaticallyApprove"))){

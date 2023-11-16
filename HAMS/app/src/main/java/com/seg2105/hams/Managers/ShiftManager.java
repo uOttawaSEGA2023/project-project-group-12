@@ -61,6 +61,7 @@ public class ShiftManager {
 
         // Set the value of the new shift object to the generated unique ID
         newShiftRef.setValue(shift);
+        callback.onSuccess();
     }
     public static void removeShiftFromDataBase(Shift shift, UserCallback callback) {
         DatabaseReference shiftReference = FirebaseDatabase.getInstance().getReference("users").child(getCurrentUser().getUUID()).child("userData").child("shifts").child(shift.getShiftID());

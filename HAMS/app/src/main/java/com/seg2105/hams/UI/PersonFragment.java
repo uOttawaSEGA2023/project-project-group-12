@@ -46,10 +46,10 @@ public class PersonFragment extends Fragment {
 
 
         // Prevents NullPointerException
-        if (getArguments() != null || getArguments().size()==1) {
+        if (getArguments() != null && getArguments().size()==1) {
             person = (Person) getArguments().getSerializable("person");
         }
-        else if (getArguments() != null || getArguments().size()==2) {
+        else if (getArguments() != null && getArguments().size()==2) {
             person = (Person) getArguments().getSerializable("person");
             appointment = (Appointment) getArguments().getSerializable("appointment");
         }

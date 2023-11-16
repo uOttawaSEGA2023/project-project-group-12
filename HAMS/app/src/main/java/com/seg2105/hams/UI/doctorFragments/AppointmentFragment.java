@@ -25,7 +25,10 @@ import com.seg2105.hams.Users.User;
 import com.seg2105.hams.Util.AppointmentAdapter;
 import com.seg2105.hams.Util.UserCallback;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class AppointmentFragment extends Fragment implements AppointmentAdapter.OnItemClickListener {
@@ -37,10 +40,12 @@ public class AppointmentFragment extends Fragment implements AppointmentAdapter.
         // Code to populate list of Appointment status'
         List<Appointment> pendingList = new ArrayList<>();
         List<Appointment> acceptedList = new ArrayList<>();
+        List<Appointment> pastList = new ArrayList<>();
 
         View view = inflater.inflate(R.layout.fragment_appointment, container, false);
         RecyclerView recyclerViewPending = view.findViewById(R.id.recyclerViewPending);
         RecyclerView recyclerViewAccepted = view.findViewById(R.id.recyclerViewAccepted);
+        RecyclerView recyclerViewPast = view.findViewById(R.id.recyclerViewPast);
 
         // Get Appointments from database, and place them in corresponding RecyclerViews
         getAppointmentsFromDatabase((Person)getCurrentUser(),new UserCallback() {
@@ -56,8 +61,23 @@ public class AppointmentFragment extends Fragment implements AppointmentAdapter.
             public void onListLoaded(List appointments) {
                 for (Object a : appointments) {
                     Appointment appointment = (Appointment)a;
-                    if ("pending".equals(appointment.getStatus())) {pendingList.add(appointment);}
-                    if ("accepted".equals(appointment.getStatus())) {acceptedList.add(appointment);}
+
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    try {
+                        Date inputDate = dateFormat.parse(appointment.getDateTime());
+
+                        Date currentDate = new Date();
+
+                        if (inputDate.before(currentDate)){
+                            pastList.add(appointment);
+                        }
+                        else {
+                            if ("pending".equals(appointment.getStatus())) {pendingList.add(appointment);}
+                            if ("accepted".equals(appointment.getStatus())) {acceptedList.add(appointment);}
+                        }
+                    } catch (ParseException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
 
                 AppointmentAdapter pendingAdapter = new AppointmentAdapter(pendingList, AppointmentFragment.this);
@@ -67,6 +87,10 @@ public class AppointmentFragment extends Fragment implements AppointmentAdapter.
                 AppointmentAdapter acceptedAdapter = new AppointmentAdapter(acceptedList, AppointmentFragment.this);
                 recyclerViewAccepted.setAdapter(acceptedAdapter);
                 recyclerViewAccepted.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+                AppointmentAdapter pastAdapter = new AppointmentAdapter(pastList, AppointmentFragment.this);
+                recyclerViewPast.setAdapter(pastAdapter);
+                recyclerViewPast.setLayoutManager(new LinearLayoutManager(getActivity()));
 
 ;
             }
@@ -84,34 +108,6 @@ public class AppointmentFragment extends Fragment implements AppointmentAdapter.
         super.onViewCreated(view, savedInstanceState);
 
         Button home_button = view.findViewById(R.id.btn_home);
-        Button acceptAll_button = view.findViewById(R.id.btn_acceptAll);
-
-        // Accept all pending
-        acceptAll_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                acceptAllPending("appointments",new UserCallback() {
-
-                    @Override
-                    public void onFailure(String error) {}
-
-                    @Override
-                    public void onSuccess() {
-                        findNavController(view).navigate(R.id.adminFragment);
-                    }
-
-                    @Override
-                    public void onSuccess(Object object) {
-
-                    }
-
-                    @Override
-                    public void onListLoaded(List list) {
-
-                    }
-                });
-            }
-        });
 
         // Navigate home on click
         home_button.setOnClickListener(new View.OnClickListener() {

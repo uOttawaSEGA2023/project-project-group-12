@@ -116,7 +116,6 @@ public class ShiftFragment extends Fragment implements ShiftAdapter.OnItemClickL
         Button btnSubmit = view.findViewById(R.id.submitShift);
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View view) {
                 String startInput, endInput;

@@ -17,6 +17,7 @@ import com.seg2105.hams.Users.Patient;
 import com.seg2105.hams.Users.Person;
 import com.seg2105.hams.Users.User;
 
+import java.text.MessageFormat;
 import java.util.List;
 
 /*
@@ -83,7 +84,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
                 public void onSuccess(Object object) {
                     patient = (Patient)object;
 
-                    nameTextView.setText(patient.getFirstName());
+                    nameTextView.setText(MessageFormat.format("{0} {1}", patient.getFirstName(), patient.getLastName()));
                     dateTextView.setText(appointment.getDateTime());
                     appointmentIDTextView.setText(appointment.getAppointmentID());
                 }
