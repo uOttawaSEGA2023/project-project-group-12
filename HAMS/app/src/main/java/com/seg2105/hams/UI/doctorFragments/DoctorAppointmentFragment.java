@@ -29,9 +29,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class AppointmentFragment extends Fragment implements AppointmentAdapter.OnItemClickListener {
+public class DoctorAppointmentFragment extends Fragment implements AppointmentAdapter.OnItemClickListener {
 
-    public AppointmentFragment() {};
+    public DoctorAppointmentFragment() {};
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -40,7 +40,7 @@ public class AppointmentFragment extends Fragment implements AppointmentAdapter.
         List<Appointment> acceptedList = new ArrayList<>();
         List<Appointment> pastList = new ArrayList<>();
 
-        View view = inflater.inflate(R.layout.fragment_appointment, container, false);
+        View view = inflater.inflate(R.layout.fragment_doctorappointment, container, false);
         RecyclerView recyclerViewPending = view.findViewById(R.id.recyclerViewPending);
         RecyclerView recyclerViewAccepted = view.findViewById(R.id.recyclerViewAccepted);
         RecyclerView recyclerViewPast = view.findViewById(R.id.recyclerViewPast);
@@ -78,15 +78,15 @@ public class AppointmentFragment extends Fragment implements AppointmentAdapter.
                     }
                 }
 
-                AppointmentAdapter pendingAdapter = new AppointmentAdapter(pendingList, AppointmentFragment.this);
+                AppointmentAdapter pendingAdapter = new AppointmentAdapter(pendingList, DoctorAppointmentFragment.this);
                 recyclerViewPending.setAdapter(pendingAdapter);
                 recyclerViewPending.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-                AppointmentAdapter acceptedAdapter = new AppointmentAdapter(acceptedList, AppointmentFragment.this);
+                AppointmentAdapter acceptedAdapter = new AppointmentAdapter(acceptedList, DoctorAppointmentFragment.this);
                 recyclerViewAccepted.setAdapter(acceptedAdapter);
                 recyclerViewAccepted.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-                AppointmentAdapter pastAdapter = new AppointmentAdapter(pastList, AppointmentFragment.this);
+                AppointmentAdapter pastAdapter = new AppointmentAdapter(pastList, DoctorAppointmentFragment.this);
                 recyclerViewPast.setAdapter(pastAdapter);
                 recyclerViewPast.setLayoutManager(new LinearLayoutManager(getActivity()));
 

@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.seg2105.hams.UI.DoctorFragment;
-import com.seg2105.hams.UI.doctorFragments.AppointmentFragment;
+import com.seg2105.hams.UI.doctorFragments.DoctorAppointmentFragment;
 import com.seg2105.hams.UI.doctorFragments.ShiftFragment;
 
 public class DoctorViewPagerAdapter extends FragmentStateAdapter {
@@ -20,7 +20,7 @@ public class DoctorViewPagerAdapter extends FragmentStateAdapter {
             case 1:
                 return new ShiftFragment();
             default:
-                return new AppointmentFragment();
+                return new DoctorAppointmentFragment();
         }
     }
 

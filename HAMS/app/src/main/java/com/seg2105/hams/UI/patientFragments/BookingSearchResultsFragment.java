@@ -32,7 +32,7 @@ public class BookingSearchResultsFragment extends Fragment implements ResultsAda
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_bookingSearchResults, container, false);
+        View view = inflater.inflate(R.layout.fragment_bookingsearchresults, container, false);
 
         if (getArguments() != null) {
             availableDoctors = (List<Doctor>) getArguments().getSerializable("availableDoctors");

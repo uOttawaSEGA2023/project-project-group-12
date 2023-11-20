@@ -39,7 +39,7 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.BookingS
     @NonNull
     @Override
     public BookingSearchResultsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_searchResults, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_searchresults, parent, false);
         return new BookingSearchResultsViewHolder(itemView);
     }
 

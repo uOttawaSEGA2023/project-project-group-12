@@ -4,9 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="top"
-    android:layout_marginHorizontal="15sp"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".UI.patientFragments.BookingSearchResultsFragment">
+    android:layout_marginHorizontal="15sp">
 
     <TextView
         android:text="@string/search_results"

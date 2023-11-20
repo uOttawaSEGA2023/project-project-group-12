@@ -25,7 +25,7 @@ public class PatientFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_patient, container, false);
         tabLayout = view.findViewById(R.id.tab_layout);
-        viewPager2 = view.findViewById(R.id.view_pager);
+        viewPager2 = view.findViewById(R.id.view_pagerPatient);
         patientViewPagerAdapter = new PatientViewPagerAdapter(this);
         viewPager2.setAdapter(patientViewPagerAdapter);
         return view;

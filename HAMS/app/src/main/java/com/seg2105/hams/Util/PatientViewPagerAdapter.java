@@ -5,8 +5,8 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.seg2105.hams.UI.PatientFragment;
-import com.seg2105.hams.UI.doctorFragments.AppointmentFragment;
 import com.seg2105.hams.UI.patientFragments.BookingFragment;
+import com.seg2105.hams.UI.patientFragments.PatientAppointmentFragment;
 
 public class PatientViewPagerAdapter extends FragmentStateAdapter {
     public PatientViewPagerAdapter(@NonNull PatientFragment fragmentActivity) {
@@ -20,7 +20,7 @@ public class PatientViewPagerAdapter extends FragmentStateAdapter {
             case 1:
                 return new BookingFragment();
             default:
-                return new AppointmentFragment();
+                return new PatientAppointmentFragment();
         }
     }
 

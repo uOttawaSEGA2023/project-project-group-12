@@ -29,20 +29,18 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class AppointmentFragment extends Fragment implements AppointmentAdapter.OnItemClickListener {
+public class PatientAppointmentFragment extends Fragment implements AppointmentAdapter.OnItemClickListener {
 
-    public AppointmentFragment() {};
+    public PatientAppointmentFragment() {};
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Code to populate list of Appointment status'
-        List<Appointment> pendingList = new ArrayList<>();
-        List<Appointment> acceptedList = new ArrayList<>();
+        List<Appointment> upcomingList = new ArrayList<>();
         List<Appointment> pastList = new ArrayList<>();
 
-        View view = inflater.inflate(R.layout.fragment_appointment, container, false);
-        RecyclerView recyclerViewPending = view.findViewById(R.id.recyclerViewPending);
-        RecyclerView recyclerViewAccepted = view.findViewById(R.id.recyclerViewAccepted);
+        View view = inflater.inflate(R.layout.fragment_patientappointment, container, false);
+        RecyclerView recyclerViewUpcoming = view.findViewById(R.id.recyclerViewUpcoming);
         RecyclerView recyclerViewPast = view.findViewById(R.id.recyclerViewPast);
 
         // Get Appointments from database, and place them in corresponding RecyclerViews
@@ -70,23 +68,18 @@ public class AppointmentFragment extends Fragment implements AppointmentAdapter.
                             pastList.add(appointment);
                         }
                         else {
-                            if ("pending".equals(appointment.getStatus())) {pendingList.add(appointment);}
-                            if ("accepted".equals(appointment.getStatus())) {acceptedList.add(appointment);}
+                            upcomingList.add(appointment);
                         }
                     } catch (ParseException e) {
                         throw new RuntimeException(e);
                     }
                 }
 
-                AppointmentAdapter pendingAdapter = new AppointmentAdapter(pendingList, AppointmentFragment.this);
-                recyclerViewPending.setAdapter(pendingAdapter);
-                recyclerViewPending.setLayoutManager(new LinearLayoutManager(getActivity()));
+                AppointmentAdapter upcomingAdapter = new AppointmentAdapter(upcomingList, PatientAppointmentFragment.this);
+                recyclerViewUpcoming.setAdapter(upcomingAdapter);
+                recyclerViewUpcoming.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-                AppointmentAdapter acceptedAdapter = new AppointmentAdapter(acceptedList, AppointmentFragment.this);
-                recyclerViewAccepted.setAdapter(acceptedAdapter);
-                recyclerViewAccepted.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-                AppointmentAdapter pastAdapter = new AppointmentAdapter(pastList, AppointmentFragment.this);
+                AppointmentAdapter pastAdapter = new AppointmentAdapter(pastList, PatientAppointmentFragment.this);
                 recyclerViewPast.setAdapter(pastAdapter);
                 recyclerViewPast.setLayoutManager(new LinearLayoutManager(getActivity()));
 
@@ -111,7 +104,7 @@ public class AppointmentFragment extends Fragment implements AppointmentAdapter.
         home_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                findNavController(view).navigate(R.id.action_doctor_to_home);
+                findNavController(view).navigate(R.id.action_patient_to_home);
             }
         });
 

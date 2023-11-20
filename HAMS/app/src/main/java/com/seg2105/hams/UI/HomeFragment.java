@@ -52,10 +52,13 @@ public class HomeFragment extends Fragment {
         Button logout_button = view.findViewById(R.id.btn_logout);
         Button doctor_button = view.findViewById(R.id.btn_doctor);
         Button admin_button = view.findViewById(R.id.btn_admin);
+        Button patient_button = view.findViewById(R.id.btn_patient);
 
         // If type admin, display admin inbox button
         if ("admin".equals(getCurrentUser().getRole())) admin_button.setVisibility(View.VISIBLE);
         if ("doctor".equals(getCurrentUser().getRole())) doctor_button.setVisibility(View.VISIBLE);
+        if ("patient".equals(getCurrentUser().getRole())) patient_button.setVisibility(View.VISIBLE);
+
 
 
         // Button listeners
@@ -72,6 +75,13 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 // view and v point to the same View instance, doesn't matter which one we input
                 findNavController(v).navigate(R.id.action_home_to_doctor);
+            }
+        });
+        patient_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // view and v point to the same View instance, doesn't matter which one we input
+                findNavController(v).navigate(R.id.action_home_to_patient);
             }
         });
 
