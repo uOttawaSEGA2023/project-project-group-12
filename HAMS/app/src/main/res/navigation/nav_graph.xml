@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_home_to_doctor"
             app:destination="@id/doctorFragment" />
+        <action
+            android:id="@+id/action_home_to_patient"
+            app:destination="@id/patientFragment" />
     </fragment>
 
     <fragment
@@ -80,6 +83,29 @@
         <action
             android:id="@+id/action_doctor_to_person"
             app:destination="@id/personFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/patientFragment"
+        android:name="com.seg2105.hams.UI.PatientFragment"
+        android:label="Patient"
+        tools:layout="@layout/fragment_patient">
+        <action
+            android:id="@+id/action_patient_to_home"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_patient_to_bookingSearchResults"
+            app:destination="@id/bookingSearchResultsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/bookingSearchResultsFragment"
+        android:name="com.seg2105.hams.UI.patientFragments.BookingSearchResultsFragment"
+        android:label="Booking Search Results"
+        tools:layout="@layout/fragment_bookingSearchResults">
+        <action
+            android:id="@+id/action_bookingSearchResultsFragment_to_patient"
+            app:destination="@id/patientFragment" />
     </fragment>
 
     <fragment

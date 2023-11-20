@@ -1,11 +1,6 @@
 package com.seg2105.hams.Managers;
 
-import static androidx.core.content.ContentProviderCompat.requireContext;
-import static androidx.navigation.Navigation.findNavController;
-
 import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -13,10 +8,9 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.seg2105.hams.R;
 import com.seg2105.hams.Users.Administrator;
 import com.seg2105.hams.Users.Doctor;
 import com.seg2105.hams.Users.Patient;

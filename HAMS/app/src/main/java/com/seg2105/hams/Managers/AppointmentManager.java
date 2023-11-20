@@ -1,7 +1,5 @@
 package com.seg2105.hams.Managers;
 
-import static com.seg2105.hams.Managers.UserManager.getCurrentUser;
-
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -15,9 +13,7 @@ import com.seg2105.hams.Users.Doctor;
 import com.seg2105.hams.Users.Person;
 import com.seg2105.hams.Util.UserCallback;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class AppointmentManager {
@@ -56,6 +52,42 @@ public class AppointmentManager {
 
 
 
+    }
+
+    public static void getAvailableDoctorsFromDatabase(String specialty, UserCallback callback) {
+        List<Doctor> availableDoctors = new ArrayList<>();
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users");
+
+        databaseReference.orderByChild("userType").equalTo("doctor").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        DataSnapshot specialtiesSnapshot = snapshot.child("userData").child("specialties");
+
+                        // Check if the user has specialties and if the given specialty is present in the array
+                        if (specialtiesSnapshot.exists() && specialtiesSnapshot.getChildrenCount() > 0) {
+                            for (DataSnapshot specialtySnapshot : specialtiesSnapshot.getChildren()) {
+                                String userSpecialty = specialtySnapshot.getValue(String.class);
+
+                                if (userSpecialty != null && userSpecialty.equals(specialty)) {
+                                    availableDoctors.add(snapshot.child("userData").getValue(Doctor.class));
+                                    break;  // Break the loop once the specialty is found for this user
+                                }
+                            }
+                        }
+                    }
+                    callback.onListLoaded(availableDoctors);
+                } else {
+                    callback.onFailure("No doctors found.");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                callback.onFailure(databaseError.getMessage());
+            }
+        });
     }
 
     public static void putAppointmentInDatabase(Appointment appointment, UserCallback callback) {
@@ -98,4 +130,6 @@ public class AppointmentManager {
 
 
     }
+
+
 }

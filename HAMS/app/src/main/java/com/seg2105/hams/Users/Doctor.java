@@ -2,7 +2,6 @@ package com.seg2105.hams.Users;
 
 import com.seg2105.hams.Managers.Shift;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.seg2105.hams.UI.doctorFragments;
+package com.seg2105.hams.UI.patientFragments;
 
 import static androidx.navigation.Navigation.findNavController;
 import static com.seg2105.hams.Managers.AppointmentManager.getAppointmentsFromDatabase;

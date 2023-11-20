@@ -1,7 +1,6 @@
 package com.seg2105.hams.UI;
 
 import static androidx.navigation.Navigation.findNavController;
-
 import static com.seg2105.hams.Managers.UserManager.updateStatus;
 
 import android.os.Bundle;

@@ -89,4 +89,7 @@
     <string name="pick_start_time">Pick Start Time</string>
     <string name="pick_end_time">Pick End Time</string>
     <string name="approved">Approved</string>
+    <string name="book_an_appointment">Book an appointment</string>
+    <string name="search">Search</string>
+    <string name="search_results">Search results</string>
 </resources>

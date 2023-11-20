@@ -1,10 +1,10 @@
 package com.seg2105.hams.UI;
 
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
-
-import android.os.Bundle;
 
 import com.seg2105.hams.R;
 

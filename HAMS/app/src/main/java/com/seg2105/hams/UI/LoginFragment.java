@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -22,8 +23,6 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.seg2105.hams.R;
-import com.seg2105.hams.Users.Administrator;
-import com.seg2105.hams.Users.Person;
 import com.seg2105.hams.Users.User;
 import com.seg2105.hams.Util.UserCallback;
 

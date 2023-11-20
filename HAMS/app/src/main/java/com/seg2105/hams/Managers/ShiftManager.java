@@ -12,13 +12,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.seg2105.hams.Users.Doctor;
-import com.seg2105.hams.Users.Patient;
 import com.seg2105.hams.Util.UserCallback;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ShiftManager {
     public static void getAllShifts(Doctor doctor, UserCallback callback) {

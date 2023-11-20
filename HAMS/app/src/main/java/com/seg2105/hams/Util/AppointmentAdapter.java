@@ -11,11 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.seg2105.hams.Managers.Appointment;
-import com.seg2105.hams.Managers.UserManager;
 import com.seg2105.hams.R;
 import com.seg2105.hams.Users.Patient;
 import com.seg2105.hams.Users.Person;
-import com.seg2105.hams.Users.User;
 
 import java.text.MessageFormat;
 import java.util.List;

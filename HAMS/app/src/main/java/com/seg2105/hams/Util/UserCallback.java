@@ -5,9 +5,6 @@ package com.seg2105.hams.Util;
     which requires a callback to function properly in the code
  */
 
-import com.seg2105.hams.Users.Person;
-import com.seg2105.hams.Users.User;
-
 import java.util.List;
 
 public interface UserCallback {

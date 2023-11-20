@@ -4,12 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.seg2105.hams.UI.DoctorFragment;
+import com.seg2105.hams.UI.PatientFragment;
 import com.seg2105.hams.UI.doctorFragments.AppointmentFragment;
-import com.seg2105.hams.UI.doctorFragments.ShiftFragment;
+import com.seg2105.hams.UI.patientFragments.BookingFragment;
 
-public class DoctorViewPagerAdapter extends FragmentStateAdapter {
-    public DoctorViewPagerAdapter(@NonNull DoctorFragment fragmentActivity) {
+public class PatientViewPagerAdapter extends FragmentStateAdapter {
+    public PatientViewPagerAdapter(@NonNull PatientFragment fragmentActivity) {
         super(fragmentActivity);
     }
 
@@ -18,7 +18,7 @@ public class DoctorViewPagerAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position){
             case 1:
-                return new ShiftFragment();
+                return new BookingFragment();
             default:
                 return new AppointmentFragment();
         }

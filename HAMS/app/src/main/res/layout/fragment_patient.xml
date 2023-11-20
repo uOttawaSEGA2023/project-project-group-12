@@ -8,9 +8,9 @@
     tools:context=".UI.MainActivity">
 
     <TextView
-        android:text="@string/doctor_inbox"
+        android:text="@string/appointments"
         android:textSize="40sp"
-        android:id="@+id/inboxTitle"
+        android:id="@+id/appointmentsTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -27,7 +27,7 @@
         <com.google.android.material.tabs.TabItem
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/shifts"/>
+            android:text="@string/book_an_appointment"/>
     </com.google.android.material.tabs.TabLayout>
 
     <androidx.viewpager2.widget.ViewPager2
