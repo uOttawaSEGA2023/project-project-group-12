@@ -62,17 +62,16 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.BookingS
 
     class BookingSearchResultsViewHolder extends RecyclerView.ViewHolder {
         private TextView nameTextView;
-        private TextView dateTextView;
+
 
         BookingSearchResultsViewHolder(@NonNull View itemView) {
             super(itemView);
             nameTextView = itemView.findViewById(R.id.name);
-            dateTextView = itemView.findViewById(R.id.date);
         }
 
         Patient patient;
         void bind(final Doctor doctor, final OnItemClickListener listener) {
-
+            nameTextView.setText(MessageFormat.format("{0} {1}", doctor.getFirstName(), doctor.getLastName()));
             // Set click listener
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -37,7 +37,7 @@ public class AppointmentManager {
 
                 }
                 if (appointments.isEmpty()) {
-                    callback.onFailure("No shifts.");
+                    callback.onFailure("No appointments.");
                 } else {
                     callback.onListLoaded(appointments);
                 }

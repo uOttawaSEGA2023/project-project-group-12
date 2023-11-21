@@ -102,10 +102,23 @@
         android:id="@+id/bookingSearchResultsFragment"
         android:name="com.seg2105.hams.UI.patientFragments.BookingSearchResultsFragment"
         android:label="Booking Search Results"
-        tools:layout="@layout/fragment_bookingSearchResults">
+        tools:layout="@layout/fragment_bookingsearchresults">
         <action
             android:id="@+id/action_bookingSearchResultsFragment_to_patient"
             app:destination="@id/patientFragment" />
+        <action
+            android:id="@+id/action_bookingSearchResultsFragment_to_availableBookings"
+            app:destination="@id/availableBookingsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/availableBookingsFragment"
+        android:name="com.seg2105.hams.UI.patientFragments.AvailableAppointmentsFragment"
+        android:label="Available Bookings"
+        tools:layout="@layout/fragment_availableappointments">
+        <action
+            android:id="@+id/action_availableBookings_to_bookingSearchResultsFragment"
+            app:destination="@id/bookingSearchResultsFragment" />
     </fragment>
 
     <fragment

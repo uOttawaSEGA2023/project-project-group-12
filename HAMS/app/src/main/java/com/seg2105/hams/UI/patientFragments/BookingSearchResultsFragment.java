@@ -1,5 +1,6 @@
 package com.seg2105.hams.UI.patientFragments;
 
+import static androidx.navigation.Navigation.findNavController;
 import static com.seg2105.hams.Managers.AppointmentManager.getAvailableDoctorsFromDatabase;
 
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import com.seg2105.hams.Util.AppointmentAdapter;
 import com.seg2105.hams.Util.ResultsAdapter;
 import com.seg2105.hams.Util.UserCallback;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -58,6 +60,8 @@ public class BookingSearchResultsFragment extends Fragment implements ResultsAda
 
     @Override
     public void onItemClick(Doctor doctor, Person person) {
-
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("doctor", doctor);
+        findNavController(requireView()).navigate(R.id.action_bookingSearchResultsFragment_to_availableBookings, bundle);
     }
 }
