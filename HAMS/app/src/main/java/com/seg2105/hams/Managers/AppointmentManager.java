@@ -13,7 +13,12 @@ import com.seg2105.hams.Users.Doctor;
 import com.seg2105.hams.Users.Person;
 import com.seg2105.hams.Util.UserCallback;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 public class AppointmentManager {
@@ -53,6 +58,86 @@ public class AppointmentManager {
 
 
     }
+
+    public static void getAvailableAppointmentsFromDoctor(Doctor doctor, UserCallback callback) {
+        HashMap<String, Shift> shifts = doctor.getShifts();
+        ArrayList<ArrayList<String>> availableAppointments = new ArrayList<>();
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users");
+
+        databaseReference.equalTo(doctor.getUUID()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // If datareference is found
+                try { //added try catch block for now since doctor isn't initialized with a list of appointments. catches NullPointerException
+                    for (DataSnapshot shiftSnapshot : dataSnapshot.child("userData").child("shifts").getChildren()) {
+                        availableAppointments.addAll(convertShiftToAvailableAppointments(shiftSnapshot.getValue(Shift.class)));
+                    }
+                } catch (Exception e) {
+
+                }
+                if (availableAppointments.isEmpty()) {
+                    callback.onFailure("List empty.");
+                } else {
+                    callback.onListLoaded(availableAppointments);
+                }
+
+            }
+            public void onCancelled (@NonNull DatabaseError databaseError){
+                // Handle errors
+                callback.onFailure(databaseError.getMessage());
+            }
+
+        });
+
+
+
+    }
+
+    private static ArrayList<ArrayList<String>> convertShiftToAvailableAppointments(Shift shift) {
+        ArrayList<ArrayList<String>> result = new ArrayList<>();
+
+        // Get the current date and time
+        Calendar currentTime = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        try {
+            Date startDate = sdf.parse(shift.getStart());
+            Date endDate = sdf.parse(shift.getEnd());
+
+            // Disregard the shift in the past
+            if (endDate.before(currentTime.getTime())) {
+                return result;
+            }
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(startDate);
+
+            // Iterate through 30-minute blocks within the shift
+            while (calendar.getTime().before(endDate)) {
+                String blockStart = sdf.format(calendar.getTime());
+
+                // Move calendar ahead by 30 minutes
+                calendar.add(Calendar.MINUTE, 30);
+
+                String blockEnd = sdf.format(calendar.getTime());
+
+                // Create an inner list with start and end times
+                ArrayList<String> appointmentTimes = new ArrayList<>();
+                appointmentTimes.add(blockStart);
+                appointmentTimes.add(blockEnd);
+                appointmentTimes.add(shift.getShiftID());
+
+                // Add the inner list to the result list
+                result.add(appointmentTimes);
+            }
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
 
     public static void getAvailableDoctorsFromDatabase(String specialty, UserCallback callback) {
         List<Doctor> availableDoctors = new ArrayList<>();

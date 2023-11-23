@@ -3,7 +3,8 @@ package com.seg2105.hams.Managers;
 import java.io.Serializable;
 
 public class Appointment implements Serializable {
-    private String dateTime;
+    private String startDateTime;
+    private String endDateTime;
     private String doctorUUID;
     private String patientUUID;
     private String status;
@@ -11,8 +12,9 @@ public class Appointment implements Serializable {
 
     public Appointment(){}
 
-    public Appointment(String dateTime, String doctorUUID, String patientUUID, String status, String appointmentID) {
-        this.dateTime = dateTime;
+    public Appointment(String startDateTime, String doctorUUID, String patientUUID, String status, String appointmentID) {
+        this.startDateTime = startDateTime;
+        this.endDateTime = endDateTime;
         this.doctorUUID = doctorUUID;
         this.patientUUID = patientUUID;
         this.status = status;
@@ -35,12 +37,20 @@ public class Appointment implements Serializable {
         this.status = status;
     }
 
-    public String getDateTime() {
-        return dateTime;
+    public String getStartDateTime() {
+        return startDateTime;
     }
 
-    public void setDateTime(String dateTime) {
-        this.dateTime = dateTime;
+    public void setStartDateTime(String startDateTime) {
+        this.startDateTime = startDateTime;
+    }
+
+    public String getEndDateTime() {
+        return endDateTime;
+    }
+
+    public void setSEndDateTime(String endDateTime) {
+        this.endDateTime = endDateTime;
     }
 
     public String getDoctorUUID() {

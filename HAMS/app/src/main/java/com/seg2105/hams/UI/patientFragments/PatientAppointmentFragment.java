@@ -60,7 +60,7 @@ public class PatientAppointmentFragment extends Fragment implements AppointmentA
 
                     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     try {
-                        Date inputDate = dateFormat.parse(appointment.getDateTime());
+                        Date inputDate = dateFormat.parse(appointment.getStartDateTime());
 
                         Date currentDate = new Date();
 

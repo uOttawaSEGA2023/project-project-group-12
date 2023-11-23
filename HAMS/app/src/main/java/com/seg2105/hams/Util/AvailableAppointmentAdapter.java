@@ -12,25 +12,26 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.seg2105.hams.Managers.Appointment;
 import com.seg2105.hams.Managers.Appointment;
 import com.seg2105.hams.R;
+import com.seg2105.hams.Users.Doctor;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 /*
     Class used to bridge java of RecyclerView to UI
  */
 public class AvailableAppointmentAdapter extends RecyclerView.Adapter<AvailableAppointmentAdapter.AvailableAppointmentViewHolder> {
-    private List<Appointment> list;
+    private List<ArrayList<String>> list;
     private OnItemClickListener listener;
 
     // Define your custom listener interface here
     public interface OnItemClickListener {
-        void onItemClick(Appointment appointment);
+        void onItemClick(ArrayList<String> availableAppointment);
     }
 
     // Constructor to initialize the adapter with data and the custom listener
-    public AvailableAppointmentAdapter(List<Appointment> list, OnItemClickListener listener) {
-        this.list = list;
+    public AvailableAppointmentAdapter(List<ArrayList<String>> list, OnItemClickListener listener) {
         this.listener = listener;
     }
 
@@ -44,8 +45,8 @@ public class AvailableAppointmentAdapter extends RecyclerView.Adapter<AvailableA
     @Override
     public void onBindViewHolder(@NonNull AvailableAppointmentViewHolder holder, int position) {
         // Bind data and set click listener here
-        Appointment appointment = getItem(position);
-        holder.bind(appointment, listener);
+        ArrayList<String> availableShift = getItem(position);
+        holder.bind(availableShift, listener);
     }
 
     @Override
@@ -54,7 +55,7 @@ public class AvailableAppointmentAdapter extends RecyclerView.Adapter<AvailableA
     }
 
     // Helper method to get the correct Appointment item based on the position
-    private Appointment getItem(int position) {
+    private ArrayList<String> getItem(int position) {
         return list.get(position);
     }
 
@@ -64,13 +65,13 @@ public class AvailableAppointmentAdapter extends RecyclerView.Adapter<AvailableA
 
         AvailableAppointmentViewHolder(@NonNull View itemView) {
             super(itemView);
-            startTimeTextView = itemView.findViewById(R.id.startTime);
-            endTimeTextView = itemView.findViewById(R.id.endTime);
+            startTimeTextView = itemView.findViewById(R.id.start);
+            endTimeTextView = itemView.findViewById(R.id.end);
         }
 
-        void bind(final Appointment Appointment, final OnItemClickListener listener) {
-            startTimeTextView.setText(MessageFormat.format("Start: {0}", Appointment.getStart()));
-            endTimeTextView.setText(MessageFormat.format("End: {0}",Appointment.getEnd()));
+        void bind(final ArrayList<String> availableAppointment, final OnItemClickListener listener) {
+            startTimeTextView.setText(MessageFormat.format("Start: {0}", availableAppointment.get(0)));
+            endTimeTextView.setText(MessageFormat.format("End: {0}", availableAppointment.get(1)));
 
             // Set click listener
 

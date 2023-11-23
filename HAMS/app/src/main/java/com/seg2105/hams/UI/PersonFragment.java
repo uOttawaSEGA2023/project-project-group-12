@@ -40,7 +40,8 @@ public class PersonFragment extends Fragment {
         TextView healthNumber = view.findViewById(R.id.health_number);
         TextView employeeNumber = view.findViewById(R.id.employee_number);
         TextView specialties = view.findViewById(R.id.specialties);
-        TextView appointmentTime = view.findViewById(R.id.appointmentTime);
+        TextView appointmentStartTime = view.findViewById(R.id.appointmentStartTime);
+        TextView appointmentEndTime = view.findViewById(R.id.appointmentEndTime);
         TextView appointmentID = view.findViewById(R.id.appointmentID);
 
 
@@ -71,7 +72,8 @@ public class PersonFragment extends Fragment {
             employeeNumber.setVisibility(View.GONE);
             specialties.setVisibility(View.GONE);
             healthNumber.setVisibility(View.GONE);
-            appointmentTime.setText(MessageFormat.format("Appointment time: {0}", appointment.getDateTime()));
+            appointmentStartTime.setText(MessageFormat.format("Appointment start time: {0}", appointment.getStartDateTime()));
+            appointmentEndTime.setText(MessageFormat.format("Appointment end time: {0}", appointment.getEndDateTime()));
             appointmentID.setText(MessageFormat.format("Appointment ID: {0}", appointment.getAppointmentID()));
 
         }

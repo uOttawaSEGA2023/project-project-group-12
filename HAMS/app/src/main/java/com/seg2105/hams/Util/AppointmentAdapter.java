@@ -62,13 +62,15 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
 
     class AppointmentViewHolder extends RecyclerView.ViewHolder {
         private TextView nameTextView;
-        private TextView dateTextView;
+        private TextView startTextView;
+        private TextView endTextView;
         private TextView appointmentIDTextView;
 
         AppointmentViewHolder(@NonNull View itemView) {
             super(itemView);
             nameTextView = itemView.findViewById(R.id.name);
-            dateTextView = itemView.findViewById(R.id.date);
+            startTextView = itemView.findViewById(R.id.start);
+            endTextView = itemView.findViewById(R.id.end);
             appointmentIDTextView = itemView.findViewById(R.id.appointmentID);
         }
 
@@ -83,7 +85,8 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
                     patient = (Patient)object;
 
                     nameTextView.setText(MessageFormat.format("{0} {1}", patient.getFirstName(), patient.getLastName()));
-                    dateTextView.setText(appointment.getDateTime());
+                    startTextView.setText(appointment.getStartDateTime());
+                    endTextView.setText(appointment.getEndDateTime());
                     appointmentIDTextView.setText(appointment.getAppointmentID());
                 }
                 @Override
