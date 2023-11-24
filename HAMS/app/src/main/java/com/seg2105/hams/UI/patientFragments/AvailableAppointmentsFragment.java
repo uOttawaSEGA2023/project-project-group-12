@@ -109,6 +109,8 @@ public class AvailableAppointmentsFragment extends Fragment implements Available
 
     @Override
     public void onItemClick(ArrayList<String> availableAppointment) {
-
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("availableAppointment", availableAppointment);
+        findNavController(requireView()).navigate(R.id.action_availableBookings_to_personFragment, bundle);
     }
 }

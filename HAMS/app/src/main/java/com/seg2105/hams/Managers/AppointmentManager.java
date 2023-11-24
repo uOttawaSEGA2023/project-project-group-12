@@ -1,5 +1,7 @@
 package com.seg2105.hams.Managers;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -64,19 +66,19 @@ public class AppointmentManager {
         ArrayList<ArrayList<String>> availableAppointments = new ArrayList<>();
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users");
 
-        databaseReference.equalTo(doctor.getUUID()).addValueEventListener(new ValueEventListener() {
+        databaseReference.child(doctor.getUUID()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // If datareference is found
                 try { //added try catch block for now since doctor isn't initialized with a list of appointments. catches NullPointerException
                     for (DataSnapshot shiftSnapshot : dataSnapshot.child("userData").child("shifts").getChildren()) {
-                        availableAppointments.addAll(convertShiftToAvailableAppointments(shiftSnapshot.getValue(Shift.class)));
+                        availableAppointments.addAll(convertShiftToAvailableAppointments(doctor, shiftSnapshot.getValue(Shift.class)));
                     }
                 } catch (Exception e) {
 
                 }
                 if (availableAppointments.isEmpty()) {
-                    callback.onFailure("List empty.");
+                    callback.onFailure("No available appointments.");
                 } else {
                     callback.onListLoaded(availableAppointments);
                 }
@@ -93,7 +95,7 @@ public class AppointmentManager {
 
     }
 
-    private static ArrayList<ArrayList<String>> convertShiftToAvailableAppointments(Shift shift) {
+    private static ArrayList<ArrayList<String>> convertShiftToAvailableAppointments(Doctor doctor, Shift shift) {
         ArrayList<ArrayList<String>> result = new ArrayList<>();
 
         // Get the current date and time
@@ -126,6 +128,7 @@ public class AppointmentManager {
                 appointmentTimes.add(blockStart);
                 appointmentTimes.add(blockEnd);
                 appointmentTimes.add(shift.getShiftID());
+                appointmentTimes.add(doctor.getUUID());
 
                 // Add the inner list to the result list
                 result.add(appointmentTimes);
@@ -187,7 +190,8 @@ public class AppointmentManager {
 
         // Generate a unique ID for the new shift using push()
         DatabaseReference newAppointmentRef = appointmentsReference.push();
-
+        FirebaseDatabase.getInstance().getReference("users").child(appointment.getDoctorUUID()).child("userData").child("appointments").child(newAppointmentRef.getKey()).setValue(appointment);
+        FirebaseDatabase.getInstance().getReference("users").child(appointment.getPatientUUID()).child("userData").child("appointments").child(newAppointmentRef.getKey()).setValue(appointment);
         appointment.setAppointmentID(newAppointmentRef.getKey());
 
         // Set the value of the new shift object to the generated unique ID

@@ -12,13 +12,21 @@ public class Appointment implements Serializable {
 
     public Appointment(){}
 
-    public Appointment(String startDateTime, String doctorUUID, String patientUUID, String status, String appointmentID) {
+    public Appointment(String startDateTime, String endDateTime, String doctorUUID, String patientUUID, String status, String appointmentID) {
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
         this.doctorUUID = doctorUUID;
         this.patientUUID = patientUUID;
         this.status = status;
         this.appointmentID = appointmentID;
+    }
+
+    public Appointment(String startDateTime, String endDateTime, String doctorUUID, String patientUUID, String status) {
+        this.startDateTime = startDateTime;
+        this.endDateTime = endDateTime;
+        this.doctorUUID = doctorUUID;
+        this.patientUUID = patientUUID;
+        this.status = status;
     }
 
     public String getAppointmentID() {
