@@ -19,7 +19,7 @@ public class DoctorFragment extends Fragment {
     TabLayout tabLayout;
     ViewPager2 viewPager2;
     DoctorViewPagerAdapter doctorViewPagerAdapter;
-    public DoctorFragment() {};
+    public DoctorFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

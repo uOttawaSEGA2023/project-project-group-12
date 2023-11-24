@@ -2,10 +2,8 @@ package com.seg2105.hams.UI.patientFragments;
 
 import static androidx.navigation.Navigation.findNavController;
 import static com.seg2105.hams.Managers.AppointmentManager.getAvailableAppointmentsFromDoctor;
-import static com.seg2105.hams.Managers.UserManager.updateStatus;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,15 +17,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.textfield.TextInputEditText;
-import com.seg2105.hams.Managers.Appointment;
 import com.seg2105.hams.R;
-import com.seg2105.hams.UI.doctorFragments.ShiftFragment;
 import com.seg2105.hams.Users.Doctor;
-import com.seg2105.hams.Users.Patient;
-import com.seg2105.hams.Users.Person;
 import com.seg2105.hams.Util.AvailableAppointmentAdapter;
-import com.seg2105.hams.Util.ShiftAdapter;
 import com.seg2105.hams.Util.UserCallback;
 
 import java.text.MessageFormat;
@@ -41,7 +33,7 @@ public class AvailableAppointmentsFragment extends Fragment implements Available
     TextView phoneNumber;
     TextView specialties;
 
-    public AvailableAppointmentsFragment(){};
+    public AvailableAppointmentsFragment(){}
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_availableappointments, container, false);
@@ -111,6 +103,6 @@ public class AvailableAppointmentsFragment extends Fragment implements Available
     public void onItemClick(ArrayList<String> availableAppointment) {
         Bundle bundle = new Bundle();
         bundle.putSerializable("availableAppointment", availableAppointment);
-        findNavController(requireView()).navigate(R.id.action_availableBookings_to_personFragment, bundle);
+        findNavController(requireView()).navigate(R.id.action_availableBookings_to_appointmentConfirmation, bundle);
     }
 }

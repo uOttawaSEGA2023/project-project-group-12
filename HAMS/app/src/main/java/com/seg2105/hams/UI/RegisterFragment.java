@@ -83,14 +83,14 @@ public class RegisterFragment extends Fragment {
 
         autoAccept = view.findViewById(R.id.autoAcceptAppt);
         autoAcceptLayout = view.findViewById(R.id.autoAcceptLayout);
-        autoAcceptLayout.setVisibility(view.GONE);
+        autoAcceptLayout.setVisibility(View.GONE);
         doctor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 role = "doctor";
                 editTextEmployeeNumber.setVisibility(View.VISIBLE);
                 editTextSpecialties.setVisibility(View.VISIBLE);
-                autoAcceptLayout.setVisibility(view.VISIBLE);
+                autoAcceptLayout.setVisibility(View.VISIBLE);
                 editTextHealthNumber.setVisibility(View.GONE);
             }
         });
@@ -101,7 +101,7 @@ public class RegisterFragment extends Fragment {
                 role = "patient";
                 editTextEmployeeNumber.setVisibility(View.GONE);
                 editTextSpecialties.setVisibility(View.GONE);
-                autoAcceptLayout.setVisibility(view.GONE);
+                autoAcceptLayout.setVisibility(View.GONE);
                 editTextHealthNumber.setVisibility(View.VISIBLE);
             }
         });

@@ -22,7 +22,7 @@ import com.seg2105.hams.Users.Person;
 
 public class NotAcceptedFragment extends Fragment {
 
-    public NotAcceptedFragment() {};
+    public NotAcceptedFragment() {}
 
     // Basic method called to create the view, used once.
     @Override

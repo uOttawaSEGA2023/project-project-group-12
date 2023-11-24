@@ -22,7 +22,7 @@ import com.seg2105.hams.Users.Person;
 
 public class HomeFragment extends Fragment {
 
-    public HomeFragment() {};
+    public HomeFragment() {}
 
     // Basic method called to create the view, used once.
     @Override

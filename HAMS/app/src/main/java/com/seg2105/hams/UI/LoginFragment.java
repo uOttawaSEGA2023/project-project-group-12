@@ -35,7 +35,7 @@ public class LoginFragment extends Fragment {
     FirebaseAuth mAuth;
     TextView textView;
 
-    public LoginFragment() {};
+    public LoginFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

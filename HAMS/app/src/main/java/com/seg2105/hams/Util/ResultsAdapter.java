@@ -1,7 +1,5 @@
 package com.seg2105.hams.Util;
 
-import static com.seg2105.hams.Managers.UserManager.getUserFromDatabase;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,8 +20,8 @@ import java.util.List;
     Class used to bridge java of RecyclerView to UI
  */
 public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.BookingSearchResultsViewHolder> {
-    private List<Doctor> list;
-    private OnItemClickListener listener;
+    private final List<Doctor> list;
+    private final OnItemClickListener listener;
 
     // Define your custom listener interface here
     public interface OnItemClickListener {
@@ -61,7 +59,7 @@ public class ResultsAdapter extends RecyclerView.Adapter<ResultsAdapter.BookingS
     }
 
     class BookingSearchResultsViewHolder extends RecyclerView.ViewHolder {
-        private TextView nameTextView;
+        private final TextView nameTextView;
 
 
         BookingSearchResultsViewHolder(@NonNull View itemView) {

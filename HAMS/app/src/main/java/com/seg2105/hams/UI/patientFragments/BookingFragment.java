@@ -16,7 +16,6 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.seg2105.hams.R;
-import com.seg2105.hams.Users.Person;
 import com.seg2105.hams.Util.UserCallback;
 
 import java.io.Serializable;

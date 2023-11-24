@@ -58,33 +58,29 @@
         android:layout_gravity="center"
         android:text=""
         android:textSize="20sp" />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:id="@+id/appointmentStartTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text=""
-            android:textSize="20sp" />
-        <TextView
-            android:id="@+id/appointmentEndTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text=""
-            android:textSize="20sp" />
-        <TextView
-            android:id="@+id/appointmentID"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text=""
-            android:textSize="20sp" />
 
-    </LinearLayout>
+    <TextView
+        android:id="@+id/appointmentStartTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text=""
+        android:textSize="20sp" />
+    <TextView
+        android:id="@+id/appointmentEndTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text=""
+        android:textSize="20sp" />
+    <TextView
+        android:id="@+id/appointmentID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text=""
+        android:textSize="20sp" />
+
 
 
 

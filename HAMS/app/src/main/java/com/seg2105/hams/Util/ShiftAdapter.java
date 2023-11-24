@@ -19,8 +19,8 @@ import java.util.List;
     Class used to bridge java of RecyclerView to UI
  */
 public class ShiftAdapter extends RecyclerView.Adapter<ShiftAdapter.ShiftViewHolder> {
-    private List<Shift> list;
-    private OnItemClickListener listener;
+    private final List<Shift> list;
+    private final OnItemClickListener listener;
 
     // Define your custom listener interface here
     public interface OnItemClickListener {
@@ -58,10 +58,10 @@ public class ShiftAdapter extends RecyclerView.Adapter<ShiftAdapter.ShiftViewHol
     }
 
     class ShiftViewHolder extends RecyclerView.ViewHolder {
-        private TextView startTimeTextView;
-        private TextView endTimeTextView;
-        private TextView shiftIDTextView;
-        private Button cancelBtn;
+        private final TextView startTimeTextView;
+        private final TextView endTimeTextView;
+        private final TextView shiftIDTextView;
+        private final Button cancelBtn;
 
         ShiftViewHolder(@NonNull View itemView) {
             super(itemView);

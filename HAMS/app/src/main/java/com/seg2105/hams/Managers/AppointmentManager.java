@@ -1,7 +1,5 @@
 package com.seg2105.hams.Managers;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -190,8 +188,8 @@ public class AppointmentManager {
 
         // Generate a unique ID for the new shift using push()
         DatabaseReference newAppointmentRef = appointmentsReference.push();
-        FirebaseDatabase.getInstance().getReference("users").child(appointment.getDoctorUUID()).child("userData").child("appointments").child(newAppointmentRef.getKey()).setValue(appointment);
-        FirebaseDatabase.getInstance().getReference("users").child(appointment.getPatientUUID()).child("userData").child("appointments").child(newAppointmentRef.getKey()).setValue(appointment);
+        FirebaseDatabase.getInstance().getReference("users").child(appointment.getDoctorUUID()).child("userData").child("appointments").push().setValue(newAppointmentRef.getKey());
+        FirebaseDatabase.getInstance().getReference("users").child(appointment.getPatientUUID()).child("userData").child("appointments").push().setValue(newAppointmentRef.getKey());
         appointment.setAppointmentID(newAppointmentRef.getKey());
 
         // Set the value of the new shift object to the generated unique ID

@@ -17,8 +17,8 @@ import java.util.List;
     Class used to bridge java of RecyclerView to UI
  */
 public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonViewHolder> {
-    private List<Person> list;
-    private OnItemClickListener listener;
+    private final List<Person> list;
+    private final OnItemClickListener listener;
 
     // Define your custom listener interface here
     public interface OnItemClickListener {
@@ -56,8 +56,8 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonView
     }
 
     class PersonViewHolder extends RecyclerView.ViewHolder {
-        private TextView nameTextView;
-        private TextView emailTextView;
+        private final TextView nameTextView;
+        private final TextView emailTextView;
 
         PersonViewHolder(@NonNull View itemView) {
             super(itemView);

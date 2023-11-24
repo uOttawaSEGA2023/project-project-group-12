@@ -3,16 +3,12 @@ package com.seg2105.hams.Util;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.seg2105.hams.Managers.Appointment;
-import com.seg2105.hams.Managers.Appointment;
 import com.seg2105.hams.R;
-import com.seg2105.hams.Users.Doctor;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -22,8 +18,8 @@ import java.util.List;
     Class used to bridge java of RecyclerView to UI
  */
 public class AvailableAppointmentAdapter extends RecyclerView.Adapter<AvailableAppointmentAdapter.AvailableAppointmentViewHolder> {
-    private List<ArrayList<String>> list;
-    private OnItemClickListener listener;
+    private final List<ArrayList<String>> list;
+    private final OnItemClickListener listener;
 
     // Define your custom listener interface here
     public interface OnItemClickListener {
@@ -61,10 +57,10 @@ public class AvailableAppointmentAdapter extends RecyclerView.Adapter<AvailableA
     }
 
     class AvailableAppointmentViewHolder extends RecyclerView.ViewHolder {
-        private TextView startTimeTextView;
-        private TextView endTimeTextView;
-        private TextView nameTextView;
-        private TextView appointmentIDTextView;
+        private final TextView startTimeTextView;
+        private final TextView endTimeTextView;
+        private final TextView nameTextView;
+        private final TextView appointmentIDTextView;
 
         AvailableAppointmentViewHolder(@NonNull View itemView) {
             super(itemView);

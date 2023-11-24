@@ -11,7 +11,7 @@ public class Doctor extends Person {
     private List<String> specialties;
     private HashMap<String, Shift> shifts;
 
-    public Doctor() {};
+    public Doctor() {}
 
     public Doctor (String UUID, String email, String firstName, String lastName, String phoneNumber, String dateOfBirth, String address, String automaticallyApprove, String employeeNumber, List<String> specialties, String status) {
         super(UUID, email, firstName, lastName, phoneNumber, dateOfBirth, address, status);

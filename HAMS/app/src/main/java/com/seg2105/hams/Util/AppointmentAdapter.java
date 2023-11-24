@@ -22,8 +22,8 @@ import java.util.List;
     Class used to bridge java of RecyclerView to UI
  */
 public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.AppointmentViewHolder> {
-    private List<Appointment> list;
-    private OnItemClickListener listener;
+    private final List<Appointment> list;
+    private final OnItemClickListener listener;
 
     // Define your custom listener interface here
     public interface OnItemClickListener {
@@ -61,10 +61,10 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
     }
 
     class AppointmentViewHolder extends RecyclerView.ViewHolder {
-        private TextView nameTextView;
-        private TextView startTextView;
-        private TextView endTextView;
-        private TextView appointmentIDTextView;
+        private final TextView nameTextView;
+        private final TextView startTextView;
+        private final TextView endTextView;
+        private final TextView appointmentIDTextView;
 
         AppointmentViewHolder(@NonNull View itemView) {
             super(itemView);

@@ -31,7 +31,7 @@ import java.util.List;
 
 public class PatientAppointmentFragment extends Fragment implements AppointmentAdapter.OnItemClickListener {
 
-    public PatientAppointmentFragment() {};
+    public PatientAppointmentFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -83,7 +83,6 @@ public class PatientAppointmentFragment extends Fragment implements AppointmentA
                 recyclerViewPast.setAdapter(pastAdapter);
                 recyclerViewPast.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-;
             }
             @Override
             public void onFailure(String error) {

@@ -16,12 +16,10 @@ public class PatientViewPagerAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        switch (position){
-            case 1:
-                return new BookingFragment();
-            default:
-                return new PatientAppointmentFragment();
+        if (position == 1) {
+            return new BookingFragment();
         }
+        return new PatientAppointmentFragment();
     }
 
     @Override

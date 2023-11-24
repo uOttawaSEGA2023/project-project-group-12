@@ -169,7 +169,7 @@ public class ShiftFragment extends Fragment implements ShiftAdapter.OnItemClickL
                     }
 
                 } catch (Exception e) {
-                    Toast.makeText(requireContext(), "Error" + e.toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), "Error" + e, Toast.LENGTH_SHORT).show();
                 }
 
             }

@@ -28,7 +28,7 @@ import java.util.List;
 public class AdminFragment extends Fragment implements PersonAdapter.OnItemClickListener {
 
 
-    public AdminFragment() {};
+    public AdminFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
