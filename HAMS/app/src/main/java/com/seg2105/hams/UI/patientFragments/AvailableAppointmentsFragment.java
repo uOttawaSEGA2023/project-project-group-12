@@ -1,6 +1,7 @@
 package com.seg2105.hams.UI.patientFragments;
 
 import static androidx.navigation.Navigation.findNavController;
+import static com.seg2105.hams.Managers.AppointmentManager.getAppointmentsFromDatabase;
 import static com.seg2105.hams.Managers.AppointmentManager.getAvailableAppointmentsFromDoctor;
 
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.seg2105.hams.Managers.Appointment;
 import com.seg2105.hams.R;
 import com.seg2105.hams.Users.Doctor;
 import com.seg2105.hams.Util.AvailableAppointmentAdapter;
@@ -24,6 +26,7 @@ import com.seg2105.hams.Util.UserCallback;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class AvailableAppointmentsFragment extends Fragment implements AvailableAppointmentAdapter.OnItemClickListener {
@@ -44,18 +47,37 @@ public class AvailableAppointmentsFragment extends Fragment implements Available
         RecyclerView recyclerViewAvailableAppointments = view.findViewById(R.id.recyclerViewAvailableAppointments);
         getAvailableAppointmentsFromDoctor(doctor, new UserCallback() {
             @Override
-            public void onSuccess() {
-
-            }
-
+            public void onSuccess() {}
             @Override
-            public void onSuccess(Object object) {
-
-            }
-
+            public void onSuccess(Object object) {}
             @Override
-            public void onListLoaded(List list) {
-                AvailableAppointmentAdapter availableAppointmentAdapter = new AvailableAppointmentAdapter(list, AvailableAppointmentsFragment.this);
+            public void onListLoaded(List availableList) {
+                getAppointmentsFromDatabase(doctor, new UserCallback() {
+                    @Override
+                    public void onSuccess() {}
+                    @Override
+                    public void onSuccess(Object object) {}
+                    @Override
+                    public void onListLoaded(List unnavailableList) {
+                        Iterator<Object> availIterator = availableList.iterator();
+
+                        while (availIterator.hasNext()) {
+                            Object avail = availIterator.next();
+
+                            for (Object unnavail : unnavailableList) {
+                                if (((ArrayList<String>) avail).get(0).equals(((Appointment) unnavail).getStartDateTime())) {
+                                    availIterator.remove();
+                                    break;  // Assuming each startDateTime is unique, exit the inner loop once a match is found
+                                }
+                            }
+                        }
+                    }
+                    @Override
+                    public void onFailure(String error) {
+                        Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show();
+                    }
+                });
+                AvailableAppointmentAdapter availableAppointmentAdapter = new AvailableAppointmentAdapter(availableList, AvailableAppointmentsFragment.this);
                 recyclerViewAvailableAppointments.setAdapter(availableAppointmentAdapter);
                 recyclerViewAvailableAppointments.setLayoutManager(new LinearLayoutManager(getActivity()));
             }
