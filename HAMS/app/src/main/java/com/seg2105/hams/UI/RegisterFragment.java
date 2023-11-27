@@ -1,6 +1,7 @@
 package com.seg2105.hams.UI;
 
 import static com.seg2105.hams.Managers.UserManager.putUserInDatabase;
+import static com.seg2105.hams.Util.Util.isNullOrEmpty;
 
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -158,16 +159,12 @@ public class RegisterFragment extends Fragment {
                 healthNumber = String.valueOf(editTextHealthNumber.getText());
                 employeeNumber = String.valueOf(editTextEmployeeNumber.getText());
                 for (String s : String.valueOf(editTextSpecialties.getText()).split(",")) {
-                    specialties.add(s.trim());
-                }
+                    if (!isNullOrEmpty(s.trim())){
+                        specialties.add(s.trim());
+                    }
 
-                // Validation logic.
-                if (TextUtils.isEmpty(email)) {
-                    Toast.makeText(requireContext(), "Enter email.", Toast.LENGTH_SHORT).show();
-                    return;
                 }
-                if (TextUtils.isEmpty(password)) {
-                    Toast.makeText(requireContext(), "Enter password.", Toast.LENGTH_SHORT).show();
+                if (validateFields(email, password, firstName, lastName, phoneNumber, dateOfBirth, address, healthNumber, employeeNumber, specialties)){
                     return;
                 }
 
@@ -194,7 +191,7 @@ public class RegisterFragment extends Fragment {
                                     Navigation.findNavController(view).navigate(R.id.action_register_to_login);
                                 } else {
                                     // If sign-up fails, display a message to the user.
-                                    Toast.makeText(requireContext(), "Authentication failed.",
+                                    Toast.makeText(requireContext(), task.getException().getMessage(),
                                             Toast.LENGTH_SHORT).show();
                                 }
                             }
@@ -203,5 +200,54 @@ public class RegisterFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private boolean validateFields(String email, String password, String firstName, String lastName, String phoneNumber, String dateOfBirth, String address, String healthNumber, String employeeNumber, List<String> specialties) {
+        if (TextUtils.isEmpty(email)) {
+            Toast.makeText(requireContext(), "Enter email.", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        if (TextUtils.isEmpty(password)) {
+            Toast.makeText(requireContext(), "Enter password.", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        if (TextUtils.isEmpty(firstName)) {
+            Toast.makeText(requireContext(), "Enter first name.", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        if (TextUtils.isEmpty(lastName)) {
+            Toast.makeText(requireContext(), "Enter last name.", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        if (TextUtils.isEmpty(address)) {
+            Toast.makeText(requireContext(), "Enter a valid address.", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        if (TextUtils.isEmpty(phoneNumber)) {
+            Toast.makeText(requireContext(), "Enter phone number.", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        if (TextUtils.isEmpty(dateOfBirth)) {
+            Toast.makeText(requireContext(), "Enter first date of birth.", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        if (role==null) {
+            Toast.makeText(requireContext(), "Pick a role.", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+
+        if (TextUtils.isEmpty(healthNumber)&&"patient".equals(role)) {
+            Toast.makeText(requireContext(), "Enter health number.", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        if (TextUtils.isEmpty(employeeNumber)&&"doctor".equals(role)) {
+            Toast.makeText(requireContext(), "Enter employee number.", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        if (specialties.isEmpty()&&"doctor".equals(role)) {
+            Toast.makeText(requireContext(), "Enter specialties.", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        return false;
     }
 }

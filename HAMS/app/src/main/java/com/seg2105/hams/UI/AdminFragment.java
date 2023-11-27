@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -75,7 +74,6 @@ public class AdminFragment extends Fragment implements PersonAdapter.OnItemClick
             }
             @Override
             public void onFailure(String error) {
-                Toast.makeText(requireContext(), "Error: " + error, Toast.LENGTH_SHORT).show();
             }
         });
 

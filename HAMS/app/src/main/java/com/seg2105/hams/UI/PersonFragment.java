@@ -54,22 +54,22 @@ public class PersonFragment extends Fragment {
             appointment = (Appointment) getArguments().getSerializable("appointment");
         }
 
-        else{
-            // Set info in person fragment
-            name.setText(MessageFormat.format("Name: {0} {1}", person.getFirstName(), person.getLastName()));
-            address.setText(MessageFormat.format("Address: {0}", person.getAddress()));
-            phoneNumber.setText(MessageFormat.format("Phone Number: {0}", person.getPhoneNumber()));
-            if (person instanceof Patient) {
-                healthNumber.setText(MessageFormat.format("Health Number: {0}", ((Patient) person).getHealthNumber()));
-                employeeNumber.setVisibility(View.GONE);
-                specialties.setVisibility(View.GONE);
-            }
-            else if (person instanceof Doctor) {
-                employeeNumber.setText(MessageFormat.format("Employee Number: {0}", ((Doctor) person).getEmployeeNumber()));
-                specialties.setText(MessageFormat.format("Specialties: {0}", ((Doctor) person).getSpecialties().toString().replace("[", "").replace("]", "")));
-                healthNumber.setVisibility(View.GONE);
-            }
+
+        // Set info in person fragment
+        name.setText(MessageFormat.format("Name: {0} {1}", person.getFirstName(), person.getLastName()));
+        address.setText(MessageFormat.format("Address: {0}", person.getAddress()));
+        phoneNumber.setText(MessageFormat.format("Phone Number: {0}", person.getPhoneNumber()));
+        if (person instanceof Patient) {
+            healthNumber.setText(MessageFormat.format("Health Number: {0}", ((Patient) person).getHealthNumber()));
+            employeeNumber.setVisibility(View.GONE);
+            specialties.setVisibility(View.GONE);
         }
+        else if (person instanceof Doctor) {
+            employeeNumber.setText(MessageFormat.format("Employee Number: {0}", ((Doctor) person).getEmployeeNumber()));
+            specialties.setText(MessageFormat.format("Specialties: {0}", ((Doctor) person).getSpecialties().toString().replace("[", "").replace("]", "")));
+            healthNumber.setVisibility(View.GONE);
+        }
+
 
         return view;
     }

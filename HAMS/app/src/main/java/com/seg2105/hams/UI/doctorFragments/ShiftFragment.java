@@ -72,7 +72,6 @@ public class ShiftFragment extends Fragment implements ShiftAdapter.OnItemClickL
 
             @Override
             public void onFailure(String error) {
-                Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show();
             }
         });
 

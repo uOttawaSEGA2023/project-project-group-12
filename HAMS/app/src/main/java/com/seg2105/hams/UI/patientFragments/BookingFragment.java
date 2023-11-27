@@ -45,7 +45,7 @@ public class BookingFragment extends Fragment  {
             @Override
             public void onClick(View view) {
                 String specialty;
-                specialty = String.valueOf(specialtyEditText.getText());
+                specialty = String.valueOf(specialtyEditText.getText()).toLowerCase();
                 if (specialty.isEmpty()) Toast.makeText(requireContext(), "Please enter a specialty to continue.", Toast.LENGTH_SHORT).show();
                 else {
                     getAvailableDoctorsFromDatabase(specialty, new UserCallback() {

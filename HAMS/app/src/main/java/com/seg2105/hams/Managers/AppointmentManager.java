@@ -182,9 +182,19 @@ public class AppointmentManager {
 
 
         //check if doctor associated with appointment autoaccepts appointments
-        if ("true".equals(doctorReference.child(appointment.getDoctorUUID()).child("userData").child("automaticallyApprove"))){
-            appointment.setStatus("accepted");
-        }
+
+        doctorReference.child(appointment.getDoctorUUID()).child("userData").child("automaticallyApprove").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    if ("true".equals(snapshot.getValue(String.class))){
+                        appointment.setStatus("accepted");
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
+        });
 
         // Generate a unique ID for the new shift using push()
         DatabaseReference newAppointmentRef = appointmentsReference.push();

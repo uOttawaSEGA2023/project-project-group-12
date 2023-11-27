@@ -18,7 +18,13 @@ public class Util {
         return currentDate.format(formatter);
     }
 
+    public static boolean isNullOrEmpty(String str) {
+        return str == null || str.isEmpty();
+    }
+
+
     public static String fieldsToAddress(Map<String, String> addressValues){
+        if (isNullOrEmpty(addressValues.get("street"))||isNullOrEmpty(addressValues.get("city"))||isNullOrEmpty(addressValues.get("province"))||isNullOrEmpty(addressValues.get("country"))||isNullOrEmpty(addressValues.get("postalCode"))) {return null;}
         String street = addressValues.get("street");
         String city = addressValues.get("city");
         String province = addressValues.get("province");
