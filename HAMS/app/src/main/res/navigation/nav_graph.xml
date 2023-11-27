@@ -96,6 +96,9 @@
         <action
             android:id="@+id/action_patient_to_bookingSearchResults"
             app:destination="@id/bookingSearchResultsFragment" />
+        <action
+            android:id="@+id/action_patient_to_person"
+            app:destination="@id/personFragment" />
     </fragment>
 
     <fragment
@@ -138,6 +141,9 @@
         android:name="com.seg2105.hams.UI.patientFragments.AppointmentConfirmationFragment"
         android:label="Confirmation"
         tools:layout="@layout/fragment_appointmentconfirmation">
+        <action
+            android:id="@+id/action_confirmationFragment_to_patient"
+            app:destination="@id/patientFragment" />
 
     </fragment>
 </navigation>

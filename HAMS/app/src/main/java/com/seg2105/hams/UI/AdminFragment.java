@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -98,7 +99,9 @@ public class AdminFragment extends Fragment implements PersonAdapter.OnItemClick
 
                     @Override
                     public void onSuccess() {
-                        findNavController(view).navigate(R.id.adminFragment);
+                        Toast.makeText(requireContext(), "Accepted all.",
+                                Toast.LENGTH_SHORT).show();
+                        findNavController(view).navigate(R.id.action_admin_to_home);
                     }
 
                     @Override

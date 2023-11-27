@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.seg2105.hams.Managers.Appointment;
 import com.seg2105.hams.R;
 import com.seg2105.hams.Users.Person;
-import com.seg2105.hams.Util.AppointmentAdapter;
+import com.seg2105.hams.Util.DoctorAppointmentAdapter;
 import com.seg2105.hams.Util.UserCallback;
 
 import java.text.ParseException;
@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class DoctorAppointmentFragment extends Fragment implements AppointmentAdapter.OnItemClickListener {
+public class DoctorAppointmentFragment extends Fragment implements DoctorAppointmentAdapter.OnItemClickListener {
 
     public DoctorAppointmentFragment() {}
 
@@ -77,15 +77,15 @@ public class DoctorAppointmentFragment extends Fragment implements AppointmentAd
                     }
                 }
 
-                AppointmentAdapter pendingAdapter = new AppointmentAdapter(pendingList, DoctorAppointmentFragment.this);
+                DoctorAppointmentAdapter pendingAdapter = new DoctorAppointmentAdapter(pendingList, DoctorAppointmentFragment.this);
                 recyclerViewPending.setAdapter(pendingAdapter);
                 recyclerViewPending.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-                AppointmentAdapter acceptedAdapter = new AppointmentAdapter(acceptedList, DoctorAppointmentFragment.this);
+                DoctorAppointmentAdapter acceptedAdapter = new DoctorAppointmentAdapter(acceptedList, DoctorAppointmentFragment.this);
                 recyclerViewAccepted.setAdapter(acceptedAdapter);
                 recyclerViewAccepted.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-                AppointmentAdapter pastAdapter = new AppointmentAdapter(pastList, DoctorAppointmentFragment.this);
+                DoctorAppointmentAdapter pastAdapter = new DoctorAppointmentAdapter(pastList, DoctorAppointmentFragment.this);
                 recyclerViewPast.setAdapter(pastAdapter);
                 recyclerViewPast.setLayoutManager(new LinearLayoutManager(getActivity()));
 

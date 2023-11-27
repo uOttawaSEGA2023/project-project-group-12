@@ -79,7 +79,7 @@ public class AppointmentConfirmationFragment extends Fragment {
                         @Override
                         public void onSuccess() {
                             Toast.makeText(requireContext(), "Successfully booked appointment.", Toast.LENGTH_SHORT).show();
-                            findNavController(view).popBackStack();
+                            findNavController(view).navigate(R.id.action_confirmationFragment_to_patient);
                         }
 
                         @Override

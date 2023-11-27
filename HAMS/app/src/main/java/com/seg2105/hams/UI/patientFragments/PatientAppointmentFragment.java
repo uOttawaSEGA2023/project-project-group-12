@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,7 +19,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.seg2105.hams.Managers.Appointment;
 import com.seg2105.hams.R;
 import com.seg2105.hams.Users.Person;
-import com.seg2105.hams.Util.AppointmentAdapter;
+import com.seg2105.hams.Util.DoctorAppointmentAdapter;
+import com.seg2105.hams.Util.PatientAppointmentAdapter;
 import com.seg2105.hams.Util.UserCallback;
 
 import java.text.ParseException;
@@ -29,21 +29,21 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class PatientAppointmentFragment extends Fragment implements AppointmentAdapter.OnItemClickListener {
+public class PatientAppointmentFragment extends Fragment implements PatientAppointmentAdapter.OnItemClickListener {
 
     public PatientAppointmentFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+
+        View view = inflater.inflate(R.layout.fragment_patientappointment, container, false);
+
         // Code to populate list of Appointment status'
         List<Appointment> upcomingList = new ArrayList<>();
         List<Appointment> pastList = new ArrayList<>();
-
-        View view = inflater.inflate(R.layout.fragment_patientappointment, container, false);
         RecyclerView recyclerViewUpcoming = view.findViewById(R.id.recyclerViewUpcoming);
         RecyclerView recyclerViewPast = view.findViewById(R.id.recyclerViewPast);
-
-        // Get Appointments from database, and place them in corresponding RecyclerViews
         getAppointmentsFromDatabase((Person)getCurrentUser(),new UserCallback() {
             @Override
             public void onSuccess() {}
@@ -75,20 +75,21 @@ public class PatientAppointmentFragment extends Fragment implements AppointmentA
                     }
                 }
 
-                AppointmentAdapter upcomingAdapter = new AppointmentAdapter(upcomingList, PatientAppointmentFragment.this);
+                PatientAppointmentAdapter upcomingAdapter = new PatientAppointmentAdapter(upcomingList, PatientAppointmentFragment.this);
                 recyclerViewUpcoming.setAdapter(upcomingAdapter);
                 recyclerViewUpcoming.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-                AppointmentAdapter pastAdapter = new AppointmentAdapter(pastList, PatientAppointmentFragment.this);
+                PatientAppointmentAdapter pastAdapter = new PatientAppointmentAdapter(pastList, PatientAppointmentFragment.this);
                 recyclerViewPast.setAdapter(pastAdapter);
                 recyclerViewPast.setLayoutManager(new LinearLayoutManager(getActivity()));
 
             }
             @Override
             public void onFailure(String error) {
-                Toast.makeText(requireContext(), "Error: " + error, Toast.LENGTH_SHORT).show();
+
             }
         });
+
 
         return view;
     }
@@ -96,6 +97,8 @@ public class PatientAppointmentFragment extends Fragment implements AppointmentA
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+
 
         Button home_button = view.findViewById(R.id.btn_home);
 
@@ -115,7 +118,7 @@ public class PatientAppointmentFragment extends Fragment implements AppointmentA
         Bundle bundle = new Bundle();
         bundle.putSerializable("appointment", appointment);
         bundle.putSerializable("person", person);
-        findNavController(requireView()).navigate(R.id.action_doctor_to_person, bundle);
+        findNavController(requireView()).navigate(R.id.action_patient_to_person, bundle);
     }
 
 

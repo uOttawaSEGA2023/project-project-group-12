@@ -20,20 +20,21 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class AppointmentManager {
     public static void getAppointmentsFromDatabase(Person person, UserCallback callback) {
-        List<String> appointmentIDs = person.getAppointments();
+        Map<String,String> appointmentIDs = person.getAppointments();
         List<Appointment> appointments = new ArrayList<>();
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("appointments");
 
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // If datareference is found
                 try { //added try catch block for now since doctor isn't initialized with a list of appointments. catches NullPointerException
                     for (DataSnapshot appointmentSnapshot : dataSnapshot.getChildren()) {
-                        if (appointmentIDs.contains(appointmentSnapshot.child("appointmentID").getValue(String.class))) {
+                        if (appointmentIDs.containsValue(appointmentSnapshot.child("appointmentID").getValue(String.class))) {
                             Appointment appointment = appointmentSnapshot.getValue(Appointment.class);
                             appointments.add(appointment);
                         }
@@ -54,7 +55,7 @@ public class AppointmentManager {
             }
 
         });
-
+        callback.onListLoaded(appointments);
 
 
     }
@@ -190,23 +191,24 @@ public class AppointmentManager {
                     if ("true".equals(snapshot.getValue(String.class))){
                         appointment.setStatus("accepted");
                     }
+                    // Generate a unique ID for the new shift using push()
+                    DatabaseReference newAppointmentRef = appointmentsReference.push();
+                    FirebaseDatabase.getInstance().getReference("users").child(appointment.getDoctorUUID()).child("userData").child("appointments").push().setValue(newAppointmentRef.getKey());
+                    FirebaseDatabase.getInstance().getReference("users").child(appointment.getPatientUUID()).child("userData").child("appointments").push().setValue(newAppointmentRef.getKey());
+                    appointment.setAppointmentID(newAppointmentRef.getKey());
+
+                    // Set the value of the new shift object to the generated unique ID
+                    newAppointmentRef.setValue(appointment);
+
+
+                    callback.onSuccess();
                 }
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {}
         });
 
-        // Generate a unique ID for the new shift using push()
-        DatabaseReference newAppointmentRef = appointmentsReference.push();
-        FirebaseDatabase.getInstance().getReference("users").child(appointment.getDoctorUUID()).child("userData").child("appointments").push().setValue(newAppointmentRef.getKey());
-        FirebaseDatabase.getInstance().getReference("users").child(appointment.getPatientUUID()).child("userData").child("appointments").push().setValue(newAppointmentRef.getKey());
-        appointment.setAppointmentID(newAppointmentRef.getKey());
 
-        // Set the value of the new shift object to the generated unique ID
-        newAppointmentRef.setValue(appointment);
-
-
-        callback.onSuccess();
     }
     public static void removeAppointmentFromDataBase(Appointment appointment, UserCallback callback) {
         DatabaseReference appointmentReference = FirebaseDatabase.getInstance().getReference("appointments").child(appointment.getAppointmentID());

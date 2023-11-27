@@ -71,15 +71,28 @@ public class AvailableAppointmentsFragment extends Fragment implements Available
                                 }
                             }
                         }
+                        // Prevents NullPointerException
+                        doctor = (Doctor) getArguments().getSerializable("doctor");
+
+                        name = view.findViewById(R.id.name);
+                        phoneNumber = view.findViewById(R.id.phone_number);
+                        specialties = view.findViewById(R.id.specialties);
+
+
+                        // Set info in person fragment
+                        name.setText(MessageFormat.format("Name: {0} {1}", doctor.getFirstName(), doctor.getLastName()));
+                        phoneNumber.setText(MessageFormat.format("Phone Number: {0}", doctor.getPhoneNumber()));
+                        specialties.setText(doctor.getSpecialties().toString());
+
+                        AvailableAppointmentAdapter availableAppointmentAdapter = new AvailableAppointmentAdapter(availableList, AvailableAppointmentsFragment.this);
+                        recyclerViewAvailableAppointments.setAdapter(availableAppointmentAdapter);
+                        recyclerViewAvailableAppointments.setLayoutManager(new LinearLayoutManager(getActivity()));
                     }
                     @Override
                     public void onFailure(String error) {
-                        Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show();
                     }
                 });
-                AvailableAppointmentAdapter availableAppointmentAdapter = new AvailableAppointmentAdapter(availableList, AvailableAppointmentsFragment.this);
-                recyclerViewAvailableAppointments.setAdapter(availableAppointmentAdapter);
-                recyclerViewAvailableAppointments.setLayoutManager(new LinearLayoutManager(getActivity()));
+
             }
 
             @Override
@@ -89,20 +102,7 @@ public class AvailableAppointmentsFragment extends Fragment implements Available
         });
 
 
-        // Prevents NullPointerException
-        doctor = (Doctor) getArguments().getSerializable("doctor");
-
-        name = view.findViewById(R.id.name);
-        phoneNumber = view.findViewById(R.id.phone_number);
-        specialties = view.findViewById(R.id.specialties);
-
-
-        // Set info in person fragment
-        name.setText(MessageFormat.format("Name: {0} {1}", doctor.getFirstName(), doctor.getLastName()));
-        phoneNumber.setText(MessageFormat.format("Phone Number: {0}", doctor.getPhoneNumber()));
-        specialties.setText(doctor.getSpecialties().toString());
-
-        return view;
+    return view;
     }
 
     @Override

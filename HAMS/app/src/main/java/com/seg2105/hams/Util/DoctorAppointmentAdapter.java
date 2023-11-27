@@ -21,7 +21,7 @@ import java.util.List;
 /*
     Class used to bridge java of RecyclerView to UI
  */
-public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.AppointmentViewHolder> {
+public class DoctorAppointmentAdapter extends RecyclerView.Adapter<DoctorAppointmentAdapter.AppointmentViewHolder> {
     private final List<Appointment> list;
     private final OnItemClickListener listener;
 
@@ -31,7 +31,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
     }
 
     // Constructor to initialize the adapter with data and the custom listener
-    public AppointmentAdapter(List<Appointment> list, OnItemClickListener listener) {
+    public DoctorAppointmentAdapter(List<Appointment> list, OnItemClickListener listener) {
         this.list = list;
         this.listener = listener;
     }

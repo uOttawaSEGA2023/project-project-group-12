@@ -2,6 +2,7 @@ package com.seg2105.hams.UI;
 
 import static androidx.navigation.Navigation.findNavController;
 import static com.seg2105.hams.Managers.UserManager.getUserFromDatabase;
+import static com.seg2105.hams.Managers.UserManager.loginUserFromDatabase;
 import static com.seg2105.hams.Managers.UserManager.setCurrentUser;
 
 import android.os.Bundle;
@@ -89,7 +90,7 @@ public class LoginFragment extends Fragment {
                                     // If successfully authenticated, call getUserFromDatabase with callback, which waits for success or failure
 
 
-                                    getUserFromDatabase(mAuth.getCurrentUser().getUid(), new UserCallback() {
+                                    loginUserFromDatabase(mAuth.getCurrentUser().getUid(), new UserCallback() {
                                         @Override
                                         public void onSuccess() {
                                         }

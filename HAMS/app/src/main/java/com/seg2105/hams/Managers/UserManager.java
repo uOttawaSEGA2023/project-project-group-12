@@ -75,6 +75,72 @@ public class UserManager {
         });
     }
 
+    // Used to get a user object from the database
+    public static void loginUserFromDatabase(String UUID, UserCallback callback) {
+        // Get the datareference of child of users with matching UUID
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users").child(UUID);
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // If datareference is found
+                if (dataSnapshot.exists()) {
+                    // Get the userType as String
+                    String userType = dataSnapshot.child("userType").getValue(String.class);
+                    // Get the userData as a DataSnapshot
+                    DataSnapshot userDataSnapshot = dataSnapshot.child("userData");
+
+                    // Depending on userType, deserialize into corresponding instance
+                    if ("admin".equals(userType)) {
+                        callback.onSuccess(userDataSnapshot.getValue(Administrator.class));
+                    } else if ("patient".equals(userType)) {
+                        callback.onSuccess(userDataSnapshot.getValue(Patient.class));
+                    } else if ("doctor".equals(userType)) {
+                        callback.onSuccess(userDataSnapshot.getValue(Doctor.class));
+                    }
+                    userUpdateThread(UUID);
+                } else {
+                    callback.onFailure("User with UUID " + UUID + " does not exist");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                callback.onFailure(databaseError.getMessage());
+            }
+        });
+    }
+
+
+    private static void userUpdateThread(String UUID) {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users").child(UUID);
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // If datareference is found
+                if (dataSnapshot.exists()) {
+                    // Get the userType as String
+                    String userType = dataSnapshot.child("userType").getValue(String.class);
+                    // Get the userData as a DataSnapshot
+                    DataSnapshot userDataSnapshot = dataSnapshot.child("userData");
+
+                    // Depending on userType, deserialize into corresponding instance
+                    if ("admin".equals(userType)) {
+                        setCurrentUser(userDataSnapshot.getValue(Administrator.class));
+                    } else if ("patient".equals(userType)) {
+                        setCurrentUser(userDataSnapshot.getValue(Patient.class));
+                    } else if ("doctor".equals(userType)) {
+                        setCurrentUser(userDataSnapshot.getValue(Doctor.class));
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {}
+        });
+    }
+
     // Used to get a all person from database
     public static void getPersonsFromDatabase(UserCallback callback) {
         List<Person> persons = new ArrayList<>();

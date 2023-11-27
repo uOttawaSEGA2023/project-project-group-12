@@ -1,6 +1,7 @@
 package com.seg2105.hams.Users;
 
 import java.util.List;
+import java.util.Map;
 
 public abstract class Person extends User{
     private String firstName;
@@ -9,7 +10,7 @@ public abstract class Person extends User{
     private String dateOfBirth;
     private String address;
     private String status;
-    private List<String> appointments;
+    private Map<String, String> appointments;
 
     public Person(String UUID, String email) {
         super(UUID, email);
@@ -73,11 +74,11 @@ public abstract class Person extends User{
         this.dateOfBirth = dateOfBirth;
     }
 
-    public List<String> getAppointments() {
+    public Map<String,String> getAppointments() {
         return appointments;
     }
 
-    public void setAppointments(List<String> appointments) {
+    public void setAppointments(Map<String,String> appointments) {
         this.appointments = appointments;
     }
 }
