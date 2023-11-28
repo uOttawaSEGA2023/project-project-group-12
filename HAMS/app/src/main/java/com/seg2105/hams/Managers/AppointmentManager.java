@@ -207,27 +207,50 @@ public class AppointmentManager {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {}
         });
-
-
     }
-    public static void removeAppointmentFromDataBase(Appointment appointment, UserCallback callback) {
-        DatabaseReference appointmentReference = FirebaseDatabase.getInstance().getReference("appointments").child(appointment.getAppointmentID());
 
-        appointmentReference.removeValue()
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        callback.onSuccess();
+    public static void removeAppointmentFromDatabase(Appointment appointment, UserCallback callback) {
+        DatabaseReference patientAppointmentsRef = FirebaseDatabase.getInstance().getReference("users")
+                .child(appointment.getPatientUUID()).child("userData").child("appointments");
+        DatabaseReference doctorAppointmentsRef = FirebaseDatabase.getInstance().getReference("users")
+                .child(appointment.getDoctorUUID()).child("userData").child("appointments");
+
+        DatabaseReference appointmentsReference = FirebaseDatabase.getInstance().getReference("appointments");
+
+        // Remove appointment from appointmentsReference
+        appointmentsReference.child(appointment.getAppointmentID()).removeValue();
+
+        // Remove appointment ID from patient's appointments list
+        removeAppointmentIDFromList(patientAppointmentsRef, appointment.getAppointmentID());
+
+        // Remove appointment ID from doctor's appointments list
+        removeAppointmentIDFromList(doctorAppointmentsRef, appointment.getAppointmentID());
+
+        callback.onSuccess();
+    }
+
+    private static void removeAppointmentIDFromList(DatabaseReference appointmentsListRef, String targetAppointmentID) {
+        appointmentsListRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    for (DataSnapshot appointmentSnapshot : snapshot.getChildren()) {
+                        String appointmentID = appointmentSnapshot.getValue(String.class);
+
+                        if (targetAppointmentID.equals(appointmentID)) {
+                            // Remove the correct entry from the list
+                            appointmentSnapshot.getRef().removeValue();
+                            break; // Stop iterating once the correct entry is found and removed
+                        }
                     }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        callback.onFailure(e.toString());
-                    }
-                });
+                }
+            }
 
-
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Handle onCancelled event
+            }
+        });
     }
 
 

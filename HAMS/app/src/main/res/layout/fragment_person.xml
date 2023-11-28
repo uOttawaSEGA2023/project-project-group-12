@@ -80,6 +80,13 @@
         android:layout_gravity="center"
         android:text=""
         android:textSize="20sp" />
+    <TextView
+        android:id="@+id/status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text=""
+        android:textSize="20sp" />
 
 
 
@@ -105,6 +112,13 @@
             android:layout_margin="10sp"
             android:text="@string/reject"
             android:visibility="visible" />
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10sp"
+            android:text="@string/cancel"
+            android:visibility="gone" />
     </LinearLayout>
 
     <Button

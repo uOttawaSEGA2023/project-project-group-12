@@ -1,6 +1,8 @@
 package com.seg2105.hams.UI;
 
 import static androidx.navigation.Navigation.findNavController;
+import static com.seg2105.hams.Managers.AppointmentManager.removeAppointmentFromDatabase;
+import static com.seg2105.hams.Managers.UserManager.getCurrentUser;
 import static com.seg2105.hams.Managers.UserManager.updateStatus;
 
 import android.os.Bundle;
@@ -43,10 +45,12 @@ public class PersonFragment extends Fragment {
         TextView appointmentStartTime = view.findViewById(R.id.appointmentStartTime);
         TextView appointmentEndTime = view.findViewById(R.id.appointmentEndTime);
         TextView appointmentID = view.findViewById(R.id.appointmentID);
+        TextView status = view.findViewById(R.id.status);
+
 
 
         // Prevents NullPointerException
-        if (getArguments() != null && getArguments().getSerializable("person")!=null) {
+        if (getArguments() != null && getArguments().size()==1) {
             person = (Person) getArguments().getSerializable("person");
         }
         else if (getArguments() != null && getArguments().size()==2) {
@@ -64,11 +68,20 @@ public class PersonFragment extends Fragment {
             employeeNumber.setVisibility(View.GONE);
             specialties.setVisibility(View.GONE);
         }
-        else if (person instanceof Doctor) {
+        if (person instanceof Doctor) {
             employeeNumber.setText(MessageFormat.format("Employee Number: {0}", ((Doctor) person).getEmployeeNumber()));
             specialties.setText(MessageFormat.format("Specialties: {0}", ((Doctor) person).getSpecialties().toString().replace("[", "").replace("]", "")));
             healthNumber.setVisibility(View.GONE);
         }
+        if (appointment!=null) {
+            appointmentStartTime.setText(appointment.getStartDateTime());
+            appointmentEndTime.setText(appointment.getEndDateTime());
+            appointmentID.setText(appointment.getAppointmentID());
+            status.setText(appointment.getStatus());
+
+        }
+
+
 
 
         return view;
@@ -80,6 +93,8 @@ public class PersonFragment extends Fragment {
         Button back_button = view.findViewById(R.id.btn_back);
         Button accept_button = view.findViewById(R.id.btn_accept);
         Button reject_button = view.findViewById(R.id.btn_reject);
+        Button cancelBtn = view.findViewById(R.id.btn_cancel);
+
 
         // Hide buttons depending on status for registration
         if (appointment == null && person!=null) {
@@ -90,8 +105,21 @@ public class PersonFragment extends Fragment {
             }
 
         }
-        if (appointment != null) {
-            if ("accepted".equals(appointment.getStatus())) accept_button.setVisibility(View.GONE);
+
+        // Functionality for doctor viewing their appointment
+        if (appointment != null && getCurrentUser() instanceof Doctor) {
+            if (!("accepted".equals(appointment.getStatus()))) {
+                accept_button.setVisibility(View.VISIBLE);
+                reject_button.setVisibility(View.VISIBLE);
+            }
+            if ("accepted".equals(appointment.getStatus())) cancelBtn.setVisibility(View.VISIBLE);
+        }
+
+        // Functionality for patient viewing their appointment
+        if (appointment != null && getCurrentUser() instanceof Patient) {
+            reject_button.setVisibility(View.GONE);
+            accept_button.setVisibility(View.GONE);
+            cancelBtn.setVisibility(View.VISIBLE);
         }
 
         // Update status'
@@ -153,6 +181,23 @@ public class PersonFragment extends Fragment {
                 }
             }
         });
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                removeAppointmentFromDatabase(appointment, new UserCallback() {
+                    @Override
+                    public void onFailure(String error) {Toast.makeText(requireContext(), "Error: " + error, Toast.LENGTH_SHORT).show();}
+                    @Override
+                    public void onSuccess() {findNavController(view).popBackStack();}
+                    @Override
+                    public void onSuccess(Object object) {}
+                    @Override
+                    public void onListLoaded(List persons) {}
+                });
+
+            }
+        });
+
 
         // Back button navigation
         back_button.setOnClickListener(new View.OnClickListener() {
