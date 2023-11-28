@@ -1,6 +1,5 @@
 package com.seg2105.hams.Users;
 
-import java.util.List;
 import java.util.Map;
 
 public abstract class Person extends User{

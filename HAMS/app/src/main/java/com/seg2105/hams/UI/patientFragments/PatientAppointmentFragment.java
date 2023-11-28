@@ -19,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.seg2105.hams.Managers.Appointment;
 import com.seg2105.hams.R;
 import com.seg2105.hams.Users.Person;
-import com.seg2105.hams.Util.DoctorAppointmentAdapter;
 import com.seg2105.hams.Util.PatientAppointmentAdapter;
 import com.seg2105.hams.Util.UserCallback;
 

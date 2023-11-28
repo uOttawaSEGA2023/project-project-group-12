@@ -10,6 +10,7 @@ public class Appointment implements Serializable {
     private String status;
     private String appointmentID;
     private String shiftID;
+    private int rating;
 
 
     public Appointment(){}
@@ -85,5 +86,13 @@ public class Appointment implements Serializable {
 
     public void setShiftID(String shiftID) {
         this.shiftID = shiftID;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
+    public int getRating() {
+        return rating;
     }
 }

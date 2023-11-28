@@ -1,7 +1,12 @@
 package com.seg2105.hams.Util;
 
+import com.seg2105.hams.Managers.Appointment;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.Map;
 
 public class Util {
@@ -22,6 +27,26 @@ public class Util {
         return str == null || str.isEmpty();
     }
 
+    public static boolean appointmentIsPast(Appointment appointment) {
+        String dateString = appointment.getEndDateTime();
+
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date date = dateFormat.parse(dateString);
+            // Get the current date and time
+            Date currentDate = new Date();
+
+            // Compare the given date with the current date
+            if (date.before(currentDate)) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
     public static String fieldsToAddress(Map<String, String> addressValues){
         if (isNullOrEmpty(addressValues.get("street"))||isNullOrEmpty(addressValues.get("city"))||isNullOrEmpty(addressValues.get("province"))||isNullOrEmpty(addressValues.get("country"))||isNullOrEmpty(addressValues.get("postalCode"))) {return null;}
