@@ -29,6 +29,7 @@ import java.util.List;
 public class AppointmentConfirmationFragment extends Fragment {
 
     private ArrayList<String> availableAppointment;
+    private String shiftID;
 
     public AppointmentConfirmationFragment(){}
 
@@ -74,7 +75,7 @@ public class AppointmentConfirmationFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (availableAppointment!=null) {
-                    Appointment a = new Appointment(availableAppointment.get(0), availableAppointment.get(1),availableAppointment.get(3), getCurrentUser().getUUID(), "pending");
+                    Appointment a = new Appointment(availableAppointment.get(0), availableAppointment.get(1),availableAppointment.get(3), getCurrentUser().getUUID(), "pending", availableAppointment.get(4));
                     putAppointmentInDatabase(a, new UserCallback() {
                         @Override
                         public void onSuccess() {

@@ -112,7 +112,12 @@ public class PersonFragment extends Fragment {
                 accept_button.setVisibility(View.VISIBLE);
                 reject_button.setVisibility(View.VISIBLE);
             }
-            if ("accepted".equals(appointment.getStatus())) cancelBtn.setVisibility(View.VISIBLE);
+            if ("accepted".equals(appointment.getStatus())) {
+                accept_button.setVisibility(View.GONE);
+                reject_button.setVisibility(View.GONE);
+
+                cancelBtn.setVisibility(View.VISIBLE);
+            }
         }
 
         // Functionality for patient viewing their appointment
@@ -186,7 +191,7 @@ public class PersonFragment extends Fragment {
             public void onClick(View view) {
                 removeAppointmentFromDatabase(appointment, new UserCallback() {
                     @Override
-                    public void onFailure(String error) {Toast.makeText(requireContext(), "Error: " + error, Toast.LENGTH_SHORT).show();}
+                    public void onFailure(String error) {Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show();}
                     @Override
                     public void onSuccess() {findNavController(view).popBackStack();}
                     @Override

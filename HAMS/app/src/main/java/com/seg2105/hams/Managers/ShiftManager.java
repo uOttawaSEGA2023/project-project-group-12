@@ -1,5 +1,6 @@
 package com.seg2105.hams.Managers;
 
+import static com.seg2105.hams.Managers.AppointmentManager.getAppointmentsFromDatabase;
 import static com.seg2105.hams.Managers.UserManager.getCurrentUser;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.seg2105.hams.Users.Doctor;
+import com.seg2105.hams.Users.Person;
 import com.seg2105.hams.Util.UserCallback;
 
 import java.util.ArrayList;
@@ -61,21 +63,68 @@ public class ShiftManager {
         callback.onSuccess();
     }
     public static void removeShiftFromDataBase(Shift shift, UserCallback callback) {
-        DatabaseReference shiftReference = FirebaseDatabase.getInstance().getReference("users").child(getCurrentUser().getUUID()).child("userData").child("shifts").child(shift.getShiftID());
+        getAppointmentsFromDatabase((Person) getCurrentUser(), new UserCallback() {
+            @Override
+            public void onSuccess() {
+                DatabaseReference shiftReference = FirebaseDatabase.getInstance().getReference("users").child(getCurrentUser().getUUID()).child("userData").child("shifts").child(shift.getShiftID());
 
-        shiftReference.removeValue()
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        callback.onSuccess();
+                shiftReference.removeValue()
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                callback.onSuccess();
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                callback.onFailure(e.toString());
+                            }
+                        });
+            }
+
+            @Override
+            public void onSuccess(Object object) {            }
+
+            @Override
+            public void onListLoaded(List list) {
+                boolean appointmentAttached = false;
+
+                for (Object appointment : list) {
+                    if (((Appointment) appointment).getShiftID().equals(shift.getShiftID())) {
+                        appointmentAttached = true;
+                        break;
                     }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        callback.onFailure(e.toString());
-                    }
-                });
+                }
+
+                if (appointmentAttached) {
+                    callback.onFailure("Appointment attached");
+                } else {
+                    DatabaseReference shiftReference = FirebaseDatabase.getInstance().getReference("users").child(getCurrentUser().getUUID()).child("userData").child("shifts").child(shift.getShiftID());
+
+                    shiftReference.removeValue()
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    callback.onSuccess();
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    callback.onFailure(e.toString());
+                                }
+                            });
+                }
+            }
+
+            @Override
+            public void onFailure(String error) {
+                callback.onFailure(error);
+            }
+        });
+
+
 
 
     }

@@ -9,16 +9,18 @@ public class Appointment implements Serializable {
     private String patientUUID;
     private String status;
     private String appointmentID;
+    private String shiftID;
+
 
     public Appointment(){}
 
-    public Appointment(String startDateTime, String endDateTime, String doctorUUID, String patientUUID, String status, String appointmentID) {
+    public Appointment(String startDateTime, String endDateTime, String doctorUUID, String patientUUID, String status, String shiftID) {
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
         this.doctorUUID = doctorUUID;
         this.patientUUID = patientUUID;
         this.status = status;
-        this.appointmentID = appointmentID;
+        this.shiftID = shiftID;
     }
 
     public Appointment(String startDateTime, String endDateTime, String doctorUUID, String patientUUID, String status) {
@@ -75,5 +77,13 @@ public class Appointment implements Serializable {
 
     public void setPatientUUID(String patientUUID) {
         this.patientUUID = patientUUID;
+    }
+
+    public String getShiftID() {
+        return shiftID;
+    }
+
+    public void setShiftID(String shiftID) {
+        this.shiftID = shiftID;
     }
 }

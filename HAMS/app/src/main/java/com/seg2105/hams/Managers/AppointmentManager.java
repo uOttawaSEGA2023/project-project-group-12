@@ -31,22 +31,29 @@ public class AppointmentManager {
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                // If datareference is found
-                try { //added try catch block for now since doctor isn't initialized with a list of appointments. catches NullPointerException
-                    for (DataSnapshot appointmentSnapshot : dataSnapshot.getChildren()) {
-                        if (appointmentIDs.containsValue(appointmentSnapshot.child("appointmentID").getValue(String.class))) {
-                            Appointment appointment = appointmentSnapshot.getValue(Appointment.class);
-                            appointments.add(appointment);
+                if (dataSnapshot.exists()) {
+                    // If datareference is found
+                    try { //added try catch block for now since doctor isn't initialized with a list of appointments. catches NullPointerException
+                        for (DataSnapshot appointmentSnapshot : dataSnapshot.getChildren()) {
+                            if (appointmentIDs.containsValue(appointmentSnapshot.child("appointmentID").getValue(String.class))) {
+                                Appointment appointment = appointmentSnapshot.getValue(Appointment.class);
+                                appointments.add(appointment);
+                            }
                         }
-                    }
-                } catch (Exception e) {
+                    } catch (Exception e) {
 
+                    }
+                    if (appointments.isEmpty()) {
+                        callback.onSuccess();
+                    } else {
+                        callback.onListLoaded(appointments);
+                    }
                 }
-                if (appointments.isEmpty()) {
-                    callback.onFailure("No appointments.");
-                } else {
-                    callback.onListLoaded(appointments);
+                else {
+                    callback.onSuccess();
                 }
+
+
 
             }
             public void onCancelled (@NonNull DatabaseError databaseError){
@@ -55,7 +62,7 @@ public class AppointmentManager {
             }
 
         });
-        callback.onListLoaded(appointments);
+
 
 
     }
@@ -128,6 +135,7 @@ public class AppointmentManager {
                 appointmentTimes.add(blockEnd);
                 appointmentTimes.add(shift.getShiftID());
                 appointmentTimes.add(doctor.getUUID());
+                appointmentTimes.add(shift.getShiftID());
 
                 // Add the inner list to the result list
                 result.add(appointmentTimes);
@@ -210,6 +218,22 @@ public class AppointmentManager {
     }
 
     public static void removeAppointmentFromDatabase(Appointment appointment, UserCallback callback) {
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            Date appointmentDate = dateFormat.parse(appointment.getStartDateTime());
+            long currentTimeMillis = System.currentTimeMillis();
+            long appointmentTimeMillis = appointmentDate.getTime();
+            if (appointmentTimeMillis > currentTimeMillis && appointmentTimeMillis <= currentTimeMillis + (60 * 60 * 1000)) {
+                callback.onFailure("Cannot cancel appointment that starts within 60 minutes.");
+                return;
+            }
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+
+
+
         DatabaseReference patientAppointmentsRef = FirebaseDatabase.getInstance().getReference("users")
                 .child(appointment.getPatientUUID()).child("userData").child("appointments");
         DatabaseReference doctorAppointmentsRef = FirebaseDatabase.getInstance().getReference("users")
